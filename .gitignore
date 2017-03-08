@@ -1,0 +1,10 @@
+
+
+# python stuff
+*.pyc
+__pycache__
+.cache
+
+# vim
+*.swp
+*.swo
