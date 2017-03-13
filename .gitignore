@@ -12,6 +12,7 @@ htmlcov/
 
 # virtualenv
 venv/
+venv3/
 
 # vim
 *.swp
