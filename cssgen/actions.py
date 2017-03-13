@@ -1,4 +1,4 @@
-import widgets
+from cssgen import widgets
 import xml.etree.ElementTree as et
 
 
@@ -31,6 +31,15 @@ class WritePvAction(object):
         self.timeout = 10
 
 
+class ExecuteCommandAction(object):
+
+    def __init__(self, command, directory="$(opi.dir)"):
+        self._action_type = 'EXECUTE_CMD'
+        self.command = command
+        self.command_directory = directory
+        self.wait_time = 10
+
+
 class ActionButton(widgets.Widget):
 
     ID = 'org.csstudio.opibuilder.widgets.ActionButton'
@@ -43,3 +52,6 @@ class ActionButton(widgets.Widget):
 
     def add_write_pv(self, pv, value):
         self.actions.add(WritePvAction(pv, value))
+
+    def add_shell_command(self, command, directory="$(opi.dir)"):
+        self.actions.add(ExecuteCommandAction(command, directory))
