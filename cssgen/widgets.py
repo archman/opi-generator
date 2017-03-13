@@ -29,7 +29,7 @@ class Widget(object):
     def assemble(self):
         for child in self._children:
             child.assemble()
-        for var, val in sorted(vars(self).iteritems()):
+        for var, val in sorted(vars(self).items()):
             if not var.startswith('_'):
                 node = et.SubElement(self._node, var)
                 val.render(node)
@@ -42,7 +42,7 @@ class Widget(object):
 
     def __str__(self):
         self.assemble()
-        return et.tostring(self._node)
+        return str(et.tostring(self._node))
 
     def write_to_file(self, filename):
         self.assemble()
