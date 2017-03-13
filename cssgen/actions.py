@@ -16,7 +16,7 @@ class Actions(object):
             action_node = et.SubElement(actions_node, 'action')
             action_node.set('type', action._action_type)
             print('adding action {}'.format(action))
-            for key, value in vars(action).iteritems():
+            for key, value in vars(action).items():
                 if not key.startswith('_'):
                     n = et.SubElement(action_node, key)
                     n.text = str(value)
