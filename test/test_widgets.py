@@ -1,5 +1,5 @@
 import pytest
-import widgets
+from cssgen import widgets
 
 
 @pytest.fixture
