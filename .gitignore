@@ -5,6 +5,14 @@
 __pycache__
 .cache
 
+# coverage
+.coverage
+coverage.xml
+htmlcov/
+
+# virtualenv
+venv/
+
 # vim
 *.swp
 *.swo
