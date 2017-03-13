@@ -1,4 +1,4 @@
-import widgets
+from cssgen import widgets
 import xml.etree.ElementTree as et
 
 
