@@ -1,4 +1,4 @@
-Simple Python code to generate OPI file for CS-Studio.
+Simple Python code to generate OPI files for CS-Studio.
 
 [![Build Status](https://travis-ci.org/willrogers/cssgen.svg?branch=master)](https://travis-ci.org/willrogers/cssgen)
 [![Coverage Status](https://coveralls.io/repos/github/willrogers/cssgen/badge.svg?branch=master)](https://coveralls.io/github/willrogers/cssgen?branch=master)
