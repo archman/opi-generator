@@ -22,7 +22,7 @@ def test_widget_render_contains_correct_values(widget):
 
 
 def test_widget_render_contains_dynamically_added_values(widget):
-    widget.test = 'dummy'
+    widget.test = widgets.TextNode('dummy')
     output = str(widget)
     assert "<test>dummy</test>" in output
 

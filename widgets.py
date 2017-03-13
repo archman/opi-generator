@@ -1,13 +1,22 @@
 import xml.etree.ElementTree as et
 
 
+class TextNode(object):
+
+    def __init__(self, value):
+        self.value = value
+
+    def render(self, node):
+        node.text = str(self.value)
+
+
 class Widget(object):
 
     def __init__(self, id, x, y, width, height, parent=None, name='widget'):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+        self.x = TextNode(x)
+        self.y = TextNode(y)
+        self.width = TextNode(width)
+        self.height = TextNode(height)
         self._parent = parent
         self._children = []
         if self._parent is None:
@@ -23,7 +32,7 @@ class Widget(object):
         for var, val in sorted(vars(self).iteritems()):
             if not var.startswith('_'):
                 node = et.SubElement(self._node, var)
-                node.text = str(val)
+                val.render(node)
 
     def get_node(self):
         return self._node
@@ -48,8 +57,8 @@ class Display(Widget):
     def __init__(self, width, height):
         super(Display, self).__init__(Display.ID, 0, 0, width, height,
                                       parent=None, name='display')
-        self.auto_zoom_to_fit_all = 'false'
-        self.show_grid = 'true'
+        self.auto_zoom_to_fit_all = TextNode('false')
+        self.show_grid = TextNode('true')
 
 
 class Rectangle(Widget):
