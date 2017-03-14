@@ -64,3 +64,12 @@ class Rectangle(Widget):
 
     def __init__(self, x, y, width, height):
         super(Rectangle, self).__init__(Rectangle.ID, x, y, width, height)
+
+
+class GroupingContainer(Widget):
+
+    ID = 'org.csstudio.opibuilder.widgets.groupingContainer'
+
+    def __init__(self, x, y, width, height):
+        super(GroupingContainer, self).__init__(GroupingContainer.ID, x, y,
+                                                width, height)

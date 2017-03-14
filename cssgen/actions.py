@@ -1,8 +1,20 @@
+import xml.etree.ElementTree as et
 from cssgen import widgets
 from cssgen import nodes
 
 
-class WritePvAction(object):
+class ActionNode(nodes.Node):
+
+    def render(self, actions_node):
+        action_node = et.SubElement(actions_node, 'action')
+        action_node.set('type', self._action_type)
+        for key, value in vars(self).items():
+            if not key.startswith('_'):
+                n = et.SubElement(action_node, key)
+                n.text = str(value)
+
+
+class WritePvAction(ActionNode):
 
     def __init__(self, pv, value):
         self._action_type = 'WRITE_PV'
@@ -11,7 +23,7 @@ class WritePvAction(object):
         self.timeout = 10
 
 
-class ExecuteCommandAction(object):
+class ExecuteCommandAction(ActionNode):
 
     def __init__(self, command, directory="$(opi.dir)"):
         self._action_type = 'EXECUTE_CMD'
@@ -28,10 +40,10 @@ class ActionButton(widgets.Widget):
         super(ActionButton, self).__init__(ActionButton.ID, x, y,
                                            width, height)
         self.text = nodes.TextNode(text)
-        self.actions = nodes.ActionsNode(self)
+        self.actions = nodes.ListNode()
 
     def add_write_pv(self, pv, value):
-        self.actions.add(WritePvAction(pv, value))
+        self.actions.add_child(WritePvAction(pv, value))
 
     def add_shell_command(self, command, directory="$(opi.dir)"):
-        self.actions.add(ExecuteCommandAction(command, directory))
+        self.actions.add_child(ExecuteCommandAction(command, directory))
