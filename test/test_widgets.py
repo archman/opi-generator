@@ -21,18 +21,13 @@ def test_widget_render_contains_correct_values(widget):
     assert "<width>10</width>" in output
 
 
-def test_widget_render_contains_dynamically_added_values(widget):
-    widget.test = widgets.TextNode('dummy')
-    output = str(widget)
-    assert "<test>dummy</test>" in output
-
-
 def test_Display_render_contains_default_values(display):
     output = str(display)
     assert "<auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>" in output
 
 
 def test_Display_render_contains_child_widgets(display):
-    widgets.Rectangle(10, 10, 10, 10, display)
+    r = widgets.Rectangle(10, 10, 10, 10)
+    display.add_child(r)
     output = str(display)
     assert 'typeId="org.csstudio.opibuilder.widgets.Rectangle"' in output
