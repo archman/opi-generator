@@ -16,11 +16,10 @@ class TextNode(Node):
         parent_node.text = str(self.value)
 
 
-class ActionsNode(object):
+class ActionsNode(Node):
 
-    def __init__(self, parent):
+    def __init__(self):
         self._actions = []
-        self._parent = parent
 
     def add(self, action):
         self._actions.append(action)
