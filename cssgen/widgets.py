@@ -1,22 +1,14 @@
 import xml.etree.ElementTree as et
-
-
-class TextNode(object):
-
-    def __init__(self, value):
-        self.value = value
-
-    def render(self, node):
-        node.text = str(self.value)
+from cssgen import nodes
 
 
 class Widget(object):
 
     def __init__(self, id, x, y, width, height, name='widget'):
-        self.x = TextNode(x)
-        self.y = TextNode(y)
-        self.width = TextNode(width)
-        self.height = TextNode(height)
+        self.x = nodes.TextNode(x)
+        self.y = nodes.TextNode(y)
+        self.width = nodes.TextNode(width)
+        self.height = nodes.TextNode(height)
         self._name = name
         self._children = []
         self._parent = None
@@ -62,8 +54,8 @@ class Display(Widget):
     def __init__(self, width, height):
         super(Display, self).__init__(Display.ID, 0, 0, width, height,
                                       name='display')
-        self.auto_zoom_to_fit_all = TextNode('false')
-        self.show_grid = TextNode('true')
+        self.auto_zoom_to_fit_all = nodes.TextNode('false')
+        self.show_grid = nodes.TextNode('true')
 
 
 class Rectangle(Widget):
