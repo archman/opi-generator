@@ -16,13 +16,13 @@ def test_widget_render_contains_dynamically_added_values(widget):
 
 
 def test_empty_RulesNode(widget):
-    widget.rules = nodes.ParentNode()
+    widget.rules = nodes.ListNode()
     output = str(widget)
     assert '<rules />' in output
 
 
 def test_simple_rule(widget):
-    widget.rules = nodes.ParentNode()
+    widget.rules = nodes.ListNode()
     widget.rules.add_child(rules.RuleNode('vis', 'dummy_pv', 'pv0 > 0'))
     widget.assemble()
     rule_element = widget.get_node().find('./rules/rule')

@@ -15,7 +15,7 @@ class TextNode(Node):
         parent_node.text = str(self.value)
 
 
-class ParentNode(Node):
+class ListNode(Node):
 
     def __init__(self):
         self._children = []
