@@ -28,7 +28,7 @@ class ActionButton(widgets.Widget):
         super(ActionButton, self).__init__(ActionButton.ID, x, y,
                                            width, height)
         self.text = nodes.TextNode(text)
-        self.actions = nodes.ActionsNode(self)
+        self.actions = nodes.ActionsNode()
 
     def add_write_pv(self, pv, value):
         self.actions.add(WritePvAction(pv, value))
