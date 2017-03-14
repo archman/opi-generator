@@ -2,7 +2,7 @@ from cssgen import widgets
 import xml.etree.ElementTree as et
 
 
-class Actions(object):
+class ActionsNode(object):
 
     def __init__(self, parent):
         self._actions = []
@@ -48,7 +48,7 @@ class ActionButton(widgets.Widget):
         super(ActionButton, self).__init__(ActionButton.ID, x, y,
                                            width, height)
         self.text = widgets.TextNode(text)
-        self.actions = Actions(self)
+        self.actions = ActionsNode(self)
 
     def add_write_pv(self, pv, value):
         self.actions.add(WritePvAction(pv, value))
