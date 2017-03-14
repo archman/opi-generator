@@ -44,9 +44,9 @@ class ActionButton(widgets.Widget):
 
     ID = 'org.csstudio.opibuilder.widgets.ActionButton'
 
-    def __init__(self, x, y, width, height, parent, text):
+    def __init__(self, x, y, width, height, text):
         super(ActionButton, self).__init__(ActionButton.ID, x, y,
-                                           width, height, parent)
+                                           width, height)
         self.text = widgets.TextNode(text)
         self.actions = Actions(self)
 

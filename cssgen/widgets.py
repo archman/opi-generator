@@ -12,21 +12,22 @@ class TextNode(object):
 
 class Widget(object):
 
-    def __init__(self, id, x, y, width, height, parent=None, name='widget'):
+    def __init__(self, id, x, y, width, height, name='widget'):
         self.x = TextNode(x)
         self.y = TextNode(y)
         self.width = TextNode(width)
         self.height = TextNode(height)
-        self._parent = parent
+        self._name = name
         self._children = []
-        if self._parent is None:
-            self._node = et.Element(name)
-        else:
-            self._node = et.SubElement(parent.get_node(), name)
-            parent.add_child(self)
-        self._node.set('typeId', id)
+        self._parent = None
+        self._typeId = id
 
     def assemble(self):
+        if self._parent is None:
+            self._node = et.Element(self._name)
+        else:
+            self._node = et.SubElement(self._parent.get_node(), self._name)
+        self._node.set('typeId', self._typeId)
         for child in self._children:
             child.assemble()
         for var, val in sorted(vars(self).items()):
@@ -37,8 +38,12 @@ class Widget(object):
     def get_node(self):
         return self._node
 
+    def set_parent(self, parent):
+        self._parent = parent
+
     def add_child(self, child):
         self._children.append(child)
+        child.set_parent(self)
 
     def __str__(self):
         self.assemble()
@@ -56,7 +61,7 @@ class Display(Widget):
 
     def __init__(self, width, height):
         super(Display, self).__init__(Display.ID, 0, 0, width, height,
-                                      parent=None, name='display')
+                                      name='display')
         self.auto_zoom_to_fit_all = TextNode('false')
         self.show_grid = TextNode('true')
 
@@ -65,7 +70,5 @@ class Rectangle(Widget):
 
     ID = 'org.csstudio.opibuilder.widgets.Rectangle'
 
-    def __init__(self, x, y, width, height, parent):
-        super(Rectangle, self).__init__(Rectangle.ID, x, y, width, height, parent)
-
-
+    def __init__(self, x, y, width, height):
+        super(Rectangle, self).__init__(Rectangle.ID, x, y, width, height)
