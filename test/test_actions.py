@@ -1,4 +1,3 @@
-import xml.etree.ElementTree as et
 import pytest
 
 from cssgen import actions, widgets
@@ -10,7 +9,8 @@ def root_widget():
 
 
 def test_ActionButton_adds_shell_command(root_widget):
-    ab = actions.ActionButton(0, 0, 0, 0, root_widget, 'dummy')
+    ab = actions.ActionButton(0, 0, 0, 0, 'dummy')
+    root_widget.add_child(ab)
     ab.add_shell_command('ls')
     root_widget.assemble()
     action_nodes = ab.get_node().findall('./actions/action')
@@ -19,7 +19,8 @@ def test_ActionButton_adds_shell_command(root_widget):
 
 
 def test_ActionButton_adds_write_pv(root_widget):
-    ab = actions.ActionButton(0, 0, 0, 0, root_widget, 'dummy')
+    ab = actions.ActionButton(0, 0, 0, 0, 'dummy')
+    root_widget.add_child(ab)
     ab.add_write_pv('hello', 'bye')
     root_widget.assemble()
     action_nodes = ab.get_node().findall('./actions/action')

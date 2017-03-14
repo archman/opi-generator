@@ -33,6 +33,7 @@ def test_Display_render_contains_default_values(display):
 
 
 def test_Display_render_contains_child_widgets(display):
-    widgets.Rectangle(10, 10, 10, 10, display)
+    r = widgets.Rectangle(10, 10, 10, 10)
+    display.add_child(r)
     output = str(display)
     assert 'typeId="org.csstudio.opibuilder.widgets.Rectangle"' in output
