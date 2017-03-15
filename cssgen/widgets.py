@@ -1,41 +1,45 @@
 import xml.etree.ElementTree as et
-from cssgen import nodes
+from cssgen import nodes, actions, rules
 
 
-class Widget(object):
+class OPIRenderer(object):
 
-    def __init__(self, id, x, y, width, height, name='widget'):
-        self.x = nodes.TextNode(x)
-        self.y = nodes.TextNode(y)
-        self.width = nodes.TextNode(width)
-        self.height = nodes.TextNode(height)
-        self._name = name
-        self._children = []
-        self._parent = None
-        self._typeId = id
+    def __init__(self, model):
+        self._model = model
+        self._node = None
 
-    def assemble(self):
-        if self._parent is None:
-            self._node = et.Element(self._name)
+    def assemble(self, model=None, parent=None):
+        if model is None:
+            model = self._model
+        if parent is None:
+            node = et.Element(model._name)
         else:
-            self._node = et.SubElement(self._parent.get_node(), self._name)
-        self._node.set('typeId', self._typeId)
-        for child in self._children:
-            child.assemble()
-        for var, val in sorted(vars(self).items()):
+            node = et.SubElement(parent, model._name)
+        for var, val in sorted(vars(model).items()):
             if not var.startswith('_'):
-                node = et.SubElement(self._node, var)
-                val.render(node)
+                if var == 'actions':
+                    child_node = et.SubElement(node, var)
+                    action_renderer = actions.OpiActionRenderer()
+                    for action in val:
+                        action_renderer.render(child_node, action)
+                elif var == 'rules':
+                    child_node = et.SubElement(node, var)
+                    rules_renderer = rules.OpiRuleRenderer()
+                    for rule in val:
+                        rules_renderer.render(child_node, rule)
+                    pass
+                else:
+                    child_node = et.SubElement(node, var)
+                    nodes.TextNode(val).render(child_node)
+        node.set('typeId', model._typeId)
+        for child in model.get_children():
+            self.assemble(child, node)
+
+        if parent is None:
+            self._node = node
 
     def get_node(self):
         return self._node
-
-    def set_parent(self, parent):
-        self._parent = parent
-
-    def add_child(self, child):
-        self._children.append(child)
-        child.set_parent(self)
 
     def __str__(self):
         self.assemble()
@@ -45,31 +49,3 @@ class Widget(object):
         self.assemble()
         tree = et.ElementTree(self._node)
         tree.write(filename)
-
-
-class Display(Widget):
-
-    ID = 'org.csstudio.opibuilder.Display'
-
-    def __init__(self, width, height):
-        super(Display, self).__init__(Display.ID, 0, 0, width, height,
-                                      name='display')
-        self.auto_zoom_to_fit_all = nodes.TextNode('false')
-        self.show_grid = nodes.TextNode('true')
-
-
-class Rectangle(Widget):
-
-    ID = 'org.csstudio.opibuilder.widgets.Rectangle'
-
-    def __init__(self, x, y, width, height):
-        super(Rectangle, self).__init__(Rectangle.ID, x, y, width, height)
-
-
-class GroupingContainer(Widget):
-
-    ID = 'org.csstudio.opibuilder.widgets.groupingContainer'
-
-    def __init__(self, x, y, width, height):
-        super(GroupingContainer, self).__init__(GroupingContainer.ID, x, y,
-                                                width, height)
