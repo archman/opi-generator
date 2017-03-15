@@ -1,19 +1,21 @@
 from utils import widget
-from cssgen import nodes
-from cssgen import rules
+from model import rules
+from cssgen import render
 
 
 def test_empty_RulesNode(widget):
-    widget.rules = nodes.ListNode()
-    output = str(widget)
+    widget.rules = []
+    renderer = render.OPIRenderer(widget)
+    output = str(renderer)
     assert '<rules />' in output
 
 
 def test_greater_than_rule(widget):
-    widget.rules = nodes.ListNode()
-    widget.rules.add_child(rules.GreaterThanRuleNode('vis', 'dummy_pv', '0'))
-    widget.assemble()
-    rule_element = widget.get_node().find('./rules/rule')
+    widget.rules = []
+    widget.rules.append(rules.GreaterThanRuleModel('vis', 'dummy_pv', '0'))
+    renderer = render.OPIRenderer(widget)
+    renderer.assemble()
+    rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.find('./pv').text == 'dummy_pv'
     assert rule_element.find('./pv').attrib['trig'] == 'true'
     exp_elements = rule_element.findall('./exp')
@@ -25,10 +27,11 @@ def test_greater_than_rule(widget):
 
 
 def test_between_rule(widget):
-    widget.rules = nodes.ListNode()
-    widget.rules.add_child(rules.BetweenRuleNode('vis', 'dummy_pv', '0', '5'))
-    widget.assemble()
-    rule_element = widget.get_node().find('./rules/rule')
+    widget.rules = []
+    widget.rules.append(rules.BetweenRuleModel('vis', 'dummy_pv', '0', '5'))
+    renderer = render.OPIRenderer(widget)
+    renderer.assemble()
+    rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.find('./pv').text == 'dummy_pv'
     assert rule_element.find('./pv').attrib['trig'] == 'true'
     exp_elements = rule_element.findall('./exp')
