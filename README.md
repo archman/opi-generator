@@ -25,7 +25,7 @@ Properties of widgets are called nodes.  Any public attribute of a widget object
     # Add two action buttons to the grouping container.
     ab = actions.ActionButton(30, 30, 30, 30, 'hello')
     group.add_child(ab)
-    ab.add_write_pv('helo', 'bye')
+    ab.add_write_pv('hello', 'bye')
     ab2 = actions.ActionButton(60, 60, 60, 60, 'ls')
     ab2.add_shell_command('ls')
     group.add_child(ab2)
