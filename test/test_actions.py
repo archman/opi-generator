@@ -6,7 +6,7 @@ from cssgen import actions, render
 
 
 def test_ActionButton_adds_shell_command(widget):
-    ab = widgets.ActionButtonModel(0, 0, 0, 0, 'dummy')
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     widget.add_child(ab)
     ab.add_shell_command('ls')
     renderer = render.OPIRenderer(widget)
@@ -17,7 +17,7 @@ def test_ActionButton_adds_shell_command(widget):
 
 
 def test_ActionButton_adds_write_pv(widget):
-    ab = widgets.ActionButtonModel(0, 0, 0, 0, 'dummy')
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     widget.add_child(ab)
     ab.add_write_pv('hello', 'bye')
     renderer = render.OPIRenderer(widget)

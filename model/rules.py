@@ -1,23 +1,26 @@
 
 
-class RuleModel(object):
+class Rule(object):
 
     def __init__(self, prop_id):
         self._prop_id = prop_id
 
+    def render(self, renderer):
+        renderer.render(self)
 
-class BetweenRuleModel(RuleModel):
+
+class BetweenRule(Rule):
 
     def __init__(self, prop_id, pv, min, max):
-        super(BetweenRuleModel, self).__init__(prop_id)
+        super(BetweenRule, self).__init__(prop_id)
         self._pv = pv
         self._min = min
         self._max = max
 
 
-class GreaterThanRuleModel(RuleModel):
+class GreaterThanRule(Rule):
 
     def __init__(self, prop_id, pv, threshold):
-        super(GreaterThanRuleModel, self).__init__(prop_id)
+        super(GreaterThanRule, self).__init__(prop_id)
         self._pv = pv
         self._threshold = threshold

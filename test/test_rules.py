@@ -12,7 +12,7 @@ def test_empty_RulesNode(widget):
 
 def test_greater_than_rule(widget):
     widget.rules = []
-    widget.rules.append(rules.GreaterThanRuleModel('vis', 'dummy_pv', '0'))
+    widget.rules.append(rules.GreaterThanRule('vis', 'dummy_pv', '0'))
     renderer = render.OPIRenderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -28,7 +28,7 @@ def test_greater_than_rule(widget):
 
 def test_between_rule(widget):
     widget.rules = []
-    widget.rules.append(rules.BetweenRuleModel('vis', 'dummy_pv', '0', '5'))
+    widget.rules.append(rules.BetweenRule('vis', 'dummy_pv', '0', '5'))
     renderer = render.OPIRenderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')

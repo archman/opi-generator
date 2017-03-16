@@ -6,7 +6,7 @@ from cssgen import render
 
 @pytest.fixture
 def display():
-    return widgets.DisplayModel(100, 100)
+    return widgets.Display(100, 100)
 
 
 def test_widget_render_contains_correct_values(widget):
@@ -28,7 +28,7 @@ def test_Display_render_contains_default_values(display):
 
 
 def test_Display_render_contains_child_widgets(display):
-    r = widgets.RectangleModel(10, 10, 10, 10)
+    r = widgets.Rectangle(10, 10, 10, 10)
     display.add_child(r)
     renderer = render.OPIRenderer(display)
     renderer.assemble()
