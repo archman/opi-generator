@@ -26,9 +26,6 @@ class Widget(object):
     def get_children(self):
         return self._children
 
-    def render(self, renderer):
-        renderer.render(self)
-
 
 class Display(Widget):
 

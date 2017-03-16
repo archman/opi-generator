@@ -5,9 +5,6 @@ class Rule(object):
     def __init__(self, prop_id):
         self._prop_id = prop_id
 
-    def render(self, renderer):
-        renderer.render(self)
-
 
 class BetweenRule(Rule):
 
