@@ -1,16 +1,11 @@
 import pytest
-from utils import widget
 from model import widgets
-from cssgen import render
+from cssgen import render, rules, actions
+from utils import widget, get_renderer, display
 
 
-@pytest.fixture
-def display():
-    return widgets.Display(100, 100)
-
-
-def test_widget_render_contains_correct_values(widget):
-    renderer = render.OPIRenderer(widget)
+def test_widget_render_contains_correct_values(widget, get_renderer):
+    renderer = get_renderer(widget)
     renderer.assemble()
     output = str(renderer)
     assert 'typeId="dummyid"' in output
@@ -20,17 +15,17 @@ def test_widget_render_contains_correct_values(widget):
     assert "<width>10</width>" in output
 
 
-def test_Display_render_contains_default_values(display):
-    renderer = render.OPIRenderer(display)
+def test_Display_render_contains_default_values(display, get_renderer):
+    renderer = get_renderer(display)
     renderer.assemble()
     output = str(renderer)
     assert "<auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>" in output
 
 
-def test_Display_render_contains_child_widgets(display):
+def test_Display_render_contains_child_widgets(display, get_renderer):
+    renderer = get_renderer(display)
     r = widgets.Rectangle(10, 10, 10, 10)
     display.add_child(r)
-    renderer = render.OPIRenderer(display)
     renderer.assemble()
     output = str(renderer)
     assert 'typeId="org.csstudio.opibuilder.widgets.Rectangle"' in output
