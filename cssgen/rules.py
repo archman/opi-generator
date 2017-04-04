@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as et
-from model import rules
+from opimodel import rules
 
 
 class OpiRuleRenderer(object):

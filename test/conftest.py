@@ -1,5 +1,5 @@
 import pytest
-from model import widgets
+from opimodel import widgets
 from cssgen import render, actions, rules
 
 

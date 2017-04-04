@@ -1,4 +1,4 @@
-from model import rules
+from opimodel import rules
 from cssgen import render
 
 

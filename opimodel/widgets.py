@@ -1,4 +1,4 @@
-from model import actions
+from opimodel import actions
 
 
 class Widget(object):
