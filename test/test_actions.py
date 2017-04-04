@@ -1,25 +1,27 @@
 import pytest
 
-from utils import widget
-from cssgen import actions, widgets
+from opimodel import widgets
+from cssgen import actions, render
 
 
-def test_ActionButton_adds_shell_command(widget):
-    ab = actions.ActionButton(0, 0, 0, 0, 'dummy')
+def test_ActionButton_adds_shell_command(widget, get_renderer):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     widget.add_child(ab)
     ab.add_shell_command('ls')
-    widget.assemble()
-    action_nodes = ab.get_node().findall('./actions/action')
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
     assert action_nodes[0].find('./command').text == 'ls'
     assert action_nodes[0].find('./command_directory').text == '$(opi.dir)'
 
 
-def test_ActionButton_adds_write_pv(widget):
-    ab = actions.ActionButton(0, 0, 0, 0, 'dummy')
+def test_ActionButton_adds_write_pv(widget, get_renderer):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     widget.add_child(ab)
     ab.add_write_pv('hello', 'bye')
-    widget.assemble()
-    action_nodes = ab.get_node().findall('./actions/action')
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
     assert len(action_nodes) == 1
     assert action_nodes[0].find('./pv_name').text == 'hello'
     assert action_nodes[0].find('./value').text == 'bye'

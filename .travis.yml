@@ -12,7 +12,7 @@ install:
 
 script:
   - export PYTHONPATH=.
-  - py.test --cov=cssgen test
+  - py.test --cov=cssgen --cov=opimodel test
 
 after_success:
   - coveralls
