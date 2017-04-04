@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as et
 from cssgen import actions, rules
+import collections
 
 
 def get_opi_renderer(widget):
@@ -27,6 +28,9 @@ class OpiWidgetRenderer(object):
         self._action_renderer = action_renderer
         self._rule_renderer = rule_renderer
         self._text_renderer = text_renderer
+        self._renderers = collections.defaultdict(lambda: self._text_renderer)
+        self._renderers['actions'] = self._action_renderer
+        self._renderers['rules'] = self._rule_renderer
 
     def render(self, model, parent):
         if parent is None:
@@ -37,14 +41,7 @@ class OpiWidgetRenderer(object):
         for var, val in sorted(vars(model).items()):
             if not var.startswith('_'):
                 child_node = et.SubElement(node, var)
-                if var == 'actions':
-                    for action in val:
-                        self._action_renderer.render(child_node, action)
-                elif var == 'rules':
-                    for rule in val:
-                        self._rule_renderer.render(child_node, rule)
-                else:
-                    self._text_renderer.render(child_node, val)
+                self._renderers[var].render(child_node, val)
         for child in model.get_children():
             self.render(child, node)
 

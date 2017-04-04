@@ -4,7 +4,11 @@ from model import rules
 
 class OpiRuleRenderer(object):
 
-    def render(self, rules_node, rule_model):
+    def render(self, rules_node, rule_list):
+        for rule_model in rule_list:
+            self.render_one(rules_node, rule_model)
+
+    def render_one(self, rules_node, rule_model):
         self.rule_node = et.SubElement(rules_node, 'rule')
         self.rule_node.set('prop_id', rule_model._prop_id)
         self.rule_node.set('name', 'Rule')
