@@ -1,4 +1,3 @@
-from utils import widget, get_renderer
 from model import rules
 from cssgen import render
 

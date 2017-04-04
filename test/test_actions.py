@@ -1,6 +1,5 @@
 import pytest
 
-from utils import widget, get_renderer
 from model import widgets
 from cssgen import actions, render
 

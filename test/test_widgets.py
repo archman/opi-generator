@@ -1,7 +1,6 @@
 import pytest
 from model import widgets
 from cssgen import render, rules, actions
-from utils import widget, get_renderer, display
 
 
 def test_widget_render_contains_correct_values(widget, get_renderer):
