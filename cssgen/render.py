@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as et
-from cssgen import actions, rules
+from cssgen import actions, rules, colors
 import collections
 
 
@@ -7,7 +7,8 @@ def get_opi_renderer(widget):
     ar = actions.OpiActionRenderer()
     rr = rules.OpiRuleRenderer()
     tr = OpiTextRenderer()
-    wr = OpiWidgetRenderer(ar, rr, tr)
+    cr = colors.OpiColorRenderer()
+    wr = OpiWidgetRenderer(ar, rr, tr, cr)
     return OpiRenderer(widget, wr)
 
 
@@ -24,13 +25,16 @@ class OpiTextRenderer(object):
 
 class OpiWidgetRenderer(object):
 
-    def __init__(self, action_renderer, rule_renderer, text_renderer):
+    def __init__(self, action_renderer, rule_renderer, text_renderer, color_renderer):
         self._action_renderer = action_renderer
         self._rule_renderer = rule_renderer
         self._text_renderer = text_renderer
+        self._color_renderer = color_renderer
         self._renderers = collections.defaultdict(lambda: self._text_renderer)
         self._renderers['actions'] = self._action_renderer
         self._renderers['rules'] = self._rule_renderer
+        self._renderers['background_color'] = self._color_renderer
+        self._renderers['foreground_color'] = self._color_renderer
 
     def render(self, model, parent):
         if parent is None:
