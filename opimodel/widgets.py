@@ -32,6 +32,9 @@ class Widget(object):
     def set_fg_color(self, color):
         self.foreground_color = color
 
+    def set_border(self, border):
+        self.border = border
+
 
 class Display(Widget):
 
