@@ -23,6 +23,10 @@ class Widget(object):
         self._children.append(child)
         child.set_parent(self)
 
+    def add_children(self, children):
+        for child in children:
+            self.add_child(child)
+
     def get_children(self):
         return self._children
 
