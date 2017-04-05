@@ -3,7 +3,8 @@ import xml.etree.ElementTree as et
 
 class OpiActionRenderer(object):
 
-    def render(self, actions_node, action_list):
+    def render(self, widget_node, tag_name, action_list):
+        actions_node = et.SubElement(widget_node, tag_name)
         for action_model in action_list:
             self.render_one(actions_node, action_model)
 
