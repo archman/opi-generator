@@ -1,6 +1,6 @@
 import pytest
 from opimodel import widgets
-from cssgen import render, actions, rules
+from cssgen import render, actions, rules, colors
 
 
 @pytest.fixture
@@ -19,5 +19,6 @@ def get_renderer():
         ar = actions.OpiActionRenderer()
         rr = rules.OpiRuleRenderer()
         tr = render.OpiTextRenderer()
-        return render.OpiRenderer(w, render.OpiWidgetRenderer(ar, rr, tr))
+        cr = colors.OpiColorRenderer()
+        return render.OpiRenderer(w, render.OpiWidgetRenderer(ar, rr, tr, cr))
     return get_renderer
