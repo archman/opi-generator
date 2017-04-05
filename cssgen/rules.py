@@ -4,7 +4,8 @@ from opimodel import rules
 
 class OpiRuleRenderer(object):
 
-    def render(self, rules_node, rule_list):
+    def render(self, widget_node, tag_name, rule_list):
+        rules_node = et.SubElement(widget_node, tag_name)
         for rule_model in rule_list:
             self.render_one(rules_node, rule_model)
 
