@@ -12,28 +12,31 @@ Properties of widgets are called nodes.  Any public attribute of a widget object
 
 ## Demo
 
-    from cssgen import widgets, nodes, actions, rules
+    from opimodel import widgets, nodes, actions, rules
+    from cssgen import render
 
-    # Create the root widget.
-    d = widgets.Display(200, 200)
+    # Create the root widget
+    d = widgets.Display(100, 100)
     # Add a rectangle.
-    rect = widgets.Rectangle(10, 10, 10, 10)
-    d.add_child(rect)
+    w = widgets.Rectangle(0, 0, 10, 10)
+    d.add_child(w)
     # Add a grouping container.
     group = widgets.GroupingContainer(30, 30, 90, 90)
-    d.add_child(group)
     # Add two action buttons to the grouping container.
-    ab = actions.ActionButton(30, 30, 30, 30, 'hello')
-    group.add_child(ab)
+    ab = widgets.ActionButton(30, 30, 30, 30, 'hello')
     ab.add_write_pv('hello', 'bye')
-    ab2 = actions.ActionButton(60, 60, 60, 60, 'ls')
+    group.add_child(ab)
+    ab2 = widgets.ActionButton(60, 60, 60, 60, 'ls')
     ab2.add_shell_command('ls')
     group.add_child(ab2)
     # Add a rule to the grouping container.
-    group.rules = nodes.ListNode()
-    group.rules.add_child(rules.GreaterThanRuleNode('visible', 'SR-CS-FILL-01:COUNTDOWN', 300))
+    group.rules = []
+    group.rules.append(rules.GreaterThanRule('visible', 'SR-CS-FILL-01:COUNTDOWN', 300))
+    d.add_child(group)
+
     # Write the OPI file.
-    d.write_to_file('demo.opi')
+    o = render.get_opi_renderer(d)
+    o.write_to_file(name)
 
 ## How to run the tests
 
@@ -42,4 +45,4 @@ Use a virtualenv:
 * `virtualenv --no-site-packages venv`
 * `source venv/bin/activate`
 * `pip install -r requirements.txt`
-* `py.test --cov=cssgen test`
+* `py.test --cov=cssgen --cov=opimodel test`
