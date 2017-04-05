@@ -8,7 +8,9 @@ Simple Python code to generate OPI files for CS-Studio.
 
 Assemble an OPI file by creating widgets.  The root widget should be a Display object.  Top-level widgets should be added as children of the root widget.
 
-Properties of widgets are called nodes.  Any public attribute of a widget object will become a sub-element in XML with the attribute as tag name - in order to render correctly, any such attribute should inherit from Node.  A sub-element with multiple children, such as rules and actions, should be a ParentNode that contains a list of the appropriate nodes.
+Any public attribute of a widget object will become a sub-element in XML with the attribute as tag name.  Complicated sub-elements, such as rules and actions, can be created using the classes in the opimodel package.
+
+To write the OPI file out, use the renderers in the cssgen package.
 
 ## Demo
 
