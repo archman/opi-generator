@@ -26,6 +26,12 @@ class Widget(object):
     def get_children(self):
         return self._children
 
+    def set_bg_color(self, color):
+        self.background_color = color
+
+    def set_fg_color(self, color):
+        self.foreground_color = color
+
 
 class Display(Widget):
 
