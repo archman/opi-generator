@@ -16,9 +16,5 @@ def display():
 @pytest.fixture
 def get_renderer():
     def get_renderer(w):
-        ar = actions.OpiActionRenderer()
-        rr = rules.OpiRuleRenderer()
-        tr = render.OpiTextRenderer()
-        cr = colors.OpiColorRenderer()
-        return render.OpiRenderer(w, render.OpiWidgetRenderer(ar, rr, tr, cr))
+        return render.get_opi_renderer(w)
     return get_renderer
