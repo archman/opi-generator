@@ -47,6 +47,33 @@ class Rectangle(Widget):
                                         width, height)
 
 
+class Label(Widget):
+
+    ID = 'org.csstudio.opibuilder.widgets.Label'
+
+    def __init__(self, x, y, width, height, text):
+        super(Label, self).__init__(Label.ID, x, y, width, height)
+        self.text = text
+
+
+class TextMonitor(Widget):
+
+    ID = 'org.csstudio.opibuilder.widgets.TextUpdate'
+
+    def __init__(self, x, y, width, height, pv):
+        super(TextMonitor, self).__init__(TextMonitor.ID, x, y, width, height)
+        self.pv_name = pv
+
+
+class TextInput(Widget):
+
+    ID = 'org.csstudio.opibuilder.widgets.TextInput'
+
+    def __init__(self, x, y, width, height, pv):
+        super(TextInput, self).__init__(TextInput.ID, x, y, width, height)
+        self.pv_name = pv
+
+
 class GroupingContainer(Widget):
 
     ID = 'org.csstudio.opibuilder.widgets.groupingContainer'
