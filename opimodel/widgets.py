@@ -101,8 +101,7 @@ class ActionButton(Widget):
     ID = 'org.csstudio.opibuilder.widgets.ActionButton'
 
     def __init__(self, x, y, width, height, text):
-        super(ActionButton, self).__init__(ActionButton.ID, x, y,
-                                           width, height)
+        super(ActionButton, self).__init__(ActionButton.ID, x, y, width, height)
         self.text = text
         self.actions = []
 
@@ -111,3 +110,27 @@ class ActionButton(Widget):
 
     def add_shell_command(self, command, directory="$(opi.dir)"):
         self.actions.append(actions.ExecuteCommandAction(command, directory))
+
+
+class ToggleButton(Widget):
+
+    ID = 'org.csstudio.opibuilder.widgets.BoolButton'
+
+    def __init__(self, x, y, width, height, on_text, off_text):
+        super(ToggleButton, self).__init__(ToggleButton.ID, x, y, width, height)
+        self.actions = []
+        self.on_label = on_text
+        self.off_label = off_text
+        self.toggle_button = True
+        self.effect_3d = True
+        self.square_button = True
+        self.show_boolean_label = True
+        self.show_led = False
+
+    def add_push_action(self, action):
+        self.actions.append(action)
+        self.push_action_index = len(self.actions) - 1
+
+    def add_release_action(self, action):
+        self.actions.append(action)
+        self.release_action_index = len(self.actions) - 1
