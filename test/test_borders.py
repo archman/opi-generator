@@ -13,4 +13,4 @@ def test_add_border_to_widget(widget, get_renderer):
     assert border_color.get('red') == '0'
     assert border_color.get('green') == '0'
     assert border_color.get('blue') == '0'
-    assert border_color.get('name') == 'black'
+    assert border_color.get('name') == 'Black'
