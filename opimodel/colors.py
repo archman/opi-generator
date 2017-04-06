@@ -1,14 +1,24 @@
 class Color(object):
 
-    def __init__(self, r, b, g, name=None):
+    def __init__(self, r, g, b, name=None):
         self.red = r
-        self.blue = b
         self.green = g
+        self.blue = b
         self.name = name
 
 
-GREY_2 = Color(219, 219, 219, 'grey-2')
-GREY_8 = Color(134, 134, 134, 'grey-8')
-BLACK = Color(0, 0, 0, 'black')
-TOP_SHADOW = Color(237, 237, 237, 'Top Shadow')
-BUTTON_ON = Color(188, 188, 188, 'Button: On')
+def parse_color_file(filename):
+    def_colors = {}
+    with open(filename) as f:
+        for line in (l.strip() for l in f.readlines()):
+            if not line == '' and not line.startswith('#'):
+                key, value = [x.strip() for x in line.split('=')]
+                r, g, b = [x.strip(',') for x in value.split()]
+                def_colors[key] = Color(r, g, b, key)
+    return def_colors
+
+
+BLACK = Color(0, 0, 0, 'Black')
+RED = Color(255, 0, 0, 'Red')
+GREEN = Color(0, 255, 0, 'Green')
+BLUE = Color(0, 0, 255, 'Blue')
