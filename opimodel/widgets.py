@@ -1,6 +1,12 @@
 from opimodel import actions
 
 
+class HAlign(object):
+    LEFT = 0
+    CENTER = 1
+    RIGHT = 2
+
+
 class Widget(object):
 
     def __init__(self, id, x, y, width, height, name='widget'):
@@ -79,6 +85,7 @@ class TextMonitor(Widget):
     def __init__(self, x, y, width, height, pv):
         super(TextMonitor, self).__init__(TextMonitor.ID, x, y, width, height)
         self.pv_name = pv
+        self.horizontal_alignment = HAlign.CENTER
 
 
 class TextInput(Widget):
