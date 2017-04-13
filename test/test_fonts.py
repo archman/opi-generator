@@ -12,7 +12,7 @@ dummy 3 = Dummy one-regular-14
 
 @pytest.fixture
 def font_file():
-    tmp = tempfile.NamedTemporaryFile(delete=False)
+    tmp = tempfile.NamedTemporaryFile('wt', delete=False)
     tmp.write(TEST_FONT_FILE)
     tmp.close()
     yield tmp
