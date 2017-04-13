@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as et
-from cssgen import actions, rules, colors, borders
+from cssgen import actions, rules, colors, borders, fonts
 import collections
 
 
@@ -12,9 +12,11 @@ def get_opi_renderer(widget):
     wr.add_renderer('rules', rr)
     cr = colors.OpiColorRenderer()
     br = borders.OpiBorderRenderer(tr, cr)
+    fr = fonts.OpiFontRenderer()
     wr.add_renderer('background_color', cr)
     wr.add_renderer('foreground_color', cr)
     wr.add_renderer('border', br)
+    wr.add_renderer('font', fr)
     return OpiRenderer(widget, wr)
 
 
