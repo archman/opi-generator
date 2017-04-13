@@ -12,11 +12,17 @@ STYLES = {'regular': REGULAR,
 
 class Font(object):
 
-    def __init__(self, fontface, size, style=REGULAR, name=None, pixels=True):
+    def __init__(self, fontface, size, style=REGULAR, pixels=True):
         self.fontface = fontface
         self.size = size
         self.style = style
         self.pixels = pixels
+
+    def __eq__(self, other):
+        val = (self.size == other.size and
+               self.style == other.style and
+               self.pixels == other.pixels)
+        return val
 
 
 def parse_font_file(filename):
@@ -34,6 +40,7 @@ def parse_font_file(filename):
                     pixels = False
                 else:
                     size = int(size)
+                    pixels = False
                 style_int = STYLES[style]
                 def_fonts[key] = Font(face, size, style_int, pixels=pixels)
     return def_fonts

@@ -39,6 +39,9 @@ class Widget(object):
     def set_border(self, border):
         self.border = border
 
+    def set_font(self, font):
+        self.font = font
+
 
 class Display(Widget):
 
