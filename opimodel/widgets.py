@@ -144,3 +144,12 @@ class ToggleButton(Widget):
     def add_release_action(self, action):
         self.actions.append(action)
         self.release_action_index = len(self.actions) - 1
+
+
+class Led(Widget):
+
+    ID = 'org.csstudio.opibuilder.widgets.LED'
+
+    def __init__(self, x, y, width, height, pv):
+        super(Led, self).__init__(Led.ID, x, y, width, height)
+        self.pv_name = pv
