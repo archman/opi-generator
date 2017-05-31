@@ -47,4 +47,5 @@ Use a virtualenv:
 * `virtualenv --no-site-packages venv`
 * `source venv/bin/activate`
 * `pip install -r requirements.txt`
+* `export PYTHONPATH=$(pwd)`
 * `py.test --cov=cssgen --cov=opimodel test`
