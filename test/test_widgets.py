@@ -39,3 +39,12 @@ def test_ToggleButton_has_correct_attributes(display, get_renderer):
     assert '<on_label>on</on_label>' in output
     assert '<off_label>off</off_label>' in output
     assert '<effect_3d>true</effect_3d>' in output
+
+
+def test_Led_has_correct_attributes(display, get_renderer):
+    led = widgets.Led(10, 10, 20, 20, 'TEST')
+    display.add_child(led)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert '<pv_name>TEST</pv_name>' in output
