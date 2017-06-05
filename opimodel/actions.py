@@ -18,3 +18,20 @@ class ExecuteCommandAction(object):
         self.description = description
         self.command_directory = directory
         self.wait_time = 10
+
+class OpenOpiAction(object):
+
+    REPLACE_CURRENT = 0
+    WORKBENCH_TAB = 1
+    WORKBENCH_TAB_LEFT = 2
+    WORKBENCH_TAB_RIGHT = 3
+    WORKBENCH_TAB_TOP = 4
+    WORKBENCH_TAB_BOTTOM = 5
+    DETACHED_TAB = 6
+    NEW_WORKBENCH = 7
+    STANDALONE = 8
+
+    def __init__(self, path, mode):
+        self._action_type = 'OPEN_DISPLAY'
+        self.path = path
+        self.mode = mode

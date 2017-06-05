@@ -65,6 +65,9 @@ class ActionWidget(Widget):
         self.actions.append(actions.ExecuteCommandAction(
                 command, description, directory))
 
+    def add_open_opi(self, path, mode=actions.OpenOpiAction.STANDALONE):
+        self.actions.append(actions.OpenOpiAction(path, mode))
+
 
 class Display(Widget):
 
