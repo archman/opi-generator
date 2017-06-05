@@ -57,11 +57,13 @@ class ActionWidget(Widget):
         super(ActionWidget, self).__init__(id, x, y, width, height)
         self.actions = []
 
-    def add_write_pv(self, pv, value):
-        self.actions.append(actions.WritePvAction(pv, value))
+    def add_write_pv(self, pv, value, description=""):
+        self.actions.append(actions.WritePvAction(pv, value, description))
 
-    def add_shell_command(self, command, directory="$(opi.dir)"):
-        self.actions.append(actions.ExecuteCommandAction(command, directory))
+    def add_shell_command(
+            self, command, description="", directory="$(opi.dir)"):
+        self.actions.append(actions.ExecuteCommandAction(
+                command, description, directory))
 
 
 class Display(Widget):
