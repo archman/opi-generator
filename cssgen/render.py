@@ -18,6 +18,7 @@ def get_opi_renderer(widget):
     wr.add_renderer('bulb_border_color', cr)
     wr.add_renderer('off_color', cr)
     wr.add_renderer('on_color', cr)
+    wr.add_renderer('line_color', cr)
     br = borders.OpiBorderRenderer(tr, cr)
     wr.add_renderer('border', br)
     wr.add_renderer('font', fr)
