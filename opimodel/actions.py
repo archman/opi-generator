@@ -19,6 +19,7 @@ class ExecuteCommandAction(object):
         self.command_directory = directory
         self.wait_time = 10
 
+
 class OpenOpiAction(object):
 
     REPLACE_CURRENT = 0
