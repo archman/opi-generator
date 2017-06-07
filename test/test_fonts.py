@@ -20,7 +20,7 @@ def font_file():
 
 
 def test_add_font_to_widget(widget, get_renderer):
-    f = fonts.Font('Dummy name', 12, fonts.REGULAR)
+    f = fonts.Font(fontface='Dummy name', size=12, style=fonts.REGULAR)
     widget.set_font(f)
     renderer = get_renderer(widget)
     renderer.assemble()
