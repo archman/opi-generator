@@ -49,6 +49,26 @@ class Widget(object):
         self.font = font
 
 
+class ActionWidget(Widget):
+
+    # No ID, designed to be subclassed only
+
+    def __init__(self, id, x, y, width, height):
+        super(ActionWidget, self).__init__(id, x, y, width, height)
+        self.actions = []
+
+    def add_write_pv(self, pv, value, description=""):
+        self.actions.append(actions.WritePvAction(pv, value, description))
+
+    def add_shell_command(
+            self, command, description="", directory="$(opi.dir)"):
+        self.actions.append(actions.ExecuteCommandAction(
+                command, description, directory))
+
+    def add_open_opi(self, path, mode=actions.OpenOpiAction.STANDALONE):
+        self.actions.append(actions.OpenOpiAction(path, mode))
+
+
 class Display(Widget):
 
     ID = 'org.csstudio.opibuilder.Display'
@@ -105,21 +125,22 @@ class GroupingContainer(Widget):
         super(GroupingContainer, self).__init__(GroupingContainer.ID,
                                                 x, y, width, height)
 
-
-class ActionButton(Widget):
+class ActionButton(ActionWidget):
 
     ID = 'org.csstudio.opibuilder.widgets.ActionButton'
 
     def __init__(self, x, y, width, height, text):
         super(ActionButton, self).__init__(ActionButton.ID, x, y, width, height)
         self.text = text
-        self.actions = []
 
-    def add_write_pv(self, pv, value):
-        self.actions.append(actions.WritePvAction(pv, value))
 
-    def add_shell_command(self, command, directory="$(opi.dir)"):
-        self.actions.append(actions.ExecuteCommandAction(command, directory))
+class MenuButton(ActionWidget):
+
+    ID = 'org.csstudio.opibuilder.widgets.MenuButton'
+
+    def __init__(self, x, y, width, height, text):
+        super(MenuButton, self).__init__(MenuButton.ID, x, y, width, height)
+        self.label = text
 
 
 class ToggleButton(Widget):
