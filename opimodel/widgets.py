@@ -58,15 +58,15 @@ class ActionWidget(Widget):
         self.actions = []
 
     def add_write_pv(self, pv, value, description=""):
-        self.actions.append(actions.WritePvAction(pv, value, description))
+        self.actions.append(actions.WritePv(pv, value, description))
 
     def add_shell_command(
             self, command, description="", directory="$(opi.dir)"):
-        self.actions.append(actions.ExecuteCommandAction(
+        self.actions.append(actions.ExecuteCommand(
                 command, description, directory))
 
-    def add_open_opi(self, path, mode=actions.OpenOpiAction.STANDALONE):
-        self.actions.append(actions.OpenOpiAction(path, mode))
+    def add_open_opi(self, path, mode=actions.OpenOpi.STANDALONE):
+        self.actions.append(actions.OpenOpi(path, mode))
 
 
 class Display(Widget):
@@ -85,8 +85,7 @@ class Rectangle(Widget):
     ID = 'org.csstudio.opibuilder.widgets.Rectangle'
 
     def __init__(self, x, y, width, height):
-        super(Rectangle, self).__init__(Rectangle.ID, x, y,
-                                        width, height)
+        super(Rectangle, self).__init__(Rectangle.ID, x, y, width, height)
 
 
 class Label(Widget):
