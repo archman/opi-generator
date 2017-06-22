@@ -1,4 +1,4 @@
-import xml.etree.ElementTree as et
+import lxml.etree as et
 
 
 class OpiFontRenderer(object):

@@ -1,4 +1,4 @@
-import xml.etree.ElementTree as et
+import lxml.etree as et
 from cssgen import actions, rules, colors, borders, fonts
 import collections
 
@@ -83,4 +83,4 @@ class OpiRenderer(object):
     def write_to_file(self, filename):
         self.assemble()
         tree = et.ElementTree(self._node)
-        tree.write(filename)
+        tree.write(filename, pretty_print=True)

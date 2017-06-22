@@ -2,7 +2,7 @@ from opimodel import widgets, borders, colors
 
 
 def test_add_border_to_widget(widget, get_renderer):
-    w = widgets.Widget(0, 0, 0, 0, 'dummy')
+    w = widgets.Widget('dummy', 0, 0, 0, 0)
     b = borders.Border(borders.LINE_STYLE, 1, colors.BLACK, False)
     w.set_border(b)
     renderer = get_renderer(w)
