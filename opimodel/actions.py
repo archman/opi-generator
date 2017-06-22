@@ -1,6 +1,6 @@
 
 
-class WritePvAction(object):
+class WritePv(object):
 
     def __init__(self, pv, value, description=''):
         self._action_type = 'WRITE_PV'
@@ -10,7 +10,7 @@ class WritePvAction(object):
         self.timeout = 10
 
 
-class ExecuteCommandAction(object):
+class ExecuteCommand(object):
 
     def __init__(self, command, description, directory="$(opi.dir)"):
         self._action_type = 'EXECUTE_CMD'
@@ -20,7 +20,7 @@ class ExecuteCommandAction(object):
         self.wait_time = 10
 
 
-class OpenOpiAction(object):
+class OpenOpi(object):
 
     REPLACE_CURRENT = 0
     WORKBENCH_TAB = 1
