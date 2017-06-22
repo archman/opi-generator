@@ -2,7 +2,7 @@
 
 class WritePvAction(object):
 
-    def __init__(self, pv, value, description):
+    def __init__(self, pv, value, description=''):
         self._action_type = 'WRITE_PV'
         self.pv_name = pv
         self.description = description
@@ -36,3 +36,10 @@ class OpenOpiAction(object):
         self._action_type = 'OPEN_DISPLAY'
         self.path = path
         self.mode = mode
+
+
+class ExitAction(object):
+
+    def __init__(self):
+        self._action_type = 'EXECUTE_JAVASCRIPT'
+        self.embedded = True
