@@ -6,7 +6,7 @@ def test_empty_RulesNode(widget, get_renderer):
     widget.rules = []
     renderer = get_renderer(widget)
     output = str(renderer)
-    assert '<rules />' in output
+    assert '<rules/>' in output
 
 
 def test_greater_than_rule(widget, get_renderer):
