@@ -1,4 +1,4 @@
-class OpiBorderRenderer(object):
+class OpiBorder(object):
 
     def __init__(self, text_renderer, color_renderer):
         self._text_renderer = text_renderer

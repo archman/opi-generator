@@ -1,6 +1,7 @@
 import pytest
+
 from opimodel import widgets
-from cssgen import render, actions, rules, colors
+from renderers.css import render
 
 
 @pytest.fixture

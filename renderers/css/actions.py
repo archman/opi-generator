@@ -1,7 +1,7 @@
 import lxml.etree as et
 
 
-class OpiActionRenderer(object):
+class OpiAction(object):
 
     def render(self, widget_node, tag_name, action_list):
         actions_node = et.SubElement(widget_node, tag_name)

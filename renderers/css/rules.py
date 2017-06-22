@@ -2,23 +2,23 @@ import lxml.etree as et
 from opimodel import rules
 
 
-class OpiRuleRenderer(object):
+class OpiRule(object):
 
     def render(self, widget_node, tag_name, rule_list):
         rules_node = et.SubElement(widget_node, tag_name)
         for rule_model in rule_list:
-            self.render_one(rules_node, rule_model)
+            self._render_one(rules_node, rule_model)
 
-    def render_one(self, rules_node, rule_model):
+    def _render_one(self, rules_node, rule_model):
         self.rule_node = et.SubElement(rules_node, 'rule')
         self.rule_node.set('prop_id', rule_model._prop_id)
         self.rule_node.set('name', 'Rule')
         if isinstance(rule_model, rules.BetweenRule):
-            self.render_between(rule_model)
+            self._render_between(rule_model)
         elif isinstance(rule_model, rules.GreaterThanRule):
-            self.render_greater_than(rule_model)
+            self._render_greater_than(rule_model)
 
-    def render_between(self, rule_model):
+    def _render_between(self, rule_model):
         pv_node = et.SubElement(self.rule_node, 'pv')
         pv_node.set('trig', 'true')
         pv_node.text = rule_model._pv
@@ -35,7 +35,7 @@ class OpiRuleRenderer(object):
         val_node3 = et.SubElement(exp_node3, 'value')
         val_node3.text = 'true'
 
-    def render_greater_than(self, rule_model):
+    def _render_greater_than(self, rule_model):
         pv_node = et.SubElement(self.rule_node, 'pv')
         pv_node.set('trig', 'true')
         pv_node.text = rule_model._pv

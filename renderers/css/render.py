@@ -1,43 +1,38 @@
-import lxml.etree as et
-from cssgen import actions, rules, colors, borders, fonts
 import collections
+
+import lxml.etree as et
+
+from renderers.css.text import OpiText
+from renderers.css.rules import OpiRule
+from renderers.css.actions import OpiAction
+from renderers.css.fonts import OpiFont
+from renderers.css.borders import OpiBorder
+from renderers.css.colors import OpiColor
 
 
 def get_opi_renderer(widget):
-    tr = OpiTextRenderer()
-    wr = OpiWidgetRenderer(tr)
-    ar = actions.OpiActionRenderer()
-    wr.add_renderer('actions', ar)
-    rr = rules.OpiRuleRenderer()
-    wr.add_renderer('rules', rr)
-    cr = colors.OpiColorRenderer()
-    br = borders.OpiBorderRenderer(tr, cr)
-    fr = fonts.OpiFontRenderer()
+    tr = OpiText()
+    wr = OpiWidget(tr)
+
+    wr.add_renderer('actions', OpiAction())
+
+    wr.add_renderer('rules', OpiRule())
+
+    cr = OpiColor()
     wr.add_renderer('background_color', cr)
     wr.add_renderer('foreground_color', cr)
     wr.add_renderer('bulb_border_color', cr)
     wr.add_renderer('off_color', cr)
     wr.add_renderer('on_color', cr)
     wr.add_renderer('line_color', cr)
-    br = borders.OpiBorderRenderer(tr, cr)
-    wr.add_renderer('border', br)
-    wr.add_renderer('font', fr)
+
+    wr.add_renderer('border', OpiBorder(tr, cr))
+
+    wr.add_renderer('font', OpiFont())
     return OpiRenderer(widget, wr)
 
 
-class OpiTextRenderer(object):
-
-    def render(self, widget_node, tag_name, model):
-        text_node = et.SubElement(widget_node, tag_name)
-        if model is True:
-            text_node.text = 'true'
-        elif model is False:
-            text_node.text = 'false'
-        else:
-            text_node.text = str(model)
-
-
-class OpiWidgetRenderer(object):
+class OpiWidget(object):
 
     def __init__(self, text_renderer):
         self._text_renderer = text_renderer
