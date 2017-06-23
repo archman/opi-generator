@@ -1,5 +1,4 @@
 from opimodel import rules
-from renderers import render
 
 
 def test_empty_RulesNode(widget, get_renderer):
