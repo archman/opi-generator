@@ -11,7 +11,7 @@ install:
 
 script:
   - export PYTHONPATH=.
-  - py.test --cov=cssgen --cov=opimodel test
+  - py.test --cov=renderers --cov=opimodel test
 
 after_success:
   - coveralls
