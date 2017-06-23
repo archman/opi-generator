@@ -12,11 +12,15 @@ STYLES = {'regular': REGULAR,
 
 class Font(object):
 
-    def __init__(self, fontface, size, style=REGULAR, pixels=True):
+    def __init__(self, name=None, fontface='Liberation Sans',
+            size=15, style=REGULAR, pixels=True):
+        # If the font name is specified, and defined in CS-Studio's fonts.def
+        # than this overrides all over attributes.
         self.fontface = fontface
         self.size = size
         self.style = style
         self.pixels = pixels
+        self.name = name
 
     def __eq__(self, other):
         val = (self.size == other.size and
