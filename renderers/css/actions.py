@@ -6,7 +6,7 @@ EXIT_SCRIPT = ('importPackage(Packages.org.csstudio.opibuilder.scriptUtil);'
                'ScriptUtil.closeAssociatedOPI(widget);')
 
 
-class OpiActionRenderer(object):
+class OpiAction(object):
 
     def __init__(self):
         # Dict containing any actions that require a specific method.

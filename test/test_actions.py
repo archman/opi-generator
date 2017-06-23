@@ -1,7 +1,4 @@
-import pytest
-
 from opimodel import widgets
-from cssgen import actions, render
 
 
 def test_ActionButton_adds_shell_command(widget, get_renderer):

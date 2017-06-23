@@ -1,6 +1,4 @@
-import pytest
 from opimodel import widgets
-from cssgen import render, rules, actions
 
 
 def test_widget_render_contains_correct_values(widget, get_renderer):
