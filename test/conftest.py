@@ -18,4 +18,5 @@ def display():
 def get_renderer():
     def get_renderer(w):
         return render.get_opi_renderer(w)
+
     return get_renderer
