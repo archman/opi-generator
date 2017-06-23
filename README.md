@@ -10,12 +10,12 @@ Assemble an OPI file by creating widgets.  The root widget should be a Display o
 
 Any public attribute of a widget object will become a sub-element in XML with the attribute as tag name.  Complicated sub-elements, such as rules and actions, can be created using the classes in the opimodel package.
 
-To write the OPI file out, use the renderers in the cssgen package.
+To write the OPI file out, use a renderer in the renderers.css package.
 
 ## Demo
 
     from opimodel import widgets, nodes, actions, rules
-    from cssgen import render
+    from renderers.css import render
 
     # Create the root widget
     d = widgets.Display(100, 100)

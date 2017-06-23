@@ -1,7 +1,7 @@
 import lxml.etree as et
 
 
-class OpiColorRenderer(object):
+class OpiColor(object):
 
     def render(self, widget_node, tag_name, color_model):
         parent_color_node = et.SubElement(widget_node, tag_name)
