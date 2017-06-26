@@ -1,11 +1,10 @@
-from opimodel import widgets, borders, colors
+from opimodel import borders, colors
 
 
 def test_add_border_to_widget(widget, get_renderer):
-    w = widgets.Widget('dummy', 0, 0, 0, 0)
     b = borders.Border(borders.LINE_STYLE, 1, colors.BLACK, False)
-    w.set_border(b)
-    renderer = get_renderer(w)
+    widget.set_border(b)
+    renderer = get_renderer(widget)
     renderer.assemble()
     alarm_sensitive = renderer.get_node().find('./border_alarm_sensitive')
     assert alarm_sensitive.text == 'false'

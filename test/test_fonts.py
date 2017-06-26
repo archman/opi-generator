@@ -1,8 +1,9 @@
-from opimodel import fonts
-import tempfile
 import os
+import tempfile
+
 import pytest
 
+from opimodel import fonts
 
 TEST_FONT_FILE = """dummy 1 = Dummy one-bold-19pt
 dummy 2 = Dummy two-italic-15px

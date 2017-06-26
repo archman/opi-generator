@@ -1,4 +1,5 @@
 import lxml.etree as et
+
 from opimodel import rules
 
 
