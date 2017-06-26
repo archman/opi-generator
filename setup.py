@@ -2,4 +2,5 @@ from setuptools import setup
 
 setup(name='cssgen',
       version='0.0.1',
-      packages=['renderers', 'opimodel'])
+      packages=['renderers', 'opimodel'],
+      install_requires=['lxml'])
