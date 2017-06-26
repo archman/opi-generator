@@ -1,13 +1,30 @@
+"""
+Module containing widgets to describe opi files.  An opi has a root widget
+of type Display.  To create the opi, add widgets as children of this widget.
+"""
 from opimodel import actions
 
 
 class HAlign(object):
+    """Enum describing horizontal alignment, typically used with the
+       horizontal_alignment property.
+    """
     LEFT = 0
     CENTER = 1
     RIGHT = 2
 
 
 class Widget(object):
+    """Base class for any widget to extend.
+
+    Args:
+        id - the CSS id for the widget.
+        x - the x position of the widget in pixels
+        y - the y position of the widget in pixels
+        widget - the width of the widget in pixels
+        height - the height of the widget in pixels
+        name - a name for the widget within the display
+    """
 
     def __init__(self, id, x, y, width, height, name='widget'):
         self.x = x
@@ -20,36 +37,78 @@ class Widget(object):
         self._typeId = id
 
     def get_parent(self):
+        """Get the parent widget of this widget.
+        """
         return self._parent
 
     def set_parent(self, parent):
+        """Set the parent widget of this widget.
+
+        Args:
+            widget to be this widget's parent
+        """
         self._parent = parent
 
     def add_child(self, child):
+        """Add a widget as a child of this widget.
+
+        Args:
+            child widget
+        """
         self._children.append(child)
         child.set_parent(self)
 
     def add_children(self, children):
+        """Add multiple widgets as children of this widget.
+
+        Args:
+            sequence of child widgets
+        """
         for child in children:
             self.add_child(child)
 
     def get_children(self):
+        """Get all child widgets.
+        """
         return self._children
 
     def set_bg_color(self, color):
+        """Set background color for the widget.
+
+        Args:
+            Color object
+        """
         self.background_color = color
 
     def set_fg_color(self, color):
+        """Set background color for the widget.
+
+        Args:
+            Color object
+        """
         self.foreground_color = color
 
     def set_border(self, border):
+        """Set border for the widget.
+
+        Args:
+            Border object
+        """
         self.border = border
 
     def set_font(self, font):
+        """Set font for the widget.
+
+        Args:
+            Font object
+        """
         self.font = font
 
 
 class ActionWidget(Widget):
+    """
+    Base class for any widget that can have a list of actions.
+    """
 
     # No ID, designed to be subclassed only
 
@@ -70,6 +129,9 @@ class ActionWidget(Widget):
 
 
 class Display(Widget):
+    """
+    Display widget.  This is the root widget for any opi.
+    """
 
     ID = 'org.csstudio.opibuilder.Display'
 
