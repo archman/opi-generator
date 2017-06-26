@@ -3,7 +3,5 @@ strictness: veryhigh
 pep8:
       full: true
       python-targets:
-          - "2.7"
-          - "3.4"
-          - "3.5"
-          - "3.6"
+          - 2
+          - 3
