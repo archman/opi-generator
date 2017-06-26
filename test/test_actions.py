@@ -1,4 +1,16 @@
-from opimodel import widgets
+from opimodel import actions, widgets
+
+
+def test_ActionButton_adds_arbitrary_action(widget, get_renderer):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    command = actions.ExecuteCommand('ls', 'list directory')
+    widget.add_child(ab)
+    ab.add_action(command)
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
+    assert action_nodes[0].find('./command').text == 'ls'
+    assert action_nodes[0].find('./command_directory').text == '$(opi.dir)'
 
 
 def test_ActionButton_adds_shell_command(widget, get_renderer):
