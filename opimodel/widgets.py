@@ -57,6 +57,15 @@ class ActionWidget(Widget):
         super(ActionWidget, self).__init__(id, x, y, width, height)
         self.actions = []
 
+    def add_action(self, action):
+        """
+        Add any action to the list of actions.
+
+        Args:
+            action to add
+        """
+        self.actions.append(action)
+
     def add_write_pv(self, pv, value, description=""):
         self.actions.append(actions.WritePv(pv, value, description))
 
