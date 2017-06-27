@@ -13,7 +13,7 @@ def mangle_name(name):
     last = ''
     deduped = []
     for char in name:
-        if char.isalpha():
+        if char.isalpha() or char.isdigit():
             last = char
         else:
             if last == '_':
