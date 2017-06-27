@@ -2,7 +2,7 @@ from opimodel import colors
 
 
 def test_add_color_to_widget(widget, get_renderer):
-    c = colors.Color(0, 0, 0, 'black')
+    c = colors.Color((0, 0, 0), 'black')
     widget.set_fg_color(c)
     renderer = get_renderer(widget)
     renderer.assemble()
