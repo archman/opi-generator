@@ -1,7 +1,8 @@
 doc-warnings: true
+test-warnings: true
 strictness: veryhigh
 pep8:
-      full: true
-      python-targets:
-          - 2
-          - 3
+    full: true
+python-targets:
+    - 2
+    - 3
