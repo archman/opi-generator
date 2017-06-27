@@ -110,7 +110,9 @@ class TextMonitor(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.TextUpdate'
 
     def __init__(self, x, y, width, height, pv):
-        super(TextMonitor, self).__init__(TextMonitor.TYPE_ID, x, y, width, height)
+        super(TextMonitor, self).__init__(
+            TextMonitor.TYPE_ID, x, y, width, height)
+
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
 
@@ -120,7 +122,9 @@ class TextInput(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.TextInput'
 
     def __init__(self, x, y, width, height, pv):
-        super(TextInput, self).__init__(TextInput.TYPE_ID, x, y, width, height)
+        super(TextInput, self).__init__(
+            TextInput.TYPE_ID, x, y, width, height)
+
         self.pv_name = pv
 
 
@@ -129,8 +133,8 @@ class GroupingContainer(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.groupingContainer'
 
     def __init__(self, x, y, width, height):
-        super(GroupingContainer, self).__init__(GroupingContainer.TYPE_ID,
-                                                x, y, width, height)
+        super(GroupingContainer, self).__init__(
+            GroupingContainer.TYPE_ID, x, y, width, height)
 
 
 class ActionButton(ActionWidget):
@@ -138,7 +142,9 @@ class ActionButton(ActionWidget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.ActionButton'
 
     def __init__(self, x, y, width, height, text):
-        super(ActionButton, self).__init__(ActionButton.TYPE_ID, x, y, width, height)
+        super(ActionButton, self).__init__(
+            ActionButton.TYPE_ID, x, y, width, height)
+
         self.text = text
 
 
@@ -147,7 +153,9 @@ class MenuButton(ActionWidget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.MenuButton'
 
     def __init__(self, x, y, width, height, text):
-        super(MenuButton, self).__init__(MenuButton.TYPE_ID, x, y, width, height)
+        super(MenuButton, self).__init__(
+            MenuButton.TYPE_ID, x, y, width, height)
+
         self.label = text
 
 
@@ -156,7 +164,9 @@ class ToggleButton(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.BoolButton'
 
     def __init__(self, x, y, width, height, on_text, off_text):
-        super(ToggleButton, self).__init__(ToggleButton.TYPE_ID, x, y, width, height)
+        super(ToggleButton, self).__init__(
+            ToggleButton.TYPE_ID, x, y, width, height)
+
         self.actions = []
         self.on_label = on_text
         self.off_label = off_text
