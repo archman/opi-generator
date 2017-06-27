@@ -1,6 +1,6 @@
 
 
-class WritePv(object):  # pragma pylint: disable=too-few-public-methods
+class WritePv(object):
 
     def __init__(self, pv, value, description):
         self._action_type = 'WRITE_PV'
@@ -10,7 +10,7 @@ class WritePv(object):  # pragma pylint: disable=too-few-public-methods
         self.timeout = 10
 
 
-class ExecuteCommand(object):  # pragma pylint: disable=too-few-public-methods
+class ExecuteCommand(object):
 
     def __init__(self, command, description, directory="$(opi.dir)"):
         self._action_type = 'EXECUTE_CMD'
@@ -20,7 +20,7 @@ class ExecuteCommand(object):  # pragma pylint: disable=too-few-public-methods
         self.wait_time = 10
 
 
-class OpenOpi(object)  # pragma pylint: disable=too-few-public-methods
+class OpenOpi(object):
 
     REPLACE_CURRENT = 0
     WORKBENCH_TAB = 1

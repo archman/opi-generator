@@ -1,7 +1,7 @@
 from opimodel import actions
 
 
-class HAlign(object):  # pragma pylint: disable=too-few-public-methods
+class HAlign(object):
     LEFT = 0
     CENTER = 1
     RIGHT = 2

@@ -2,7 +2,7 @@ NONE_STYLE = 0
 LINE_STYLE = 1
 
 
-class Border(object):  # pragma pylint: disable=too-few-public-methods
+class Border(object):
 
     def __init__(self, style, width, color, alarm):
         self.alarm = alarm

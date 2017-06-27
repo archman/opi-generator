@@ -10,7 +10,7 @@ STYLES = {'regular': REGULAR,
           'bold italic': BOLD_ITALIC}
 
 
-class Font(object):  # pragma pylint: disable=too-few-public-methods
+class Font(object):
 
     def __init__(self, name=None, fontface='Liberation Sans',
             size=15, style=REGULAR, pixels=True):
