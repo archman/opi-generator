@@ -4,15 +4,20 @@ Simple Python code to generate OPI files for CS-Studio.
 [![Coverage Status](https://coveralls.io/repos/github/dls-controls/cssgen/badge.svg?branch=master)](https://coveralls.io/github/dls-controls/cssgen?branch=master)
 
 
-## How it works
+## User guide
 
-Assemble an OPI file by creating widgets.  The root widget should be a Display object.  Top-level widgets should be added as children of the root widget.
+Assemble an OPI file by creating widgets.  The root widget should be a Display object.  Top-level widgets should be added as children of the root widget.  You would usually create functions to help create common widgets in your displays.
 
-Any public attribute of a widget object will become a sub-element in XML with the attribute as tag name.  Complicated sub-elements, such as rules and actions, can be created using the classes in the opimodel package.
+To write the OPI file out, use a renderer from the renderers package.
 
-To write the OPI file out, use a renderer in the renderers.css package.
+### CS-Studio notes
 
-## Demo
+Any public attribute of a widget object will become a sub-element in XML with the attribute as tag name.  Any simple XML tag can be created by giving the object the correct variable with the correct value.  To find out what attributes you need, create the widget in CS-Studio and then examine the XML that is created when you save the file.
+
+Complicated sub-elements, such as rules and actions, can be created using the classes in the opimodel package.
+
+
+### Demo
 
     from opimodel import widgets, nodes, actions, rules
     from renderers.css import render
@@ -40,7 +45,11 @@ To write the OPI file out, use a renderer in the renderers.css package.
     o = render.get_opi_renderer(d)
     o.write_to_file(name)
 
-## How to run the tests
+## Developer Guide
+
+To create another type of widget, extend the class `Widget` in `opimodel/widgets.py`.
+
+### How to run the tests
 
 Use a virtualenv:
 
@@ -48,4 +57,4 @@ Use a virtualenv:
 * `source venv/bin/activate`
 * `pip install -r requirements.txt`
 * `export PYTHONPATH=$(pwd)`
-* `py.test --cov=cssgen --cov=opimodel test`
+* `py.test --cov=renderers --cov=opimodel test`
