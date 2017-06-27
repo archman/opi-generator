@@ -25,7 +25,7 @@ def test_add_color_to_widget(widget, get_renderer):
     assert color_nodes[0].get('green') == '0'
 
 
-def test_color_file():
+def test_parse_css_color_file():
     mock_open = mock.mock_open(read_data=COLOR_FILE_CONTENTS)
     with mock.patch("__builtin__.open", mock_open) as mock_file:
         colors.parse_css_color_file(mock_file)
