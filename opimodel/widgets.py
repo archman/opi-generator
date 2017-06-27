@@ -9,7 +9,7 @@ class HAlign(object):
 
 class Widget(object):
 
-    def __init__(self, id, x, y, width, height, name='widget'):
+    def __init__(self, type_id, x, y, width, height, name='widget'):
         self.x = x
         self.y = y
         self.width = width
@@ -17,7 +17,7 @@ class Widget(object):
         self._name = name
         self._children = []
         self._parent = None
-        self._typeId = id
+        self._typeId = type_id
 
     def get_parent(self):
         return self._parent
@@ -53,8 +53,8 @@ class ActionWidget(Widget):
 
     # No ID, designed to be subclassed only
 
-    def __init__(self, id, x, y, width, height):
-        super(ActionWidget, self).__init__(id, x, y, width, height)
+    def __init__(self, type_id, x, y, width, height):
+        super(ActionWidget, self).__init__(type_id, x, y, width, height)
         self.actions = []
 
     def add_action(self, action):
