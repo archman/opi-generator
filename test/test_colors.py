@@ -1,4 +1,14 @@
 from opimodel import colors
+import mock
+
+
+COLOR_FILE_CONTENTS = """
+# Alarm colours
+Minor = 255, 241, 0
+Major = 255, 0, 0
+Invalid = 255, 255, 255
+Disconnected = 255, 255, 255
+"""
 
 
 def test_add_color_to_widget(widget, get_renderer):
@@ -13,3 +23,13 @@ def test_add_color_to_widget(widget, get_renderer):
     assert color_nodes[0].get('red') == '0'
     assert color_nodes[0].get('blue') == '0'
     assert color_nodes[0].get('green') == '0'
+
+
+def test_color_file():
+    mock_open = mock.mock_open(read_data=COLOR_FILE_CONTENTS)
+    with mock.patch("__builtin__.open", mock_open) as mock_file:
+        colors.parse_css_color_file(mock_file)
+        assert colors.MINOR.red == 255
+        assert colors.MAJOR.green == 0
+        assert colors.INVALID.green == 255
+        assert colors.DISCONNECTED.name == 'Disconnected'
