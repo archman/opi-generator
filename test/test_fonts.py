@@ -36,12 +36,13 @@ def test_add_font_to_widget(widget, get_renderer):
     assert opifont_nodes[0].get('style') == '0'
 
 
-def test_parse_font_file(font_file):
-    def_fonts = fonts.parse_font_file(font_file.name)
-    print(def_fonts)
-    f1 = def_fonts['dummy 1']
-    assert f1 == fonts.Font('Dummy one', 19, fonts.BOLD, pixels=False)
-    f2 = def_fonts['dummy 2']
-    assert f2 == fonts.Font('Dummy two', 15, fonts.ITALIC, pixels=True)
-    f3 = def_fonts['dummy 3']
-    assert f3 == fonts.Font('Dummy one', 14, fonts.REGULAR, pixels=False)
+def test_parse_css_font_file(font_file):
+    fonts.parse_css_font_file(font_file.name)
+    print(fonts.DUMMY_1)
+    print(fonts.BOLD)
+    assert fonts.DUMMY_1 == fonts.Font('dummy 1', 'Dummy one', 19,
+                                       fonts.BOLD, pixels=False)
+    assert fonts.DUMMY_2 == fonts.Font('dummy 2', 'Dummy two', 15,
+                                       fonts.ITALIC, pixels=True)
+    assert fonts.DUMMY_3 == fonts.Font('dummy 3', 'Dummy one', 14,
+                                       fonts.REGULAR, pixels=False)
