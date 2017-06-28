@@ -12,7 +12,10 @@ class WritePv(object):
 
 class ExecuteCommand(object):
 
-    def __init__(self, command, description, directory="$(opi.dir)"):
+    OPI_DIR = '$(opi.dir)'
+    HOME_DIR = '$(user.home)'
+
+    def __init__(self, command, description, directory=OPI_DIR):
         self._action_type = 'EXECUTE_CMD'
         self.command = command
         self.description = description
