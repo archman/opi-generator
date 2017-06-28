@@ -6,15 +6,22 @@ Simple Python code to generate OPI files for CS-Studio.
 
 ## User guide
 
-Assemble an OPI file by creating widgets.  The root widget should be a Display object.  Top-level widgets should be added as children of the root widget.  You would usually create functions to help create common widgets in your displays.
+Assemble an OPI file by creating widgets.  The root widget should be a Display 
+object.  Top-level widgets should be added as children of the root widget.  You 
+would usually create functions to help create common widgets in your displays.
 
 To write the OPI file out, use a renderer from the renderers package.
 
 ### CS-Studio notes
 
-Any public attribute of a widget object will become a sub-element in XML with the attribute as tag name.  Any simple XML tag can be created by giving the object the correct variable with the correct value.  To find out what attributes you need, create the widget in CS-Studio and then examine the XML that is created when you save the file.
+Any public attribute of a widget object will become a sub-element in XML with 
+the attribute as tag name.  Any simple XML tag can be created by giving the 
+object the correct variable with the correct value.  To find out what attributes
+you need, create the widget in CS-Studio and then examine the XML that is 
+created when you save the file.
 
-Complicated sub-elements, such as rules and actions, can be created using the classes in the opimodel package.
+Complicated sub-elements, such as rules and actions, can be created using the
+classes in the opimodel package.
 
 
 ## Demo
@@ -25,7 +32,8 @@ Examples of the use of the cssgen library are included in the examples folder:
 
 ## Developer Guide
 
-To create another type of widget, extend the class `Widget` in `opimodel/widgets.py`.
+To create another type of widget, extend the class `Widget` in 
+`opimodel/widgets.py`.
 
 ### How to run the tests
 
