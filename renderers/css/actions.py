@@ -7,7 +7,6 @@ EXIT_SCRIPT = ('importPackage(Packages.org.csstudio.opibuilder.scriptUtil);'
                'ScriptUtil.closeAssociatedOPI(widget);')
 
 
-
 class OpiAction(object):
     """Base class for action renderers."""
 

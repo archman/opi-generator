@@ -47,4 +47,3 @@ class OpenOpi(object):
 
 class Exit(object):
     """Action that closes the current opi."""
-    pass
