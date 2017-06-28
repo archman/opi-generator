@@ -21,7 +21,7 @@ def parse_css_color_file(filepath):
     """
     with open(filepath) as f:
         for line in (l.strip() for l in f.readlines()):
-            if not line == '' and not line.startswith('#'):
+            if line and not line.startswith('#'):
                 key, value = [x.strip() for x in line.split('=')]
                 r, g, b = [int(x.strip(',')) for x in value.split()]
                 utils.add_attr_to_module(key, Color((r, g, b), key),

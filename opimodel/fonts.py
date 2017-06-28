@@ -51,7 +51,7 @@ def parse_css_font_file(filename):
     """
     with open(filename) as f:
         for line in (l.strip() for l in f.readlines()):
-            if not line == '' and not line.startswith('#'):
+            if line and not line.startswith('#'):
                 key, value = [x.strip() for x in line.split('=')]
                 face, style, size = [x.strip(',') for x in value.split('-')]
                 pixels = True
