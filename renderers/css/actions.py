@@ -70,7 +70,6 @@ class OpiActions(object):
     def render(self, widget_node, tag_name, action_list):
         actions_node = et.SubElement(widget_node, tag_name)
         for action_model in action_list:
-            t = text.OpiText()
-            c = OpiActions.ACTION_MAPPING[type(action_model)]
-            renderer = c(t)
+            action_class = OpiActions.ACTION_MAPPING[type(action_model)]
+            renderer = action_class(text.OpiText())
             renderer.render(actions_node, action_model)
