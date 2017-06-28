@@ -26,9 +26,3 @@ def parse_css_color_file(filepath):
                 r, g, b = [int(x.strip(',')) for x in value.split()]
                 name = utils.mangle_name(key)
                 setattr(sys.modules[__name__], name, Color((r, g, b), key))
-
-
-BLACK = Color((0, 0, 0), 'Black')
-RED = Color((255, 0, 0), 'Red')
-GREEN = Color((0, 255, 0), 'Green')
-BLUE = Color((0, 0, 255), 'Blue')
