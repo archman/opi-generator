@@ -77,7 +77,7 @@ class ActionWidget(Widget):
         self.actions.append(actions.OpenOpi(path, mode))
 
     def add_exit(self):
-        self.actions.append(actions.ExitAction())
+        self.actions.append(actions.Exit())
 
 
 class Display(Widget):

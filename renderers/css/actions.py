@@ -7,10 +7,11 @@ EXIT_SCRIPT = ('importPackage(Packages.org.csstudio.opibuilder.scriptUtil);'
 
 
 class OpiAction(object):
+    """Renderer for actions."""
 
     def __init__(self):
         # Dict containing any actions that require a specific method.
-        self.renderers = {actions.ExitAction: self.render_exit}
+        self.renderers = {actions.Exit: self.render_exit}
 
     def render(self, widget_node, tag_name, action_list):
         actions_node = et.SubElement(widget_node, tag_name)
@@ -31,6 +32,17 @@ class OpiAction(object):
         return action_node
 
     def render_exit(self, actions_node, action_model):
+        """Render an exit action.
+
+        Args:
+            actions_node to be parent of the action
+            action_model representing the exit action
+        """
+        # In CSS exit happens to use javascript.  Add properties to help with
+        # rendering.
+        action_model._action_type = 'EXECUTE_JAVASCRIPT'
+        action_model.embedded = True
+        # Render the javascript
         action_node = self.render_simple(actions_node, action_model)
         n = et.SubElement(action_node, 'scriptText')
         n.text = et.CDATA(EXIT_SCRIPT)
