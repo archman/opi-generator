@@ -21,6 +21,9 @@ class ExecuteCommand(object):
 
 
 class OpenOpi(object):
+    """
+    Action that opens another opi file.
+    """
 
     REPLACE_CURRENT = 0
     WORKBENCH_TAB = 1
@@ -32,7 +35,14 @@ class OpenOpi(object):
     NEW_WORKBENCH = 7
     STANDALONE = 8
 
-    def __init__(self, path, mode):
+    def __init__(self, path, mode=STANDALONE):
+        """
+        Construct OpenOpi action.
+
+        Args:
+            path of opi to open
+            mode determining how the opi opens
+        """
         self._action_type = 'OPEN_DISPLAY'
         self.path = path
         self.mode = mode
