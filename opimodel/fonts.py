@@ -15,6 +15,7 @@ STYLES = {'regular': REGULAR,
 
 
 class Font(object):
+    """Representation of a font."""
 
     def __init__(self, name=None, fontface='Liberation Sans',
             size=15, style=REGULAR, pixels=True):
@@ -40,11 +41,10 @@ class Font(object):
 
 
 def parse_css_font_file(filename):
-    """
-    Parse the provided font.def file, create Font objects for each
-    defined font and attach them to the namespace of this module wth
-    names converted into appropriate constants by the
-    utils.mangle_name() function.
+    """Parse the provided font.def file, create Font objects for each
+       defined font and attach them to the namespace of this module wth
+       names converted into appropriate constants by the
+       utils.mangle_name() function.
 
     Args:
         filepath of the font file
@@ -65,5 +65,4 @@ def parse_css_font_file(filename):
                     pixels = False
                 style_int = STYLES[style]
                 f = Font(key, face, size, style_int, pixels)
-                name = utils.mangle_name(key)
-                setattr(sys.modules[__name__], name, f)
+                utils.add_attr_to_module(key, f, sys.modules[__name__])
