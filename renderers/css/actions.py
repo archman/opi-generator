@@ -1,17 +1,75 @@
 import lxml.etree as et
+from opimodel import actions
+from renderers.css import text
+
+
+EXIT_SCRIPT = ('importPackage(Packages.org.csstudio.opibuilder.scriptUtil);'
+               'ScriptUtil.closeAssociatedOPI(widget);')
 
 
 class OpiAction(object):
+    """Base class for action renderers."""
+
+    def __init__(self, text_renderer):
+        self.text = text_renderer
+        self._action_type = self.ACTION_TYPE
+
+    def render(self, actions_node, action_model):
+        action_node = et.SubElement(actions_node, 'action')
+        action_node.set('type', self.ACTION_TYPE)
+        for key, value in vars(action_model).items():
+            if not key.startswith('_'):
+                self.text.render(action_node, key, value)
+        return action_node
+
+
+class OpiWritePv(OpiAction):
+    """Renderer for write PV actions."""
+    ACTION_TYPE = 'EXECUTE_JAVASCRIPT'
+
+
+class OpiExecuteCommand(OpiAction):
+    """Renderer for write PV actions."""
+    ACTION_TYPE = 'EXECUTE_CMD'
+
+
+class OpiOpen(OpiAction):
+    """Renderer for write PV actions."""
+    ACTION_TYPE = 'OPEN_OPI'
+
+
+class OpiExit(OpiAction):
+    """Render for exit OPI actions."""
+    ACTION_TYPE = 'EXECUTE_JAVASCRIPT'
+
+    def render(self, actions_node, action_model):
+        """Render an exit action.
+
+        Args:
+            actions_node to be parent of the action
+            action_model representing the exit action
+        """
+        # In CSS exit happens to use javascript.  Add properties to help with
+        # rendering.
+        action_model._action_type = 'EXECUTE_JAVASCRIPT'
+        action_model.embedded = True
+        # Render the javascript
+        action_node = super(OpiExit, self).render(actions_node, action_model)
+        n = et.SubElement(action_node, 'scriptText')
+        n.text = et.CDATA(EXIT_SCRIPT)
+
+
+class OpiActions(object):
+    """Renderer for actions."""
+
+    ACTION_MAPPING = {actions.ExecuteCommand: OpiExecuteCommand,
+                      actions.WritePv: OpiWritePv,
+                      actions.Exit: OpiExit,
+                      actions.OpenOpi: OpiOpen}
 
     def render(self, widget_node, tag_name, action_list):
         actions_node = et.SubElement(widget_node, tag_name)
         for action_model in action_list:
-            self.render_one(actions_node, action_model)
-
-    def render_one(self, actions_node, action_model):
-        action_node = et.SubElement(actions_node, 'action')
-        action_node.set('type', action_model._action_type)
-        for key, value in vars(action_model).items():
-            if not key.startswith('_'):
-                n = et.SubElement(action_node, key)
-                n.text = str(value)
+            action_class = OpiActions.ACTION_MAPPING[type(action_model)]
+            renderer = action_class(text.OpiText())
+            renderer.render(actions_node, action_model)
