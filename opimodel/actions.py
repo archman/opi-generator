@@ -4,7 +4,6 @@ class WritePv(object):
     """Action to write a value to a PV."""
 
     def __init__(self, pv, value, description=''):
-        self._action_type = 'WRITE_PV'
         self.pv_name = pv
         self.description = description
         self.value = value
@@ -15,7 +14,6 @@ class ExecuteCommand(object):
     """Action to execute a shell command."""
 
     def __init__(self, command, description, directory="$(opi.dir)"):
-        self._action_type = 'EXECUTE_CMD'
         self.command = command
         self.description = description
         self.command_directory = directory
@@ -43,7 +41,6 @@ class OpenOpi(object):
             path of opi to open
             mode determining how the opi opens
         """
-        self._action_type = 'OPEN_DISPLAY'
         self.path = path
         self.mode = mode
 
