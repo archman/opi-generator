@@ -1,8 +1,19 @@
 
 
 class WritePv(object):
+    """
+    Action that writes the specified value to a named PV.
+    """
 
     def __init__(self, pv, value, description):
+        """
+        Construct WritePv action.
+
+        Args:
+            pv name of PV to write, this can include macros
+            value to write
+            description to display
+        """
         self._action_type = 'WRITE_PV'
         self.pv_name = pv
         self.description = description
@@ -11,11 +22,26 @@ class WritePv(object):
 
 
 class ExecuteCommand(object):
+    """
+    Action that executes a script command in the specified directory.
+    """
 
     OPI_DIR = '$(opi.dir)'
     HOME_DIR = '$(user.home)'
 
     def __init__(self, command, description, directory=OPI_DIR):
+        """
+        Construct ExecuteCommand action.
+
+        The directory can be a real path or one of the predefined helper macros:
+            OPI_DIR: the directory containing the OPI file
+            HOME_DIR: users home directory
+
+        Args:
+            command to execute
+            description to display
+            directory to execute the script
+        """
         self._action_type = 'EXECUTE_CMD'
         self.command = command
         self.description = description
