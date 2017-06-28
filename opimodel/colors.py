@@ -1,24 +1,28 @@
-class Color(object):
+from opimodel import utils
+import sys
 
-    def __init__(self, r, g, b, name=None):
-        self.red = r
-        self.green = g
-        self.blue = b
+
+class Color(object):
+    """Representation of a color."""
+
+    def __init__(self, rgb=(0, 0, 0),  name=None):
+        self.red, self.green, self.blue = rgb
         self.name = name
 
 
-def parse_color_file(filename):
-    def_colors = {}
-    with open(filename) as f:
+def parse_css_color_file(filepath):
+    """Parse the provided color.def file, create Color objects for each
+       defined color and attach them to the namespace of this module wth
+       names converted into appropriate constants by the
+       utils.mangle_name() function.
+
+    Args:
+        filepath of the color file
+    """
+    with open(filepath) as f:
         for line in (l.strip() for l in f.readlines()):
-            if not line == '' and not line.startswith('#'):
+            if line and not line.startswith('#'):
                 key, value = [x.strip() for x in line.split('=')]
-                r, g, b = [x.strip(',') for x in value.split()]
-                def_colors[key] = Color(r, g, b, key)
-    return def_colors
-
-
-BLACK = Color(0, 0, 0, 'Black')
-RED = Color(255, 0, 0, 'Red')
-GREEN = Color(0, 255, 0, 'Green')
-BLUE = Color(0, 0, 255, 'Blue')
+                r, g, b = [int(x.strip(',')) for x in value.split()]
+                utils.add_attr_to_module(key, Color((r, g, b), key),
+                                  sys.modules[__name__])

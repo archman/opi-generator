@@ -1,8 +1,10 @@
 from opimodel import borders, colors
 
 
+BLACK = colors.Color((0, 0, 0), 'Black')
+
 def test_add_border_to_widget(widget, get_renderer):
-    b = borders.Border(borders.LINE_STYLE, 1, colors.BLACK, False)
+    b = borders.Border(borders.LINE_STYLE, 1, BLACK, False)
     widget.set_border(b)
     renderer = get_renderer(widget)
     renderer.assemble()

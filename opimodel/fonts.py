@@ -1,3 +1,7 @@
+from opimodel import utils
+import sys
+
+
 REGULAR = 0
 BOLD = 1
 ITALIC = 2
@@ -11,6 +15,7 @@ STYLES = {'regular': REGULAR,
 
 
 class Font(object):
+    """Representation of a font."""
 
     def __init__(self, name=None, fontface='Liberation Sans',
             size=15, style=REGULAR, pixels=True):
@@ -28,12 +33,25 @@ class Font(object):
                self.pixels == other.pixels)
         return val
 
+    def __str__(self):
+        pixels_or_points = 'px' if self.pixels else 'pt'
+        format_string = 'Font name {}: {} style {} size {}{}'
+        return format_string.format(self.name, self.fontface, self.style,
+                                    self.size, pixels_or_points)
 
-def parse_font_file(filename):
-    def_fonts = {}
+
+def parse_css_font_file(filename):
+    """Parse the provided font.def file, create Font objects for each
+       defined font and attach them to the namespace of this module wth
+       names converted into appropriate constants by the
+       utils.mangle_name() function.
+
+    Args:
+        filepath of the font file
+    """
     with open(filename) as f:
         for line in (l.strip() for l in f.readlines()):
-            if not line == '' and not line.startswith('#'):
+            if line and not line.startswith('#'):
                 key, value = [x.strip() for x in line.split('=')]
                 face, style, size = [x.strip(',') for x in value.split('-')]
                 pixels = True
@@ -46,5 +64,5 @@ def parse_font_file(filename):
                     size = int(size)
                     pixels = False
                 style_int = STYLES[style]
-                def_fonts[key] = Font(face, size, style_int, pixels=pixels)
-    return def_fonts
+                f = Font(key, face, size, style_int, pixels)
+                utils.add_attr_to_module(key, f, sys.modules[__name__])
