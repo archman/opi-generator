@@ -46,3 +46,13 @@ def test_Led_has_correct_attributes(display, get_renderer):
     renderer.assemble()
     output = str(renderer)
     assert '<pv_name>TEST</pv_name>' in output
+
+
+def test_Byte_has_correct_attributes(display, get_renderer):
+    led = widgets.Byte(10, 10, 20, 20, 'TEST', 3)
+    display.add_child(led)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert '<pv_name>TEST</pv_name>' in output
+    assert '<numBits>3</numBits>' in output
