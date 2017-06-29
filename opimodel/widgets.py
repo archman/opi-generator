@@ -195,3 +195,15 @@ class Led(Widget):
     def __init__(self, x, y, width, height, pv):
         super(Led, self).__init__(Led.TYPE_ID, x, y, width, height)
         self.pv_name = pv
+
+
+class Byte(Widget):
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.bytemonitor'
+
+    def __init__(self, x, y, width, height, pv, bits):
+        super(Byte, self).__init__(Byte.TYPE_ID, x, y, width, height)
+        self.pv_name = pv
+        self.effect_3d = False
+        self.square_led = True
+        self.numBits = bits
+        self.led_border = 1
