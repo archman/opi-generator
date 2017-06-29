@@ -53,3 +53,15 @@ def test_ActionButton_adds_open_opi_action(widget, get_renderer):
     assert len(action_nodes) == 1
     assert action_nodes[0].find('./path').text == 'file/path'
     assert action_nodes[0].find('./mode').text == '42'
+
+
+def test_ActionButton_adds_exit_action(widget, get_renderer):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    ab.add_exit()
+    widget.add_child(ab)
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
+    assert len(action_nodes) == 1
+    assert action_nodes[0].get('type') == 'EXECUTE_JAVASCRIPT'
+    assert action_nodes[0].find('./embedded').text == 'true'

@@ -5,7 +5,7 @@ class WritePv(object):
     Action that writes the specified value to a named PV.
     """
 
-    def __init__(self, pv, value, description):
+    def __init__(self, pv, value, description=''):
         """
         Construct WritePv action.
 
@@ -14,7 +14,6 @@ class WritePv(object):
             value to write
             description to display
         """
-        self._action_type = 'WRITE_PV'
         self.pv_name = pv
         self.description = description
         self.value = value
@@ -42,7 +41,6 @@ class ExecuteCommand(object):
             description to display
             directory to execute the script
         """
-        self._action_type = 'EXECUTE_CMD'
         self.command = command
         self.description = description
         self.command_directory = directory
@@ -50,9 +48,7 @@ class ExecuteCommand(object):
 
 
 class OpenOpi(object):
-    """
-    Action that opens another opi file.
-    """
+    """Action that opens another opi file."""
 
     REPLACE_CURRENT = 0
     WORKBENCH_TAB = 1
@@ -72,6 +68,9 @@ class OpenOpi(object):
             path of opi to open
             mode determining how the opi opens
         """
-        self._action_type = 'OPEN_DISPLAY'
         self.path = path
         self.mode = mode
+
+
+class Exit(object):
+    """Action that closes the current opi."""

@@ -135,6 +135,9 @@ class ActionWidget(Widget):
     def add_open_opi(self, path, mode=actions.OpenOpi.STANDALONE):
         self.actions.append(actions.OpenOpi(path, mode))
 
+    def add_exit(self):
+        self.actions.append(actions.Exit())
+
 
 class Display(Widget):
     """

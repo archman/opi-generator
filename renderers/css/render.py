@@ -1,6 +1,6 @@
 import lxml.etree as et
 
-from renderers.css.actions import OpiAction
+from renderers.css.actions import OpiActions
 from renderers.css.borders import OpiBorder
 from renderers.css.colors import OpiColor
 from renderers.css.fonts import OpiFont
@@ -13,7 +13,7 @@ def get_opi_renderer(widget):
     tr = OpiText()
     wr = OpiWidget(tr)
 
-    wr.add_renderer('actions', OpiAction())
+    wr.add_renderer('actions', OpiActions())
 
     wr.add_renderer('rules', OpiRule())
 
