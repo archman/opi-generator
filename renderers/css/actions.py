@@ -35,7 +35,7 @@ class OpiExecuteCommand(OpiAction):
 
 class OpiOpen(OpiAction):
     """Renderer for write PV actions."""
-    ACTION_TYPE = 'OPEN_OPI'
+    ACTION_TYPE = 'OPEN_DISPLAY'
 
 
 class OpiExit(OpiAction):
