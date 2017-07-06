@@ -26,6 +26,7 @@ def get_opi_renderer(widget):
     wr.add_renderer('line_color', cr)
     wr.add_renderer('border_color', cr)
     wr.add_renderer('led_border_color', cr)
+    
     wr.add_renderer('border', OpiBorder(tr, cr))
 
     wr.add_renderer('font', OpiFont())
