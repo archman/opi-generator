@@ -161,6 +161,16 @@ class Rectangle(Widget):
         super(Rectangle, self).__init__(Rectangle.ID, x, y, width, height)
 
 
+class Line(Widget):
+
+    ID = 'org.csstudio.opibuilder.widgets.polyline'
+
+    def __init__(self, x0, y0, x1, y1):
+        super(Line, self).__init__(
+            Line.ID, x=x0, y=y0, width=abs(x0-x1)+1, height=abs(y0-y1)+1)
+        self.points = [(x0, y0), (x1, y1)]
+
+
 class Label(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.Label'
