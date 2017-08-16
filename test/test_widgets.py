@@ -49,10 +49,23 @@ def test_Led_has_correct_attributes(display, get_renderer):
 
 
 def test_Byte_has_correct_attributes(display, get_renderer):
-    led = widgets.Byte(10, 10, 20, 20, 'TEST', 3)
-    display.add_child(led)
+    byte = widgets.Byte(10, 10, 20, 20, 'TEST', 3)
+    display.add_child(byte)
     renderer = get_renderer(display)
     renderer.assemble()
     output = str(renderer)
     assert '<pv_name>TEST</pv_name>' in output
     assert '<numBits>3</numBits>' in output
+
+
+def test_Line_has_correct_attributes(display, get_renderer):
+    byte = widgets.Line(10, 100, 50, 20)
+    display.add_child(byte)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert '<x>10</x>' in output
+    assert '<y>20</y>' in output
+    assert '<points>' in output
+    assert '<point x="10" y="100"/>' in output
+    assert '<point x="50" y="20"/>' in output

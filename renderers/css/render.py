@@ -7,6 +7,7 @@ from renderers.css.fonts import OpiFont
 from renderers.css.rules import OpiRule
 from renderers.css.text import OpiText
 from renderers.css.widget import OpiWidget
+from renderers.css.points import OpiPoints
 
 
 def get_opi_renderer(widget):
@@ -30,6 +31,8 @@ def get_opi_renderer(widget):
     wr.add_renderer('border', OpiBorder(tr, cr))
 
     wr.add_renderer('font', OpiFont())
+
+    wr.add_renderer('points', OpiPoints())
     return OpiRenderer(widget, wr)
 
 
