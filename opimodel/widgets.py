@@ -269,3 +269,5 @@ class Byte(Widget):
         self.square_led = True
         self.numBits = bits
         self.led_border = 1
+        self.border_alarm_sensitive = False
+        self.led_packed = True
