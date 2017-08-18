@@ -16,8 +16,6 @@ def get_opi_renderer(widget):
 
     wr.add_renderer('actions', OpiActions())
 
-    wr.add_renderer('rules', OpiRule())
-
     cr = OpiColor()
     wr.add_renderer('background_color', cr)
     wr.add_renderer('foreground_color', cr)
@@ -27,7 +25,9 @@ def get_opi_renderer(widget):
     wr.add_renderer('line_color', cr)
     wr.add_renderer('border_color', cr)
     wr.add_renderer('led_border_color', cr)
-    
+
+    wr.add_renderer('rules', OpiRule(cr))
+
     wr.add_renderer('border', OpiBorder(tr, cr))
 
     wr.add_renderer('font', OpiFont())

@@ -1,9 +1,12 @@
 import lxml.etree as et
 
-from opimodel import rules
+from opimodel import rules, colors
 
 
 class OpiRule(object):
+
+    def __init__(self, color_renderer):
+        self._color = color_renderer
 
     def render(self, widget_node, tag_name, rule_list):
         rules_node = et.SubElement(widget_node, tag_name)
@@ -18,6 +21,8 @@ class OpiRule(object):
             self._render_between(rule_model)
         elif isinstance(rule_model, rules.GreaterThanRule):
             self._render_greater_than(rule_model)
+        elif isinstance(rule_model, rules.SelectionRule):
+            self._render_selection(rule_model)
 
     def _render_between(self, rule_model):
         less_than_rule = 'pv0 {} {}'.format(
@@ -55,3 +60,18 @@ class OpiRule(object):
         exp_node2.set('bool_exp', 'true')
         val_node2 = et.SubElement(exp_node2, 'value')
         val_node2.text = 'false'
+
+    def _render_selection(self, rule_model):
+
+        pv_node = et.SubElement(self.rule_node, 'pv')
+        pv_node.set('trig', 'true')
+        pv_node.text = rule_model._pv
+
+        for (pv_val, prop_val) in rule_model._options:
+            exp_node = et.SubElement(self.rule_node, 'exp')
+            exp_node.set('bool_exp', '{} == {}'.format(rule_model._var, pv_val))
+            if isinstance(prop_val, colors.Color):
+                self._color.render(exp_node, 'value', prop_val)
+            else:
+                val_node = et.SubElement(exp_node, 'value')
+                val_node.text = str(prop_val)
