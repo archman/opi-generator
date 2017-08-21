@@ -14,8 +14,9 @@ class Rule(object):
             name (optional): Rule Name as displayed in CSS OPIEditor
         """
         self._prop_id = prop_id
-        if name is not None:
-            self._name = name
+        self._name = name
+        if name is None:
+            self._name = "Rule"
 
 
 class BetweenRule(Rule):
@@ -48,15 +49,15 @@ class BetweenRule(Rule):
 
 class GreaterThanRule(Rule):
 
-    def __init__(self, prop_id, pv, threshold):
-        super(GreaterThanRule, self).__init__(prop_id)
+    def __init__(self, prop_id, pv, threshold, name=None):
+        super(GreaterThanRule, self).__init__(prop_id, name)
         self._pv = pv
         self._threshold = threshold
 
 
 class SelectionRule(Rule):
 
-    def __init__(self, prop_id, pv, options, var=PV_VAL):
+    def __init__(self, prop_id, pv, options, var=PV_VAL, name=None):
         """ Simple selection rule, e.g.:
 
             widget.rules = []
@@ -69,8 +70,9 @@ class SelectionRule(Rule):
             pv: Controlling PV
             options: List of tuples (value, widget value)
             var: Variable to use (pv0 for value, pvSev0 for alarm severity)
+            name (optional): Rule Name as displayed in CSS OPIEditor
         """
-        super(SelectionRule, self).__init__(prop_id)
+        super(SelectionRule, self).__init__(prop_id, name)
         self._pv = pv
         self._options = options
         self._var = var

@@ -10,10 +10,13 @@ def test_empty_RulesNode(widget, get_renderer):
 
 def test_greater_than_rule(widget, get_renderer):
     widget.rules = []
-    widget.rules.append(rules.GreaterThanRule('vis', 'dummy_pv', '0'))
+    widget.rules.append(rules.GreaterThanRule(
+        'vis', 'dummy_pv', '0', name="positive_rule"))
     renderer = get_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
+    assert rule_element.attrib['prop_id'] == 'vis'
+    assert rule_element.attrib['name'] == 'positive_rule'
     assert rule_element.find('./pv').text == 'dummy_pv'
     assert rule_element.find('./pv').attrib['trig'] == 'true'
     exp_elements = rule_element.findall('./exp')
@@ -119,12 +122,13 @@ def test_between_rule_both_open_0_lt_x_lt_5(widget, get_renderer):
 def test_selection_rule_one_string_value(widget, get_renderer):
     widget.rules = []
     widget.rules.append(rules.SelectionRule(
-        'test_property', 'dummy_pv', [('1', 'strval')]))
+        'test_property', 'dummy_pv', [('1', 'strval')], name="stringSelection"))
 
     renderer = get_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.find('./pv').text == 'dummy_pv'
+    assert rule_element.attrib['name'] == 'stringSelection'
     assert rule_element.attrib['prop_id'] == 'test_property'
 
     exp_elements = rule_element.findall('./exp')

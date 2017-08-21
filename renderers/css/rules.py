@@ -16,7 +16,7 @@ class OpiRule(object):
     def _render_one(self, rules_node, rule_model):
         self.rule_node = et.SubElement(rules_node, 'rule')
         self.rule_node.set('prop_id', rule_model._prop_id)
-        self.rule_node.set('name', 'Rule')
+        self.rule_node.set('name', rule_model._name)
         if isinstance(rule_model, rules.BetweenRule):
             self._render_between(rule_model)
         elif isinstance(rule_model, rules.GreaterThanRule):
