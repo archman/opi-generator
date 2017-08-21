@@ -74,6 +74,24 @@ def test_ActionButton_adds_open_opi_action_with_macros(widget, get_renderer, mac
             assert macros_node.find(m).text == macros[m]
 
 
+@pytest.mark.parametrize('macros,raise_expected',
+                         (({'a': 'b'}, False),
+                          ({'a': 10}, True),
+                          ({10: 'a'}, True),
+                          ({10: 11}, True)))
+def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings(widget, get_renderer, macros, raise_expected):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    ab.add_open_opi('file/path', mode=42, macros=macros)
+    widget.add_child(ab)
+    renderer = get_renderer(widget)
+    if raise_expected:
+        with pytest.raises(ValueError):
+            renderer.assemble()
+    else:
+        renderer.assemble()
+
+
+
 def test_ActionButton_adds_exit_action(widget, get_renderer):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     ab.add_exit()
