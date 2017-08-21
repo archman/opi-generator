@@ -1,3 +1,6 @@
+import sys
+
+
 def mangle_name(name):
     """Convert the name found in a color or font configuration file into
        a Python variable:
@@ -38,3 +41,14 @@ def add_attr_to_module(name, value, module):
     if hasattr(module, var):
         print('Warning: overwriting variable {} in module {}'.format(var, module))
     setattr(module, var, value)
+
+
+def is_string(val):
+    """Determine if val is a string-based type.  Implementation
+       is copied from the six module.
+    """
+    python3 = sys.version_info[0] == 3
+    if python3:
+        return isinstance(val, str)
+    else:
+        return isinstance(val, basestring)

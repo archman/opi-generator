@@ -1,5 +1,5 @@
 import lxml.etree as et
-from opimodel import actions
+from opimodel import actions, utils
 from renderers.css import text
 
 
@@ -36,6 +36,20 @@ class OpiExecuteCommand(OpiAction):
 class OpiOpen(OpiAction):
     """Renderer for write PV actions."""
     ACTION_TYPE = 'OPEN_DISPLAY'
+    MACRO_ERROR = 'Invalid macro {}:{} (error {})'
+
+    def render(self, actions_node, action_model):
+        action_node = super(OpiOpen, self).render(actions_node, action_model)
+        macros_node = et.SubElement(action_node, 'macros')
+        parent_macros_node = et.SubElement(macros_node, 'include_parent_macros')
+        parent_macros_node.text = 'true' if action_model._parent_macros else 'false'
+        for key, value in action_model._macros.items():
+            try:
+                key_node = et.SubElement(macros_node, key)
+                key_node.text = str(value)
+            except (TypeError, ValueError) as e:
+                raise ValueError(self.MACRO_ERROR.format(key, value, e))
+        return action_node
 
 
 class OpiExit(OpiAction):

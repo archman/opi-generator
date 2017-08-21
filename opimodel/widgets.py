@@ -132,8 +132,8 @@ class ActionWidget(Widget):
         self.actions.append(actions.ExecuteCommand(
                 command, description, directory))
 
-    def add_open_opi(self, path, mode=actions.OpenOpi.STANDALONE):
-        self.actions.append(actions.OpenOpi(path, mode))
+    def add_open_opi(self, path, mode=actions.OpenOpi.STANDALONE, macros=None, parent_macros=True):
+        self.actions.append(actions.OpenOpi(path, mode, macros, parent_macros))
 
     def add_exit(self):
         self.actions.append(actions.Exit())

@@ -60,16 +60,20 @@ class OpenOpi(object):
     NEW_WORKBENCH = 7
     STANDALONE = 8
 
-    def __init__(self, path, mode=STANDALONE):
+    def __init__(self, path, mode=STANDALONE, macros=None, parent_macros=True):
         """
         Construct OpenOpi action.
 
         Args:
             path of opi to open
             mode determining how the opi opens
+            macros: dict of macros with which to open the opi
+            parent_macros: whether to inherit parent macros
         """
         self.path = path
         self.mode = mode
+        self._macros = {} if macros is None else macros
+        self._parent_macros = parent_macros
 
 
 class Exit(object):
