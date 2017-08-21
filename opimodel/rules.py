@@ -6,7 +6,7 @@ PV_SEVR = "pvSev0"
 class Rule(object):
 
     def __init__(self, prop_id, name=None):
-        """
+        """ Base class for rules
 
         Args:
             prop_id: Widget property to set
@@ -50,6 +50,16 @@ class BetweenRule(Rule):
 class GreaterThanRule(Rule):
 
     def __init__(self, prop_id, pv, threshold, name=None):
+        """ Construct an rule setting the specified boolean property
+                - True if pv > threshold
+                - False otherwise
+
+        Args:
+            prop_id: Widget property to set
+            pv: Controlling PV
+            threshold: Threshold value
+            name (optional): Rule Name as displayed in CSS OPIEditor
+        """
         super(GreaterThanRule, self).__init__(prop_id, name)
         self._pv = pv
         self._threshold = threshold
@@ -58,7 +68,8 @@ class GreaterThanRule(Rule):
 class SelectionRule(Rule):
 
     def __init__(self, prop_id, pv, options, var=PV_VAL, name=None):
-        """ Simple selection rule, e.g.:
+        """ Simple selection rule setting specified property to one of a
+            number of possible values based on the pv value, e.g.:
 
             widget.rules = []
             options = [(-1, colors.INVALID), (1, colors.MAJOR), (2, colors.MINOR)]
