@@ -24,13 +24,27 @@ def test_greater_than_rule(widget, get_renderer):
     assert exp_elements[1].attrib['bool_exp'] == 'true'
 
 
-def test_between_rule(widget, get_renderer):
+def test_greater_than_rule_default_name(widget, get_renderer):
     widget.rules = []
-    widget.rules.append(rules.BetweenRule('vis', 'dummy_pv', '0', '5'))
+    widget.rules.append(rules.GreaterThanRule(
+        'vis', 'dummy_pv', '0'))
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    rule_element = renderer.get_node().find('./rules/rule')
+    assert rule_element.attrib['prop_id'] == 'vis'
+    assert rule_element.attrib['name'] == 'Rule'
+
+
+def test_between_rule_both_closed_0_lte_x_lte_5(widget, get_renderer):
+    widget.rules = []
+    widget.rules.append(rules.BetweenRule(
+        'vis', 'dummy_pv', '0', '5', name="betweenRule",
+        min_equals=True, max_equals=True))
     renderer = get_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.find('./pv').text == 'dummy_pv'
+    assert rule_element.attrib['name'] == 'betweenRule'
     assert rule_element.find('./pv').attrib['trig'] == 'true'
     exp_elements = rule_element.findall('./exp')
     assert len(exp_elements) == 3
@@ -42,10 +56,10 @@ def test_between_rule(widget, get_renderer):
     assert value_element.text == 'false'
     assert exp_elements[2].attrib['bool_exp'] == 'true'
 
-def test_between_rule_gt_equals(widget, get_renderer):
+def test_between_rule_lower_half_closed_0_lte_x_lt_5(widget, get_renderer):
     widget.rules = []
     widget.rules.append(rules.BetweenRule(
-        'vis', 'dummy_pv', '0', '5', gt_equals=True))
+        'vis', 'dummy_pv', '0', '5', max_equals=False))
     renderer = get_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -62,10 +76,10 @@ def test_between_rule_gt_equals(widget, get_renderer):
     assert exp_elements[2].attrib['bool_exp'] == 'true'
 
 
-def test_between_rule_lt_equals(widget, get_renderer):
+def test_between_rule_upper_half_closed_0_lt_x_lte_5(widget, get_renderer):
     widget.rules = []
     widget.rules.append(rules.BetweenRule(
-        'vis', 'dummy_pv', '0', '5', lt_equals=True))
+        'vis', 'dummy_pv', '0', '5', min_equals=False))
     renderer = get_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -82,10 +96,10 @@ def test_between_rule_lt_equals(widget, get_renderer):
     assert exp_elements[2].attrib['bool_exp'] == 'true'
 
 
-def test_between_rule_gt_equals_and_lt_equals(widget, get_renderer):
+def test_between_rule_both_open_0_lt_x_lt_5(widget, get_renderer):
     widget.rules = []
     widget.rules.append(rules.BetweenRule(
-        'vis', 'dummy_pv', '0', '5', gt_equals=True, lt_equals=True))
+        'vis', 'dummy_pv', '0', '5', min_equals=False, max_equals=False))
     renderer = get_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')

@@ -21,14 +21,29 @@ class Rule(object):
 class BetweenRule(Rule):
 
     def __init__(self, prop_id, pv, min_val, max_val,
-             gt_equals=False, lt_equals=False):
+             min_equals=True, max_equals=True, name=None):
+        """ Construct an rule setting the specified boolean property
+                - True if min_val <= pv <= max_val
+                - False otherwise
 
-        super(BetweenRule, self).__init__(prop_id)
+            If min_equals is false the lower limit is replaced by '<'
+            If max_equals is false the upper limit is replaced by '<'
+
+        Args:
+            prop_id: Widget property to set
+            pv: Controlling PV
+            min_val: Lower bound
+            max_val: Upper bound
+            min_equals: True if range is inclusive at lower end
+            max_equals: True if range is inclusive at upper end
+            name (optional): Rule Name as displayed in CSS OPIEditor
+        """
+        super(BetweenRule, self).__init__(prop_id, name)
         self._pv = pv
         self._min = min_val
         self._max = max_val
-        self._lt_equals = lt_equals
-        self._gt_equals = gt_equals
+        self._min_equals = min_equals
+        self._max_equals = max_equals
 
 
 class GreaterThanRule(Rule):

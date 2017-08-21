@@ -25,22 +25,36 @@ class OpiRule(object):
             self._render_selection(rule_model)
 
     def _render_between(self, rule_model):
-        less_than_rule = 'pv0 {} {}'.format(
-            "<=" if rule_model._lt_equals else "<",
-            rule_model._min)
-        greater_than_rule = 'pv0 {} {}'.format(
-            ">=" if rule_model._gt_equals else ">",
+        """ Write the between rule:
+                true iff a < p < b
+            as
+                false if p <= a
+                false if p >= b
+                true otherwise
+
+            if lower rule is 'a <= p' modify to be
+                false if p < a
+
+            if upper rule is 'p <= b' modify to be
+                false if p > b
+
+        """
+        max_rule = 'pv0 {} {}'.format(
+            ">" if rule_model._max_equals else ">=",
             rule_model._max)
+        min_rule = 'pv0 {} {}'.format(
+            "<" if rule_model._min_equals else "<=",
+            rule_model._min)
 
         pv_node = et.SubElement(self.rule_node, 'pv')
         pv_node.set('trig', 'true')
         pv_node.text = rule_model._pv
         exp_node1 = et.SubElement(self.rule_node, 'exp')
-        exp_node1.set('bool_exp', less_than_rule)
+        exp_node1.set('bool_exp', min_rule)
         val_node1 = et.SubElement(exp_node1, 'value')
         val_node1.text = 'false'
         exp_node2 = et.SubElement(self.rule_node, 'exp')
-        exp_node2.set('bool_exp', greater_than_rule)
+        exp_node2.set('bool_exp', max_rule)
         val_node2 = et.SubElement(exp_node2, 'value')
         val_node2.text = 'false'
         exp_node3 = et.SubElement(self.rule_node, 'exp')
