@@ -1,4 +1,7 @@
 
+PV_VAL = "pv0"
+PV_SEVR = "pvSev0"
+
 
 class Rule(object):
 
@@ -38,13 +41,13 @@ class GreaterThanRule(Rule):
 
 class SelectionRule(Rule):
 
-    def __init__(self, prop_id, pv, options, var="pv0"):
+    def __init__(self, prop_id, pv, options, var=PV_VAL):
         """ Simple selection rule, e.g.:
 
             widget.rules = []
             options = [(-1, colors.INVALID), (1, colors.MAJOR), (2, colors.MINOR)]
             widget.rules.append(
-                rules.SelectionRule('on_color', pv_name, options, var="pvSev0"))
+                rules.SelectionRule('on_color', pv_name, options, var=PV_SEVR))
 
         Args:
             prop_id: Widget property to set

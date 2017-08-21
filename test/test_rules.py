@@ -119,6 +119,25 @@ def test_selection_rule_one_string_value(widget, get_renderer):
     value_element = exp_elements[0].find('./value')
     assert value_element.text == 'strval'
 
+
+def test_selection_rule_one_string_value_using_severity(widget, get_renderer):
+    widget.rules = []
+    widget.rules.append(rules.SelectionRule(
+        'test_property', 'dummy_pv', [('1', 'strval')], var=rules.PV_SEVR))
+
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    rule_element = renderer.get_node().find('./rules/rule')
+    assert rule_element.find('./pv').text == 'dummy_pv'
+    assert rule_element.attrib['prop_id'] == 'test_property'
+
+    exp_elements = rule_element.findall('./exp')
+    assert len(exp_elements) == 1
+    assert exp_elements[0].attrib['bool_exp'] == 'pvSev0 == 1'
+    value_element = exp_elements[0].find('./value')
+    assert value_element.text == 'strval'
+
+
 def test_selection_rule_two_string_value(widget, get_renderer):
     widget.rules = []
     widget.rules.append(rules.SelectionRule(
