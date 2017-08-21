@@ -76,9 +76,11 @@ def test_ActionButton_adds_open_opi_action_with_macros(widget, get_renderer, mac
 
 @pytest.mark.parametrize('macros,raise_expected',
                          (({'a': 'b'}, False),
-                          ({'a': 10}, True),
-                          ({10: 'a'}, True),
-                          ({10: 11}, True)))
+                          ({'a': 10}, False),
+                          ({10: 'a'}, True),  # key not a string
+                          ({10: 11}, True),  # key not a string
+                          ({'a b': 11}, True),  # space in key
+                          ({'1': 'a'}, True)))  # key begins with number
 def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings(widget, get_renderer, macros, raise_expected):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     ab.add_open_opi('file/path', mode=42, macros=macros)
@@ -89,7 +91,6 @@ def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings(wid
             renderer.assemble()
     else:
         renderer.assemble()
-
 
 
 def test_ActionButton_adds_exit_action(widget, get_renderer):

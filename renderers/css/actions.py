@@ -36,7 +36,7 @@ class OpiExecuteCommand(OpiAction):
 class OpiOpen(OpiAction):
     """Renderer for write PV actions."""
     ACTION_TYPE = 'OPEN_DISPLAY'
-    MACRO_ERROR = 'Macros must have key and value as strings ({}:{} violates this rule)'
+    MACRO_ERROR = 'Invalid macro {}:{} (error {})'
 
     def render(self, actions_node, action_model):
         action_node = super(OpiOpen, self).render(actions_node, action_model)
@@ -44,10 +44,11 @@ class OpiOpen(OpiAction):
         parent_macros_node = et.SubElement(macros_node, 'include_parent_macros')
         parent_macros_node.text = 'true' if action_model._parent_macros else 'false'
         for key, value in action_model._macros.items():
-            if not utils.is_string(key) or not utils.is_string(value):
-                raise ValueError(self.MACRO_ERROR.format(key, value))
-            key_node = et.SubElement(macros_node, key)
-            key_node.text = value
+            try:
+                key_node = et.SubElement(macros_node, key)
+                key_node.text = str(value)
+            except (TypeError, ValueError) as e:
+                raise ValueError(self.MACRO_ERROR.format(key, value, e))
         return action_node
 
 
