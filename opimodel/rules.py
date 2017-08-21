@@ -3,6 +3,13 @@
 class Rule(object):
 
     def __init__(self, prop_id, name=None):
+        """
+
+        Args:
+            prop_id: Widget property to set
+            pv: Controlling PV
+            name (optional): Rule Name as displayed in CSS OPIEditor
+        """
         self._prop_id = prop_id
         if name is not None:
             self._name = name
@@ -32,12 +39,18 @@ class GreaterThanRule(Rule):
 class SelectionRule(Rule):
 
     def __init__(self, prop_id, pv, options, var="pv0"):
-        """
+        """ Simple selection rule, e.g.:
 
-        :param prop_id: Widget property to set
-        :param pv: Controlling PV
-        :param options: List of tuples (value, widget value)
-        :param var: Variable to use (pv0 for value, pvSevr0 for alarm severity)
+            widget.rules = []
+            options = [(-1, colors.INVALID), (1, colors.MAJOR), (2, colors.MINOR)]
+            widget.rules.append(
+                rules.SelectionRule('on_color', pv_name, options, var="pvSev0"))
+
+        Args:
+            prop_id: Widget property to set
+            pv: Controlling PV
+            options: List of tuples (value, widget value)
+            var: Variable to use (pv0 for value, pvSev0 for alarm severity)
         """
         super(SelectionRule, self).__init__(prop_id)
         self._pv = pv
