@@ -24,3 +24,6 @@ venv3/
 # vim
 *.swp
 *.swo
+
+# Pycharm
+.idea
