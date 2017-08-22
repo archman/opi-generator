@@ -14,9 +14,7 @@ class Rule(object):
             name (optional): Rule Name as displayed in CSS OPIEditor
         """
         self._prop_id = prop_id
-        self._name = name
-        if name is None:
-            self._name = "Rule"
+        self._name = "Rule" if name is None else name
 
 
 class BetweenRule(Rule):
