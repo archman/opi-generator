@@ -56,7 +56,17 @@ def test_Byte_has_correct_attributes(display, get_renderer):
     output = str(renderer)
     assert '<pv_name>TEST</pv_name>' in output
     assert '<numBits>3</numBits>' in output
+    assert 'startBit' not in output
 
+def test_Byte_includes_start_bit_if_specified(display, get_renderer):
+    byte = widgets.Byte(10, 10, 20, 20, 'TEST', 3, start_bit=5)
+    display.add_child(byte)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert '<pv_name>TEST</pv_name>' in output
+    assert '<numBits>3</numBits>' in output
+    assert '<startBit>5</startBit>' in output
 
 def test_Line_has_correct_attributes(display, get_renderer):
     byte = widgets.Line(10, 100, 50, 20)

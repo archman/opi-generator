@@ -277,7 +277,7 @@ class Led(Widget):
 class Byte(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.bytemonitor'
 
-    def __init__(self, x, y, width, height, pv, bits):
+    def __init__(self, x, y, width, height, pv, bits, start_bit=None):
         super(Byte, self).__init__(Byte.TYPE_ID, x, y, width, height)
         self.pv_name = pv
         self.effect_3d = False
@@ -286,3 +286,5 @@ class Byte(Widget):
         self.led_border = 1
         self.border_alarm_sensitive = False
         self.led_packed = True
+        if start_bit is not None:
+            self.startBit = start_bit
