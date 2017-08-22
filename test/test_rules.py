@@ -48,16 +48,20 @@ def test_between_rule_both_closed_0_lte_x_lte_5(widget, get_renderer):
     rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.find('./pv').text == 'dummy_pv'
     assert rule_element.attrib['name'] == 'betweenRule'
+
     assert rule_element.find('./pv').attrib['trig'] == 'true'
+
     exp_elements = rule_element.findall('./exp')
-    assert len(exp_elements) == 3
-    assert exp_elements[0].attrib['bool_exp'] == 'pv0 < 0'
+    assert len(exp_elements) == 2
+
+    assert exp_elements[0].attrib['bool_exp'] == 'pv0 >= 0 && pv0 <= 5'
     value_element = exp_elements[0].find('./value')
-    assert value_element.text == 'false'
-    assert exp_elements[1].attrib['bool_exp'] == 'pv0 > 5'
+    assert value_element.text == 'true'
+
+    assert exp_elements[1].attrib['bool_exp'] == 'true'
     value_element = exp_elements[1].find('./value')
     assert value_element.text == 'false'
-    assert exp_elements[2].attrib['bool_exp'] == 'true'
+
 
 def test_between_rule_lower_half_closed_0_lte_x_lt_5(widget, get_renderer):
     widget.rules = []
@@ -68,15 +72,17 @@ def test_between_rule_lower_half_closed_0_lte_x_lt_5(widget, get_renderer):
     rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.find('./pv').text == 'dummy_pv'
     assert rule_element.find('./pv').attrib['trig'] == 'true'
+
     exp_elements = rule_element.findall('./exp')
-    assert len(exp_elements) == 3
-    assert exp_elements[0].attrib['bool_exp'] == 'pv0 < 0'
+    assert len(exp_elements) == 2
+
+    assert exp_elements[0].attrib['bool_exp'] == 'pv0 >= 0 && pv0 < 5'
     value_element = exp_elements[0].find('./value')
-    assert value_element.text == 'false'
-    assert exp_elements[1].attrib['bool_exp'] == 'pv0 >= 5'
+    assert value_element.text == 'true'
+
+    assert exp_elements[1].attrib['bool_exp'] == 'true'
     value_element = exp_elements[1].find('./value')
     assert value_element.text == 'false'
-    assert exp_elements[2].attrib['bool_exp'] == 'true'
 
 
 def test_between_rule_upper_half_closed_0_lt_x_lte_5(widget, get_renderer):
@@ -88,15 +94,17 @@ def test_between_rule_upper_half_closed_0_lt_x_lte_5(widget, get_renderer):
     rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.find('./pv').text == 'dummy_pv'
     assert rule_element.find('./pv').attrib['trig'] == 'true'
+
     exp_elements = rule_element.findall('./exp')
-    assert len(exp_elements) == 3
-    assert exp_elements[0].attrib['bool_exp'] == 'pv0 <= 0'
+    assert len(exp_elements) == 2
+
+    assert exp_elements[0].attrib['bool_exp'] == 'pv0 > 0 && pv0 <= 5'
     value_element = exp_elements[0].find('./value')
-    assert value_element.text == 'false'
-    assert exp_elements[1].attrib['bool_exp'] == 'pv0 > 5'
+    assert value_element.text == 'true'
+
+    assert exp_elements[1].attrib['bool_exp'] == 'true'
     value_element = exp_elements[1].find('./value')
     assert value_element.text == 'false'
-    assert exp_elements[2].attrib['bool_exp'] == 'true'
 
 
 def test_between_rule_both_open_0_lt_x_lt_5(widget, get_renderer):
@@ -108,15 +116,17 @@ def test_between_rule_both_open_0_lt_x_lt_5(widget, get_renderer):
     rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.find('./pv').text == 'dummy_pv'
     assert rule_element.find('./pv').attrib['trig'] == 'true'
+
     exp_elements = rule_element.findall('./exp')
-    assert len(exp_elements) == 3
-    assert exp_elements[0].attrib['bool_exp'] == 'pv0 <= 0'
+    assert len(exp_elements) == 2
+
+    assert exp_elements[0].attrib['bool_exp'] == 'pv0 > 0 && pv0 < 5'
     value_element = exp_elements[0].find('./value')
-    assert value_element.text == 'false'
-    assert exp_elements[1].attrib['bool_exp'] == 'pv0 >= 5'
+    assert value_element.text == 'true'
+
+    assert exp_elements[1].attrib['bool_exp'] == 'true'
     value_element = exp_elements[1].find('./value')
     assert value_element.text == 'false'
-    assert exp_elements[2].attrib['bool_exp'] == 'true'
 
 
 def test_selection_rule_one_string_value(widget, get_renderer):
