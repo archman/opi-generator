@@ -35,7 +35,7 @@ def test_greater_than_rule_default_name(widget, get_renderer):
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
     assert rule_element.attrib['prop_id'] == 'vis'
-    assert rule_element.attrib['name'] == 'Rule'
+    assert rule_element.attrib['name'] == 'GreaterThanRule'
 
 
 def test_between_rule_both_closed_0_lte_x_lte_5(widget, get_renderer):
@@ -61,6 +61,16 @@ def test_between_rule_both_closed_0_lte_x_lte_5(widget, get_renderer):
     assert exp_elements[1].attrib['bool_exp'] == 'true'
     value_element = exp_elements[1].find('./value')
     assert value_element.text == 'false'
+
+
+def test_between_rule_default_name(widget, get_renderer):
+    widget.rules = []
+    widget.rules.append(rules.BetweenRule('vis', 'dummy_pv', '0', '5'))
+
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    rule_element = renderer.get_node().find('./rules/rule')
+    assert rule_element.attrib['name'] == 'BetweenRule'
 
 
 def test_between_rule_lower_half_closed_0_lte_x_lt_5(widget, get_renderer):
@@ -146,6 +156,17 @@ def test_selection_rule_one_string_value(widget, get_renderer):
     assert exp_elements[0].attrib['bool_exp'] == 'pv0 == 1'
     value_element = exp_elements[0].find('./value')
     assert value_element.text == 'strval'
+
+
+def test_selection_rule_default_name(widget, get_renderer):
+    widget.rules = []
+    widget.rules.append(rules.SelectionRule(
+        'test_property', 'dummy_pv', [('1', 'strval')]))
+
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    rule_element = renderer.get_node().find('./rules/rule')
+    assert rule_element.attrib['name'] == 'SelectionRule'
 
 
 def test_selection_rule_one_string_value_using_severity(widget, get_renderer):

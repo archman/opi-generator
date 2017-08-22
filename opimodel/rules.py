@@ -6,15 +6,16 @@ PV_SEVR = "pvSev0"
 class Rule(object):
 
     def __init__(self, prop_id, name=None):
-        """ Base class for rules
+        """ Base class for rules.
 
+            If no `name` is provided the Rule class name is used.
         Args:
             prop_id: Widget property to set
             pv: Controlling PV
             name (optional): Rule Name as displayed in CSS OPIEditor
         """
         self._prop_id = prop_id
-        self._name = "Rule" if name is None else name
+        self._name = type(self).__name__ if name is None else name
 
 
 class BetweenRule(Rule):
