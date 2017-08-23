@@ -106,6 +106,11 @@ class Widget(object):
         self.font = font
 
     def add_rule(self, rule):
+        """Add a rule to the widget.
+
+        Args:
+            Rule object
+        """
         self.rules.append(rule)
 
 
