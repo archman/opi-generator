@@ -40,7 +40,7 @@ def test_ActionButton_adds_write_pv(widget, get_renderer):
     renderer.assemble()
     action_nodes = renderer.get_node().findall('./widget/actions/action')
     assert len(action_nodes) == 1
-    assert action_nodes[0].get('type') == 'EXECUTE_JAVASCRIPT'
+    assert action_nodes[0].get('type') == 'WRITE_PV'
     assert action_nodes[0].find('./pv_name').text == 'hello'
     assert action_nodes[0].find('./value').text == 'bye'
 

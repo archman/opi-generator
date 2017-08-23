@@ -25,7 +25,7 @@ class OpiAction(object):
 
 class OpiWritePv(OpiAction):
     """Renderer for write PV actions."""
-    ACTION_TYPE = 'EXECUTE_JAVASCRIPT'
+    ACTION_TYPE = 'WRITE_PV'
 
 
 class OpiExecuteCommand(OpiAction):
