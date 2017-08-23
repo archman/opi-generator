@@ -1,4 +1,40 @@
 
+class ActionsModel(object):
+    """
+    Represents all actions attached to a widget.
+    """
+
+    def __init__(self, hook_first=True, hook_all=False):
+        """
+        Args:
+            hook_first: whether first action is executed on mouse click
+            hook_all: whether all actions are executed on mouse click
+        """
+        self._actions = []
+        self._hook_first = hook_first
+        self._hook_all = hook_all
+
+    def add_action(self, action):
+        self._actions.append(action)
+
+    def set_hook_first(self, hook_first):
+        self._hook_first = hook_first
+
+    def get_hook_first(self):
+        return self._hook_first
+
+    def set_hook_all(self, hook_all):
+        self._hook_all = hook_all
+
+    def get_hook_all(self):
+        return self._hook_all
+
+    def __getitem__(self, index):
+        return self._actions[index]
+
+    def __len__(self):
+        return len(self._actions)
+
 
 class WritePv(object):
     """

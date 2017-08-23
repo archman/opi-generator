@@ -81,9 +81,14 @@ class OpiActions(object):
                       actions.Exit: OpiExit,
                       actions.OpenOpi: OpiOpen}
 
-    def render(self, widget_node, tag_name, action_list):
-        actions_node = et.SubElement(widget_node, tag_name)
-        for action_model in action_list:
-            action_class = OpiActions.ACTION_MAPPING[type(action_model)]
-            renderer = action_class(text.OpiText())
-            renderer.render(actions_node, action_model)
+    def render(self, widget_node, tag_name, actions_model):
+        if actions_model:
+            actions_node = et.SubElement(widget_node, tag_name)
+            hook_first = 'true' if actions_model.get_hook_first() else 'false'
+            hook_all = 'true' if actions_model.get_hook_all() else 'false'
+            actions_node.set('hook_first', hook_first)
+            actions_node.set('hook_all', hook_all)
+            for action_model in actions_model:
+                action_class = OpiActions.ACTION_MAPPING[type(action_model)]
+                renderer = action_class(text.OpiText())
+                renderer.render(actions_node, action_model)
