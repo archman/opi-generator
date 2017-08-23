@@ -9,9 +9,10 @@ class OpiRule(object):
         self._color = color_renderer
 
     def render(self, widget_node, tag_name, rule_list):
-        rules_node = et.SubElement(widget_node, tag_name)
-        for rule_model in rule_list:
-            self._render_one(rules_node, rule_model)
+        if rule_list:
+            rules_node = et.SubElement(widget_node, tag_name)
+            for rule_model in rule_list:
+                self._render_one(rules_node, rule_model)
 
     def _render_one(self, rules_node, rule_model):
         self.rule_node = et.SubElement(rules_node, 'rule')
