@@ -232,6 +232,8 @@ class GroupingContainer(Widget):
     def __init__(self, x, y, width, height):
         super(GroupingContainer, self).__init__(
             GroupingContainer.TYPE_ID, x, y, width, height)
+        self.lock_children = True
+        self.transparent = True
 
 
 class ActionButton(ActionWidget):
