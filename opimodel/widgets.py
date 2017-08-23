@@ -120,9 +120,9 @@ class ActionWidget(Widget):
     """
 
     # No ID, designed to be subclassed only
-    def __init__(self, type_id, x, y, width, height):
+    def __init__(self, type_id, x, y, width, height, hook_first=True, hook_all=False):
         super(ActionWidget, self).__init__(type_id, x, y, width, height)
-        self.actions = []
+        self.actions = actions.ActionsModel(hook_first, hook_all)
 
     def add_action(self, action):
         """
@@ -131,21 +131,21 @@ class ActionWidget(Widget):
         Args:
             action to add
         """
-        self.actions.append(action)
+        self.actions.add_action(action)
 
     def add_write_pv(self, pv, value, description=""):
-        self.actions.append(actions.WritePv(pv, value, description))
+        self.actions.add_action(actions.WritePv(pv, value, description))
 
     def add_shell_command(
             self, command, description="", directory="$(opi.dir)"):
-        self.actions.append(actions.ExecuteCommand(
+        self.actions.add_action(actions.ExecuteCommand(
                 command, description, directory))
 
     def add_open_opi(self, path, mode=actions.OpenOpi.STANDALONE, macros=None, parent_macros=True):
-        self.actions.append(actions.OpenOpi(path, mode, macros, parent_macros))
+        self.actions.add_action(actions.OpenOpi(path, mode, macros, parent_macros))
 
     def add_exit(self):
-        self.actions.append(actions.Exit())
+        self.actions.add_action(actions.Exit())
 
 
 class Display(Widget):
@@ -230,9 +230,9 @@ class ActionButton(ActionWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.ActionButton'
 
-    def __init__(self, x, y, width, height, text):
+    def __init__(self, x, y, width, height, text, hook_first=True, hook_all=False):
         super(ActionButton, self).__init__(
-            ActionButton.TYPE_ID, x, y, width, height)
+            ActionButton.TYPE_ID, x, y, width, height, hook_first, hook_all)
 
         self.text = text
 

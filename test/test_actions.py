@@ -2,6 +2,26 @@ from opimodel import actions, widgets
 import pytest
 
 
+def test_ActionsModel_obeys_sequence_protocol():
+    a = actions.ActionsModel()
+    assert len(a) == 0
+    assert not a
+    a.add_action('dummy')
+    assert len(a) == 1
+    assert a
+    assert a[0] == 'dummy'
+
+
+def test_widget_with_no_actions_does_not_have_an_actions_node(widget, get_renderer):
+    aw = widgets.ActionWidget('dummy_id', 0, 0, 0, 0)
+    assert len(aw.actions) == 0
+    widget.add_child(aw)
+    renderer = get_renderer(widget)
+    renderer.assemble()
+    actions_nodes = renderer.get_node().findall('./widget/actions')
+    assert len(actions_nodes) == 0
+
+
 @pytest.mark.parametrize('n', [0, 1, 2, 3])
 def test_adding_action_n_times_results_in_n_actions(widget, get_renderer, n):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
@@ -40,7 +60,7 @@ def test_ActionButton_adds_write_pv(widget, get_renderer):
     renderer.assemble()
     action_nodes = renderer.get_node().findall('./widget/actions/action')
     assert len(action_nodes) == 1
-    assert action_nodes[0].get('type') == 'EXECUTE_JAVASCRIPT'
+    assert action_nodes[0].get('type') == 'WRITE_PV'
     assert action_nodes[0].find('./pv_name').text == 'hello'
     assert action_nodes[0].find('./value').text == 'bye'
 
