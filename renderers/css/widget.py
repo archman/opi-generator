@@ -14,10 +14,10 @@ class OpiWidget(object):
 
     def render(self, model, parent):
         if parent is None:
-            node = et.Element(model._name)
+            node = et.Element(model.get_name())
         else:
-            node = et.SubElement(parent, model._name)
-        node.set('typeId', model._typeId)
+            node = et.SubElement(parent, model.get_name())
+        node.set('typeId', model.get_type_id())
         for var, val in sorted(vars(model).items()):
             if not var.startswith('_'):
                 self._renderers[var].render(node, var, val)

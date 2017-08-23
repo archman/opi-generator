@@ -34,8 +34,14 @@ class Widget(object):
         self._name = name
         self._children = []
         self._parent = None
-        self._typeId = type_id
+        self._type_id = type_id
         self.rules = []
+
+    def get_name(self):
+        return self._name
+
+    def get_type_id(self):
+        return self._type_id
 
     def get_parent(self):
         """Get the parent widget of this widget.
