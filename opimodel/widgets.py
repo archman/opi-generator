@@ -222,6 +222,7 @@ class TextInput(Widget):
             TextInput.TYPE_ID, x, y, width, height)
 
         self.pv_name = pv
+        self.horizontal_alignment = HAlign.CENTER
 
 
 class GroupingContainer(Widget):
