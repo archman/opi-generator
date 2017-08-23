@@ -3,13 +3,13 @@ import pytest
 import sys
 
 
-@pytest.mark.parametrize('input,output',
+@pytest.mark.parametrize('raw,mangled',
                          [('hello', 'HELLO'),
                           ('Hello:', 'HELLO_'),
                           ('Hello: Goodbye', 'HELLO_GOODBYE'),
                           ('Dummy 1', 'DUMMY_1')])
-def test_mangle_name_handles_various_cases(input, output):
-    assert utils.mangle_name(input) == output
+def test_mangle_name_handles_various_cases(raw, mangled):
+    assert utils.mangle_name(raw) == mangled
 
 
 def test_add_attr_to_module():
