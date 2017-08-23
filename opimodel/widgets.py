@@ -6,8 +6,9 @@ from opimodel import actions
 
 
 class HAlign(object):
-    """Enum describing horizontal alignment, typically used with the
-       horizontal_alignment property.
+    """Enum describing horizontal alignment
+
+    This is typically used with the horizontal_alignment property.
     """
     LEFT = 0
     CENTER = 1
