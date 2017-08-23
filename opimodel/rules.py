@@ -17,6 +17,12 @@ class Rule(object):
         self._prop_id = prop_id
         self._name = type(self).__name__ if name is None else name
 
+    def get_prop_id(self):
+        return self._prop_id
+
+    def get_name(self):
+        return self._name
+
 
 class BetweenRule(Rule):
 

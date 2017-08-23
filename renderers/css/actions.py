@@ -42,8 +42,8 @@ class OpiOpen(OpiAction):
         action_node = super(OpiOpen, self).render(actions_node, action_model)
         macros_node = et.SubElement(action_node, 'macros')
         parent_macros_node = et.SubElement(macros_node, 'include_parent_macros')
-        parent_macros_node.text = 'true' if action_model._parent_macros else 'false'
-        for key, value in action_model._macros.items():
+        parent_macros_node.text = 'true' if action_model.get_parent_macros() else 'false'
+        for key, value in action_model.get_macros().items():
             try:
                 key_node = et.SubElement(macros_node, key)
                 key_node.text = str(value)

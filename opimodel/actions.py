@@ -111,6 +111,12 @@ class OpenOpi(object):
         self._macros = {} if macros is None else macros
         self._parent_macros = parent_macros
 
+    def get_macros(self):
+        return self._macros
+
+    def get_parent_macros(self):
+        return self._parent_macros
+
 
 class Exit(object):
     """Action that closes the current opi."""
