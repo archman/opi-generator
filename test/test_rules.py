@@ -2,7 +2,6 @@ from opimodel import rules, colors
 
 
 def test_empty_RulesNode_does_not_create_rules_tag(widget, get_renderer):
-    widget.rules = []
     renderer = get_renderer(widget)
     output = str(renderer)
     assert not 'rules' in output
