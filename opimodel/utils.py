@@ -1,6 +1,3 @@
-import sys
-
-
 def mangle_name(name):
     """Convert the name found in a color or font configuration file into
        a Python variable:

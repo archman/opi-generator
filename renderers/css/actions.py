@@ -1,5 +1,5 @@
 import lxml.etree as et
-from opimodel import actions, utils
+from opimodel import actions
 from renderers.css import text
 
 
