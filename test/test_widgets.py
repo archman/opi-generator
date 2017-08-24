@@ -81,3 +81,18 @@ def test_Line_has_correct_attributes(display, get_renderer):
     assert '<points>' in output
     assert '<point x="10" y="100"/>' in output
     assert '<point x="50" y="20"/>' in output
+
+
+def test_ToggleButton_adds_actions_correctly():
+    tb = widgets.ToggleButton(0, 0, 10, 10, 'on', 'off')
+    tb.add_push_action('dummy1')
+    assert len(tb.actions) == 1
+    assert tb.actions[0] == 'dummy1'
+    assert tb.push_action_index == 0
+    assert tb.released_action_index != 0
+    tb.add_release_action('dummy2')
+    assert len(tb.actions) == 2
+    assert tb.actions[1] == 'dummy2'
+    assert tb.released_action_index == 1
+    assert tb.actions.get_hook_first() is True
+    assert tb.actions.get_hook_all() is False

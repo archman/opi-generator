@@ -258,7 +258,7 @@ class MenuButton(ActionWidget):
         self.label = text
 
 
-class ToggleButton(Widget):
+class ToggleButton(ActionWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.BoolButton'
 
@@ -266,7 +266,6 @@ class ToggleButton(Widget):
         super(ToggleButton, self).__init__(
             ToggleButton.TYPE_ID, x, y, width, height)
 
-        self.actions = []
         self.on_label = on_text
         self.off_label = off_text
         self.toggle_button = True
@@ -274,14 +273,16 @@ class ToggleButton(Widget):
         self.square_button = True
         self.show_boolean_label = True
         self.show_led = False
+        self.push_action_index = 0
+        self.released_action_index = 1
 
     def add_push_action(self, action):
-        self.actions.append(action)
+        self.actions.add_action(action)
         self.push_action_index = len(self.actions) - 1
 
     def add_release_action(self, action):
-        self.actions.append(action)
-        self.release_action_index = len(self.actions) - 1
+        self.actions.add_action(action)
+        self.released_action_index = len(self.actions) - 1
 
 
 class Led(Widget):
