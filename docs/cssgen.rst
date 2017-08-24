@@ -1,8 +1,8 @@
 cssgen package
-=============
+==============
 
 opimodel.actions
----------------
+-----------------------
 
 .. automodule:: opimodel.actions
     :members:
@@ -10,7 +10,7 @@ opimodel.actions
     :show-inheritance:
 
 opimodel.borders
----------------
+-----------------------
 
 .. automodule:: opimodel.borders
     :members:
@@ -18,7 +18,7 @@ opimodel.borders
     :show-inheritance:
 
 opimodel.colors
----------------
+-----------------------
 
 .. automodule:: opimodel.colors
     :members:
@@ -26,7 +26,7 @@ opimodel.colors
     :show-inheritance:
 
 opimodel.fonts
----------------
+-----------------------
 
 .. automodule:: opimodel.fonts
     :members:
@@ -34,7 +34,7 @@ opimodel.fonts
     :show-inheritance:
 
 opimodel.rules
----------------
+-----------------------
 
 .. automodule:: opimodel.rules
     :members:
@@ -42,7 +42,7 @@ opimodel.rules
     :show-inheritance:
 
 opimodel.utils
----------------
+-----------------------
 
 .. automodule:: opimodel.utils
     :members:
@@ -50,7 +50,7 @@ opimodel.utils
     :show-inheritance:
 
 opimodel.widgets
----------------
+-----------------------
 
 .. automodule:: opimodel.widgets
     :members:
@@ -58,7 +58,7 @@ opimodel.widgets
     :show-inheritance:
 
 renderers.css.actions
----------------
+-----------------------
 
 .. automodule:: renderers.css.actions
     :members:
@@ -66,7 +66,7 @@ renderers.css.actions
     :show-inheritance:
 
 renderers.css.borders
----------------
+-----------------------
 
 .. automodule:: renderers.css.borders
     :members:
@@ -74,7 +74,7 @@ renderers.css.borders
     :show-inheritance:
 
 renderers.css.colors
----------------
+-----------------------
 
 .. automodule:: renderers.css.colors
     :members:
@@ -82,7 +82,7 @@ renderers.css.colors
     :show-inheritance:
 
 renderers.css.fonts
----------------
+-----------------------
 
 .. automodule:: renderers.css.fonts
     :members:
@@ -90,7 +90,7 @@ renderers.css.fonts
     :show-inheritance:
 
 renderers.css.points
----------------
+-----------------------
 
 .. automodule:: renderers.css.points
     :members:
@@ -98,7 +98,7 @@ renderers.css.points
     :show-inheritance:
 
 renderers.css.render
----------------
+-----------------------
 
 .. automodule:: renderers.css.render
     :members:
@@ -106,7 +106,7 @@ renderers.css.render
     :show-inheritance:
 
 renderers.css.rules
----------------
+-----------------------
 
 .. automodule:: renderers.css.rules
     :members:
@@ -114,7 +114,7 @@ renderers.css.rules
     :show-inheritance:
 
 renderers.css.text
----------------
+-----------------------
 
 .. automodule:: renderers.css.text
     :members:
@@ -122,7 +122,7 @@ renderers.css.text
     :show-inheritance:
 
 renderers.css.widget
----------------
+-----------------------
 
 .. automodule:: renderers.css.widget
     :members:
