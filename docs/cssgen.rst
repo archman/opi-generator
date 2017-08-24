@@ -1,5 +1,5 @@
-cssgen package
-==============
+OPI Model package
+=================
 
 opimodel.actions
 -----------------------
@@ -56,6 +56,10 @@ opimodel.widgets
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+Renderer packages
+=================
 
 renderers.css.actions
 -----------------------

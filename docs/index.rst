@@ -1,18 +1,17 @@
-.. cssgen documentation master file, created by
-   sphinx-quickstart on Wed Aug 23 14:47:14 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to cssgen's documentation!
+CSSGEN
 ==================================
 
-Contents:
+Python code to generate OPI files for CS-Studio.
+
+For a guide to general usage and examples first see the
+`Github Page <https://github.com/dls-controls/cssgen>`_.
+Once you have a project setup use the comprehensive list
+of model widgets below to build your displays.
 
 .. toctree::
    :maxdepth: 2
 
    cssgen
-
 
 
 Indices and tables
