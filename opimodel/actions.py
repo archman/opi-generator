@@ -112,9 +112,19 @@ class OpenOpi(object):
         self._parent_macros = parent_macros
 
     def get_macros(self):
+        """Get the macros dict.
+
+        Returns:
+            dict: the macros dict
+        """
         return self._macros
 
     def get_parent_macros(self):
+        """Get whether parent macros should be inherited.
+
+        Returns:
+            boolean: whether parent macros should be inherited
+        """
         return self._parent_macros
 
 

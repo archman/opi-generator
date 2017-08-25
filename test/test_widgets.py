@@ -1,4 +1,5 @@
 from opimodel import widgets
+import pytest
 
 
 def test_widget_render_contains_correct_values(widget, get_renderer):
@@ -26,6 +27,18 @@ def test_Display_render_contains_child_widgets(display, get_renderer):
     renderer.assemble()
     output = str(renderer)
     assert 'typeId="org.csstudio.opibuilder.widgets.Rectangle"' in output
+
+
+@pytest.mark.parametrize('widget_type', (widgets.TextMonitor,
+                                         widgets.TextInput))
+def test_text_widgets_have_correct_attributes(display, get_renderer, widget_type):
+    tb = widget_type(10, 10, 20, 20, 'pvname')
+    display.add_child(tb)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert '<pv_name>pvname</pv_name>' in output
+    assert '<horizontal_alignment>1</horizontal_alignment>' in output
 
 
 def test_ToggleButton_has_correct_attributes(display, get_renderer):
@@ -58,6 +71,7 @@ def test_Byte_has_correct_attributes(display, get_renderer):
     assert '<numBits>3</numBits>' in output
     assert 'startBit' not in output
 
+
 def test_Byte_includes_start_bit_if_specified(display, get_renderer):
     byte = widgets.Byte(10, 10, 20, 20, 'TEST', 3, start_bit=5)
     display.add_child(byte)
@@ -67,6 +81,7 @@ def test_Byte_includes_start_bit_if_specified(display, get_renderer):
     assert '<pv_name>TEST</pv_name>' in output
     assert '<numBits>3</numBits>' in output
     assert '<startBit>5</startBit>' in output
+
 
 def test_Line_has_correct_attributes(display, get_renderer):
     byte = widgets.Line(10, 100, 50, 20)
@@ -79,3 +94,18 @@ def test_Line_has_correct_attributes(display, get_renderer):
     assert '<points>' in output
     assert '<point x="10" y="100"/>' in output
     assert '<point x="50" y="20"/>' in output
+
+
+def test_ToggleButton_adds_actions_correctly():
+    tb = widgets.ToggleButton(0, 0, 10, 10, 'on', 'off')
+    tb.add_push_action('dummy1')
+    assert len(tb.actions) == 1
+    assert tb.actions[0] == 'dummy1'
+    assert tb.push_action_index == 0
+    assert tb.released_action_index != 0
+    tb.add_release_action('dummy2')
+    assert len(tb.actions) == 2
+    assert tb.actions[1] == 'dummy2'
+    assert tb.released_action_index == 1
+    assert tb.actions.get_hook_first() is True
+    assert tb.actions.get_hook_all() is False
