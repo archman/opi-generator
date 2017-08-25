@@ -96,6 +96,27 @@ def test_Line_has_correct_attributes(display, get_renderer):
     assert '<point x="50" y="20"/>' in output
 
 
+def test_ActionWidget_renders_hook_attributes_correctly(display, get_renderer):
+    aw = widgets.ActionWidget('dummy', 10, 100, 50, 20)
+    aw.add_exit()
+    display.add_child(aw)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert 'hook="true"' in output
+    assert 'hook_all="false"' in output
+    aw.actions.set_hook_all(True)
+    renderer.assemble()
+    output = str(renderer)
+    assert 'hook="true"' in output
+    assert 'hook_all="true"' in output
+    aw.actions.set_hook_first(False)
+    renderer.assemble()
+    output = str(renderer)
+    assert 'hook="false"' in output
+    assert 'hook_all="true"' in output
+
+
 def test_ToggleButton_adds_actions_correctly():
     tb = widgets.ToggleButton(0, 0, 10, 10, 'on', 'off')
     tb.add_push_action('dummy1')
