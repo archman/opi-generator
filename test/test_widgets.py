@@ -1,4 +1,5 @@
 from opimodel import widgets
+import pytest
 
 
 def test_widget_render_contains_correct_values(widget, get_renderer):
@@ -26,6 +27,18 @@ def test_Display_render_contains_child_widgets(display, get_renderer):
     renderer.assemble()
     output = str(renderer)
     assert 'typeId="org.csstudio.opibuilder.widgets.Rectangle"' in output
+
+
+@pytest.mark.parametrize('widget_type', (widgets.TextMonitor,
+                                         widgets.TextInput))
+def test_text_widgets_have_correct_attributes(display, get_renderer, widget_type):
+    tb = widget_type(10, 10, 20, 20, 'pvname')
+    display.add_child(tb)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert '<pv_name>pvname</pv_name>' in output
+    assert '<horizontal_alignment>1</horizontal_alignment>' in output
 
 
 def test_ToggleButton_has_correct_attributes(display, get_renderer):
