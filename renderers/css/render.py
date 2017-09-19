@@ -8,6 +8,7 @@ from renderers.css.rules import OpiRule
 from renderers.css.text import OpiText
 from renderers.css.widget import OpiWidget
 from renderers.css.points import OpiPoints
+from renderers.css.scalings import OpiScaling, OpiDisplayScaling
 
 
 def get_opi_renderer(widget):
@@ -31,6 +32,9 @@ def get_opi_renderer(widget):
     wr.add_renderer('border', OpiBorder(tr, cr))
 
     wr.add_renderer('font', OpiFont())
+
+    wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
+    wr.add_renderer('scale_options', OpiScaling(tr))
 
     wr.add_renderer('points', OpiPoints())
     return OpiRenderer(widget, wr)
