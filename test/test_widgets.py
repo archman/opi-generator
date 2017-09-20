@@ -29,6 +29,28 @@ def test_Display_render_contains_child_widgets(display, get_renderer):
     assert 'typeId="org.csstudio.opibuilder.widgets.Rectangle"' in output
 
 
+def test_Display_render_contains_default_autoscale_options(display, get_renderer):
+    display.add_scale_options()
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert "<auto_scale_widgets>" in output
+    assert "<min_width>-1</min_width>" in output
+    assert "<min_height>-1</min_height>" in output
+    assert "<auto_scale_widgets>false</auto_scale_widgets>" in output
+
+
+def test_Display_render_sets_custom_scale_options(display, get_renderer):
+    display.add_scale_options(min_width=10, min_height=20, autoscale=True)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert "<auto_scale_widgets>" in output
+    assert "<min_width>10</min_width>" in output
+    assert "<min_height>20</min_height>" in output
+    assert "<auto_scale_widgets>true</auto_scale_widgets>" in output
+
+
 @pytest.mark.parametrize('widget_type', (widgets.TextMonitor,
                                          widgets.TextInput))
 def test_text_widgets_have_correct_attributes(display, get_renderer, widget_type):
@@ -130,3 +152,29 @@ def test_ToggleButton_adds_actions_correctly():
     assert tb.released_action_index == 1
     assert tb.actions.get_hook_first() is True
     assert tb.actions.get_hook_all() is False
+
+
+def test_GroupBox_render_contains_default_autoscale_options(display, get_renderer):
+    gp = widgets.GroupingContainer(0, 0, 100, 100)
+    gp.add_scale_options()
+    display.add_child(gp)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert "<scale_options>" in output
+    assert "<width_scalable>true</width_scalable>" in output
+    assert "<height_scalable>true</height_scalable>" in output
+    assert "<keep_wh_ratio>false</keep_wh_ratio>" in output
+
+
+def test_GroupBox_render_sets_custom_scale_options(display, get_renderer):
+    gp = widgets.GroupingContainer(0, 0, 100, 100)
+    gp.add_scale_options(width=False, height=False, keep_wh_ratio=True)
+    display.add_child(gp)
+    renderer = get_renderer(display)
+    renderer.assemble()
+    output = str(renderer)
+    assert "<scale_options>" in output
+    assert "<width_scalable>false</width_scalable>" in output
+    assert "<height_scalable>false</height_scalable>" in output
+    assert "<keep_wh_ratio>true</keep_wh_ratio>" in output

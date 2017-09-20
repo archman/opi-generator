@@ -2,7 +2,7 @@
 Module containing widgets to describe opi files.  An opi has a root widget
 of type Display.  To create the opi, add widgets as children of this widget.
 """
-from opimodel import actions
+from opimodel import actions, scalings
 
 
 class HAlign(object):
@@ -120,6 +120,16 @@ class Widget(object):
         """
         self.rules.append(rule)
 
+    def add_scale_options(self, width=True, height=True, keep_wh_ratio=False):
+        """Add scale options to the widget.
+
+        Args:
+            width (bool): True if widget width is scalable
+            height (bool): True if widget height is scalable
+            keep_wh_ratio (bool):
+        """
+        self.scale_options = scalings.ScaleOptions(width, height, keep_wh_ratio)
+
 
 class ActionWidget(Widget):
     """
@@ -167,6 +177,16 @@ class Display(Widget):
                                       name='display')
         self.auto_zoom_to_fit_all = False
         self.show_grid = True
+
+    def add_scale_options(self, min_width=-1, min_height=-1, autoscale=False):
+        """Add scale options to the display.
+
+        Args:
+            min_width (int): Display min width, -1 for no scaling
+            min_height (int): Display min height, -1 for no scaling
+            autoscale (bool): Autoscale child widgets
+        """
+        self.auto_scale_widgets = scalings.DisplayScaleOptions(min_width, min_height, autoscale)
 
 
 class Rectangle(Widget):
