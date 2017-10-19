@@ -189,7 +189,7 @@ class Display(Widget):
         self.auto_scale_widgets = scalings.DisplayScaleOptions(min_width, min_height, autoscale)
 
 
-class Rectangle(Widget):
+class Rectangle(ActionWidget):
 
     ID = 'org.csstudio.opibuilder.widgets.Rectangle'
 
