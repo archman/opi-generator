@@ -54,41 +54,98 @@ class BetweenRule(Rule):
 
 class GreaterThanRule(Rule):
 
-    def __init__(self, prop_id, pv, threshold, name=None):
-        """ Construct an rule setting the specified boolean property
-                - True if pv > threshold
-                - False otherwise
+    def __init__(self, prop_id, pv, threshold, name=None,
+                 val=True, false_val=False, sevr_options=None):
+        """ Construct an rule setting the specified boolean property.
+
+            In the created rule the sevr_options are tested before the
+            val_options.
+            e.g.:
+
+            widget.rules = []
+            opts = [(-1, colors.INVALID), (1, colors.MAJOR), (2, colors.MINOR)]
+            widget.rules.append(
+                rules.GreaterThanRule('on_color', pv_name, 0.5,
+                    val=colors.GREEN,
+                    false_val=colors.RED,
+                    sevr_options=opts)
+
+            In the created rule the sevr_options are tested before the
+            val_options:
+                if pvSev0 == -1:
+                    col = colors.INVALID
+                elseif pvSev0 == 1:
+                    col = colors.MAJOR
+                elseif pvSev0 == 2:
+                    col = colors.MINOR
+                elseif pv0 > 0.5:
+                    col = colors.RED
+                else:
+                    col = colors.GREEN
+
 
         Args:
             prop_id: Widget property to set
             pv: Controlling PV
             threshold: Threshold value
             name (optional): Rule Name as displayed in CSS OPIEditor
+            val (optional): PV value to set if pv > threshold, default TRUE
+            false_val (optional):
+                PV value to set if pv <= threshold, default FALSE
+            sevr_options (optional):
+                List of tuples (int, widget value) applied to PV severity
         """
         super(GreaterThanRule, self).__init__(prop_id, name)
         self._pv = pv
         self._threshold = threshold
+        self._true_val = val
+        self._false_val = false_val
+        self._sevr_options = sevr_options
 
 
 class SelectionRule(Rule):
 
-    def __init__(self, prop_id, pv, options, var=PV_VAL, name=None):
+    def __init__(self, prop_id, pv, name=None,
+                 val_options=None, sevr_options=None, else_val=None):
         """ Simple selection rule setting specified property to one of a
             number of possible values based on the pv value, e.g.:
 
             widget.rules = []
-            options = [(-1, colors.INVALID), (1, colors.MAJOR), (2, colors.MINOR)]
+            opts = [(-1, colors.INVALID), (1, colors.MAJOR), (2, colors.MINOR)]
+            val_opts = [(10, colors.RED), (20, colors.BLUE)]
             widget.rules.append(
-                rules.SelectionRule('on_color', pv_name, options, var=PV_SEVR))
+                rules.SelectionRule('on_color', pv_name,
+                    val_options=val_opts,
+                    sevr_options=opts,
+                    else_val=colors.GREEN)
+
+            In the created rule the sevr_options are tested before the
+            val_options:
+                if pvSev0 == -1:
+                    col = colors.INVALID
+                elseif pvSev0 == 1:
+                    col = colors.MAJOR
+                elseif pvSev0 == 2:
+                    col = colors.MINOR
+                elseif pv0 == 10:
+                    col = colors.RED
+                elseif pv0 == 20:
+                    col = colours.BLUE
+                else:
+                    col = colours.GREEN
 
         Args:
             prop_id: Widget property to set
             pv: Controlling PV
-            options: List of tuples (value, widget value)
-            var: Variable to use (pv0 for value, pvSev0 for alarm severity)
             name (optional): Rule Name as displayed in CSS OPIEditor
+            val_options (optional):
+                List of tuples (value, widget value) applied to PV value
+            sevr_options (optional):
+                List of tuples (value, widget value) applied to PV severity
+            else_val (optional): widget value to use as an else clause
         """
         super(SelectionRule, self).__init__(prop_id, name)
         self._pv = pv
-        self._options = options
-        self._var = var
+        self._else = else_val
+        self._sevr_options = sevr_options
+        self._val_options = val_options
