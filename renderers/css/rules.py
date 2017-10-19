@@ -86,5 +86,3 @@ class OpiRule(object):
             self._color.render(exp_node, 'value', prop_val)
         else:
             self._text.render(exp_node, 'value', prop_val)
-            # val_node = et.SubElement(exp_node, 'value')
-            # val_node.text = str(prop_val)
