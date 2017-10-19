@@ -79,19 +79,13 @@ class GreaterThanRule(Rule):
 
 class SelectionRule(Rule):
 
-    def __init__(self, prop_id, pv, options=None, var=PV_VAL, name=None,
-                 sevr_options=None, val_options=None, else_val=None):
+    def __init__(self, prop_id, pv, name=None,
+                 val_options=None, sevr_options=None, else_val=None):
         """ Simple selection rule setting specified property to one of a
             number of possible values based on the pv value, e.g.:
 
             widget.rules = []
             options = [(-1, colors.INVALID), (1, colors.MAJOR), (2, colors.MINOR)]
-            widget.rules.append(
-                rules.SelectionRule('on_color', pv_name, options, var=PV_SEVR))
-
-            Note: the var,options API will be deprecated. Use sevr_options and
-            val_options instead:
-
             widget.rules.append(
                 rules.SelectionRule('on_color', pv_name, sevr_options=options)
 
@@ -102,8 +96,6 @@ class SelectionRule(Rule):
             prop_id: Widget property to set
             pv: Controlling PV
             name (optional): Rule Name as displayed in CSS OPIEditor
-            options [deprecated]: List of tuples (value, widget value)
-            var [deprecated]: Variable to use (pv0 for value, pvSev0 for alarm severity)
             val_options (optional): List of tuples (value, widget value) applied to PV value
             sevr_options (optional): List of tuples (value, widget value) applied to PV severity
             else_value (optional): widget value to use as an else clause
@@ -111,14 +103,5 @@ class SelectionRule(Rule):
         super(SelectionRule, self).__init__(prop_id, name)
         self._pv = pv
         self._else = else_val
-        # support deprecated options,var API
-        if options is not None:
-            if var == PV_VAL:
-                self._val_options = options
-                self._sevr_options = None
-            else:
-                self._val_options = None
-                self._sevr_options = options
-        else:
-            self._sevr_options = sevr_options
-            self._val_options = val_options
+        self._sevr_options = sevr_options
+        self._val_options = val_options

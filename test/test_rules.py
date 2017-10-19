@@ -165,7 +165,7 @@ def test_between_rule_both_open_0_lt_x_lt_5(widget, get_renderer):
 
 def test_selection_rule_one_string_value(widget, get_renderer):
     widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', [('1', 'strval')], name="stringSelection"))
+        'test_property', 'dummy_pv', val_options=[('1', 'strval')], name="stringSelection"))
 
     renderer = get_renderer(widget)
     renderer.assemble()
@@ -183,7 +183,7 @@ def test_selection_rule_one_string_value(widget, get_renderer):
 
 def test_selection_rule_default_name(widget, get_renderer):
     widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', [('1', 'strval')]))
+        'test_property', 'dummy_pv', val_options=[('1', 'strval')]))
 
     renderer = get_renderer(widget)
     renderer.assemble()
@@ -193,7 +193,7 @@ def test_selection_rule_default_name(widget, get_renderer):
 
 def test_selection_rule_one_string_value_using_severity(widget, get_renderer):
     widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', [('1', 'strval')], var=rules.PV_SEVR))
+        'test_property', 'dummy_pv', sevr_options=[('1', 'strval')]))
 
     renderer = get_renderer(widget)
     renderer.assemble()
@@ -210,7 +210,7 @@ def test_selection_rule_one_string_value_using_severity(widget, get_renderer):
 
 def test_selection_rule_two_string_value(widget, get_renderer):
     widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', [('1', 'val_one'), ('2', 'val_two')]))
+        'test_property', 'dummy_pv', val_options=[('1', 'val_one'), ('2', 'val_two')]))
 
     renderer = get_renderer(widget)
     renderer.assemble()
@@ -231,7 +231,7 @@ def test_selection_rule_two_string_value(widget, get_renderer):
 
 def test_selection_rule_one_string_value_numeric_test(widget, get_renderer):
     widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', [(1, 'val_one')]))
+        'test_property', 'dummy_pv', val_options=[(1, 'val_one')]))
 
     renderer = get_renderer(widget)
     renderer.assemble()
@@ -249,7 +249,7 @@ def test_selection_rule_one_string_value_numeric_test(widget, get_renderer):
 def test_selection_rule_one_color_value(widget, get_renderer):
     col = colors.Color(rgb=(64, 128, 32), name="murky green")
     widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', [(1, col)]))
+        'test_property', 'dummy_pv', val_options=[(1, col)]))
 
     renderer = get_renderer(widget)
     renderer.assemble()
