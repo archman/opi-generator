@@ -328,3 +328,14 @@ class Byte(Widget):
         self.led_packed = True
         if start_bit is not None:
             self.startBit = start_bit
+
+
+class Symbol(ActionWidget):
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.edm.symbolwidget'
+
+    def __init__(self, x, y, width, height, pv, image_file, image_width, image_index=0):
+        super(Symbol, self).__init__(Symbol.TYPE_ID, x, y, width, height)
+        self.pv_name = pv
+        self.image_file = image_file
+        self.image_index = image_index
+        self.sub_image_width = image_width
