@@ -25,6 +25,14 @@ class OpiRule(object):
             self._render_greater_than(rule_model)
         elif isinstance(rule_model, rules.SelectionRule):
             self._render_selection(rule_model)
+        elif isinstance(rule_model, rules.RawRule):
+            self._render_raw(rule_model)
+
+    def _render_raw(self, rule_model):
+        raw_block = et.fromstring(rule_model._raw_xml)
+
+        for child in raw_block.getchildren():
+            self.rule_node.append(child)
 
     def _render_between(self, rule_model):
         """ Write the between rule:
