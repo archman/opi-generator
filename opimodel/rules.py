@@ -24,6 +24,21 @@ class Rule(object):
         return self._name
 
 
+class RawRule(Rule):
+    def __init__(self, prop_id, rule_xml, name=None):
+        """ Construct a rule using logic specified in the rule
+
+            `rule_xml` argument must be correctly formatted XML wrapped in
+            a `rule_body` tag:
+                <rule_body>
+                  <exp ..."><value></value></exp>'
+                  <pv_name...>
+                </rule_body>
+        """
+        super(RawRule, self).__init__(prop_id, name)
+        self._raw_xml = rule_xml
+
+
 class BetweenRule(Rule):
 
     def __init__(self, prop_id, pv, min_val, max_val,
