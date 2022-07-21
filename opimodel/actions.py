@@ -96,7 +96,7 @@ class OpenOpi(object):
     NEW_WORKBENCH = 7
     STANDALONE = 8
 
-    def __init__(self, path, mode=STANDALONE, macros=None, parent_macros=True):
+    def __init__(self, path, mode=STANDALONE, description=None, macros=None, parent_macros=True):
         """
         Construct OpenOpi action.
 
@@ -110,6 +110,7 @@ class OpenOpi(object):
         self.mode = mode
         self._macros = {} if macros is None else macros
         self._parent_macros = parent_macros
+        self.description = '' if description is None else description
 
     def get_macros(self):
         """Get the macros dict.
