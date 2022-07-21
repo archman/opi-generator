@@ -3,9 +3,30 @@ Module containing widgets to describe opi files.  An opi has a root widget
 of type Display.  To create the opi, add widgets as children of this widget.
 """
 from opimodel import actions, scalings
+from opimodel.colors import Color
 
 
-class HAlign(object):
+class FormatStyle:
+    DEFAULT = 0
+    DECIMAL = 1
+    EXPONENTIAL = 2
+    HEX_32 = 3
+    STRING = 4
+    HEX_64 = 5
+    COMPACT = 6
+    ENGINEERING = 7
+    SEXAGESIMAL = 8
+    SEXAGESIMAL_HMS = 9
+    SEXAGESIMAL_DMS = 10
+
+
+class BasicStyle:
+    # ActionButton, TextInput
+    CLASSIC = 0
+    NATIVE = 1
+
+
+class HAlign:
     """Enum describing horizontal alignment
 
     This is typically used with the horizontal_alignment property.
@@ -15,7 +36,7 @@ class HAlign(object):
     RIGHT = 2
 
 
-class VAlign(object):
+class VAlign:
     """Enum describing vertical alignment
 
     This is typically used with the vertical_alignment property.
@@ -23,6 +44,13 @@ class VAlign(object):
     TOP = 0
     MIDDLE = 1
     BOTTOM = 2
+
+HA_RIGHT = HAlign.RIGHT
+HA_CENTER = HAlign.CENTER
+HA_LEFT = HAlign.LEFT
+VA_TOP = VAlign.TOP
+VA_MIDDLE = VAlign.MIDDLE
+VA_BOTTOM = VAlign.BOTTOM
 
 
 class Widget(object):
@@ -139,7 +167,7 @@ class Widget(object):
             keep_wh_ratio (bool):
         """
         self.scale_options = scalings.ScaleOptions(width, height, keep_wh_ratio)
-    
+
 
 class ActionWidget(Widget):
     """
@@ -173,6 +201,15 @@ class ActionWidget(Widget):
 
     def add_exit(self):
         self.actions.add_action(actions.Exit())
+
+    def set_basic_style(self, style):
+        if style == BasicStyle.CLASSIC:
+            self.alarm_pulsing = False
+            self.backcolor_alarm_sensitive = False
+            self.set_bg_color(Color((218, 218, 218), 'ControlAndButtons Background'))
+            self.style = style
+        else: # NATIVE
+            self.style = style
 
 
 class Display(Widget):
@@ -249,12 +286,16 @@ class TextInput(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.TextInput'
 
-    def __init__(self, x, y, width, height, pv):
+    def __init__(self, x, y, width, height, pv, style=None):
         super(TextInput, self).__init__(
             TextInput.TYPE_ID, x, y, width, height)
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
+        if style is None:
+            self.style = BasicStyle.CLASSIC
+        else:
+            self.style = style
 
 TextEntry = TextInput
 
@@ -280,17 +321,17 @@ class TabContainer(Widget):
         self.transparent = True
 
 
-
-
 class ActionButton(ActionWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.ActionButton'
 
-    def __init__(self, x, y, width, height, text, hook_first=True, hook_all=False):
+    def __init__(self, x, y, width, height, text, style=None, hook_first=True, hook_all=False):
         super(ActionButton, self).__init__(
             ActionButton.TYPE_ID, x, y, width, height, hook_first, hook_all)
 
         self.text = text
+        if style is not None:
+            self.set_basic_style(_style)
 
 
 class MenuButton(ActionWidget):
