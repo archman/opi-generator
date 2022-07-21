@@ -5,7 +5,7 @@ PV_SEVR = "pvSev0"
 
 class Rule(object):
 
-    def __init__(self, prop_id, name=None):
+    def __init__(self, prop_id, name=None, out_exp='false'):
         """ Base class for rules.
 
             If no `name` is provided the Rule class name is used.
@@ -16,6 +16,7 @@ class Rule(object):
         """
         self._prop_id = prop_id
         self._name = type(self).__name__ if name is None else name
+        self._out_exp = out_exp
 
     def get_prop_id(self):
         return self._prop_id
@@ -23,9 +24,12 @@ class Rule(object):
     def get_name(self):
         return self._name
 
+    def get_out_exp(self):
+        return self._out_exp
+
 
 class RawRule(Rule):
-    def __init__(self, prop_id, rule_xml, name=None):
+    def __init__(self, prop_id, rule_xml, name=None, out_exp='false'):
         """ Construct a rule using logic specified in the rule
 
             `rule_xml` argument must be correctly formatted XML wrapped in
@@ -35,14 +39,14 @@ class RawRule(Rule):
                   <pv_name...>
                 </rule_body>
         """
-        super(RawRule, self).__init__(prop_id, name)
+        super(RawRule, self).__init__(prop_id, name, out_exp)
         self._raw_xml = rule_xml
 
 
 class BetweenRule(Rule):
 
     def __init__(self, prop_id, pv, min_val, max_val,
-             min_equals=True, max_equals=True, name=None):
+             min_equals=True, max_equals=True, name=None, out_exp='false'):
         """ Construct an rule setting the specified boolean property
                 - True if min_val <= pv <= max_val
                 - False otherwise
@@ -59,7 +63,7 @@ class BetweenRule(Rule):
             max_equals: True if range is inclusive at upper end
             name (optional): Rule Name as displayed in CSS OPIEditor
         """
-        super(BetweenRule, self).__init__(prop_id, name)
+        super(BetweenRule, self).__init__(prop_id, name, out_exp)
         self._pv = pv
         self._min = min_val
         self._max = max_val
@@ -70,7 +74,7 @@ class BetweenRule(Rule):
 class GreaterThanRule(Rule):
 
     def __init__(self, prop_id, pv, threshold, name=None,
-                 val=True, false_val=False, sevr_options=None):
+                 val=True, false_val=False, sevr_options=None, out_exp='false'):
         """ Construct an rule setting the specified boolean property.
 
             In the created rule the sevr_options are tested before the
@@ -110,7 +114,7 @@ class GreaterThanRule(Rule):
             sevr_options (optional):
                 List of tuples (int, widget value) applied to PV severity
         """
-        super(GreaterThanRule, self).__init__(prop_id, name)
+        super(GreaterThanRule, self).__init__(prop_id, name, out_exp)
         self._pv = pv
         self._threshold = threshold
         self._true_val = val
@@ -121,7 +125,10 @@ class GreaterThanRule(Rule):
 class SelectionRule(Rule):
 
     def __init__(self, prop_id, pv, name=None,
-                 val_options=None, sevr_options=None, else_val=None):
+                 val_options=None, sevr_options=None, else_val=None, out_exp='false',
+                 auto_fill_val=True):
+        # if auto_fill_val is True, expand boo_exp with "pv0" or "pvSev0" with val_options,
+        # otherwise, only put val_options.
         """ Simple selection rule setting specified property to one of a
             number of possible values based on the pv value, e.g.:
 
@@ -159,8 +166,12 @@ class SelectionRule(Rule):
                 List of tuples (value, widget value) applied to PV severity
             else_val (optional): widget value to use as an else clause
         """
-        super(SelectionRule, self).__init__(prop_id, name)
+        super(SelectionRule, self).__init__(prop_id, name, out_exp)
         self._pv = pv
         self._else = else_val
         self._sevr_options = sevr_options
         self._val_options = val_options
+        self._auto_fill_val = auto_fill_val
+
+    def get_auto_fill_val(self):
+        return self._auto_fill_val

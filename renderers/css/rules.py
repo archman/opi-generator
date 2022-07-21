@@ -19,6 +19,7 @@ class OpiRule(object):
         self.rule_node = et.SubElement(rules_node, 'rule')
         self.rule_node.set('prop_id', rule_model.get_prop_id())
         self.rule_node.set('name', rule_model.get_name())
+        self.rule_node.set('out_exp', rule_model.get_out_exp())
         if isinstance(rule_model, rules.BetweenRule):
             self._render_between(rule_model)
         elif isinstance(rule_model, rules.GreaterThanRule):
@@ -75,14 +76,21 @@ class OpiRule(object):
         pv_node = et.SubElement(self.rule_node, 'pv')
         pv_node.set('trig', 'true')
         pv_node.text = rule_model._pv
+        auto_fill_val = rule_model.get_auto_fill_val()
 
         if rule_model._sevr_options is not None:
             for (pv_val, prop_val) in rule_model._sevr_options:
-                self._render_value('{} == {}'.format(rules.PV_SEVR, pv_val), prop_val)
+                if auto_fill_val:
+                    self._render_value('{} == {}'.format(rules.PV_SEVR, pv_val), prop_val)
+                else:
+                    self._render_value(f'{pv_val}', prop_val)
 
         if rule_model._val_options is not None:
             for (pv_val, prop_val) in rule_model._val_options:
-                self._render_value('{} == {}'.format(rules.PV_VAL, pv_val), prop_val)
+                if auto_fill_val:
+                    self._render_value('{} == {}'.format(rules.PV_VAL, pv_val), prop_val)
+                else:
+                    self._render_value(f'{pv_val}', prop_val)
 
         if rule_model._else is not None:
             self._render_value('true', rule_model._else)
