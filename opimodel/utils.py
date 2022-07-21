@@ -38,3 +38,14 @@ def add_attr_to_module(name, value, module):
     if hasattr(module, var):
         print('Warning: overwriting variable {} in module {}'.format(var, module))
     setattr(module, var, value)
+
+
+
+FORMAT_TYPE_STR = [
+    "Default", "Decimal", "Exponential",
+    "Hex 32", "String", "Hex 64",
+    "Compact", "Engineering",
+    "Sexagesimal", "Sexagesimal HMS", "Sexagesimal DMS"
+]
+
+FORMAT_TYPE_MAP = {t:i for i, t in enumerate(FORMAT_TYPE_STR)}
