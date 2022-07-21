@@ -15,6 +15,16 @@ class HAlign(object):
     RIGHT = 2
 
 
+class VAlign(object):
+    """Enum describing vertical alignment
+
+    This is typically used with the vertical_alignment property.
+    """
+    TOP = 0
+    MIDDLE = 1
+    BOTTOM = 2
+
+
 class Widget(object):
     """Base class for any widget to extend.
 
@@ -129,7 +139,7 @@ class Widget(object):
             keep_wh_ratio (bool):
         """
         self.scale_options = scalings.ScaleOptions(width, height, keep_wh_ratio)
-
+    
 
 class ActionWidget(Widget):
     """
@@ -158,8 +168,8 @@ class ActionWidget(Widget):
         self.actions.add_action(actions.ExecuteCommand(
                 command, description, directory))
 
-    def add_open_opi(self, path, mode=actions.OpenOpi.STANDALONE, macros=None, parent_macros=True):
-        self.actions.add_action(actions.OpenOpi(path, mode, macros, parent_macros))
+    def add_open_opi(self, path, mode=actions.OpenOpi.STANDALONE, description=None, macros=None, parent_macros=True):
+        self.actions.add_action(actions.OpenOpi(path, mode, description, macros, parent_macros))
 
     def add_exit(self):
         self.actions.add_action(actions.Exit())
@@ -232,6 +242,8 @@ class TextMonitor(Widget):
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
 
+TextUpdate = TextMonitor
+
 
 class TextInput(Widget):
 
@@ -244,6 +256,8 @@ class TextInput(Widget):
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
 
+TextEntry = TextInput
+
 
 class GroupingContainer(Widget):
 
@@ -254,6 +268,18 @@ class GroupingContainer(Widget):
             GroupingContainer.TYPE_ID, x, y, width, height)
         self.lock_children = True
         self.transparent = True
+
+class TabContainer(Widget):
+
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.tab'
+
+    def __init__(self, x, y, width, height):
+        super(TabContainer, self).__init__(
+            TabContainer.TYPE_ID, x, y, width, height)
+        self.lock_children = True
+        self.transparent = True
+
+
 
 
 class ActionButton(ActionWidget):
@@ -276,6 +302,18 @@ class MenuButton(ActionWidget):
             MenuButton.TYPE_ID, x, y, width, height)
 
         self.label = text
+
+
+class CheckBox(ActionWidget):
+
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.checkbox'
+
+    def __init__(self, x, y, width, height, text, pv_name):
+        super(CheckBox, self).__init__(
+            CheckBox.TYPE_ID, x, y, width, height)
+
+        self.label = text
+        self.pv_name = pv_name
 
 
 class ToggleButton(ActionWidget):
@@ -339,3 +377,15 @@ class Symbol(ActionWidget):
         self.image_file = image_file
         self.image_index = image_index
         self.sub_image_width = image_width
+
+
+# Tank
+class Tank(Widget):
+
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.tank'
+
+    def __init__(self, x, y, width, height, pv):
+        super(Tank, self).__init__(Tank.TYPE_ID, x, y, width, height)
+        self.pv_name = pv
+
+
