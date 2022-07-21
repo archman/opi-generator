@@ -62,4 +62,4 @@ class OpiRenderer(object):
     def write_to_file(self, filename):
         self.assemble()
         tree = et.ElementTree(self._node)
-        tree.write(filename, pretty_print=True)
+        tree.write(filename, pretty_print=True, encoding='UTF-8', xml_declaration=True)
