@@ -203,6 +203,7 @@ class ActionWidget(Widget):
         self.actions.add_action(actions.Exit())
 
     def set_basic_style(self, style):
+        # does not work well
         if style == BasicStyle.CLASSIC:
             self.alarm_pulsing = False
             self.backcolor_alarm_sensitive = False
@@ -292,10 +293,8 @@ class TextInput(Widget):
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
-        if style is None:
-            self.style = BasicStyle.CLASSIC
-        else:
-            self.style = style
+        if style is not None:
+            self.set_basic_style(style)
 
 TextEntry = TextInput
 
@@ -331,7 +330,7 @@ class ActionButton(ActionWidget):
 
         self.text = text
         if style is not None:
-            self.set_basic_style(_style)
+            self.set_basic_style(style)
 
 
 class MenuButton(ActionWidget):
