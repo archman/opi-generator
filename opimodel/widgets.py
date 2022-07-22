@@ -6,11 +6,11 @@ from opimodel import actions, scalings
 from opimodel.colors import Color
 
 
-class ResizeBehavior:
+class ResizeBehaviour:
     # for LinkingContainer
     RESIZE_OPI_TO_FIT_CONTAINER = 0 # Size *.opi to fit the container
     RESIZE_CONTAINER_TO_FIT_OPI = 1 # Size the container to fit *.opi
-    CROP = 2 # Don't resize anything, crop if *.opi too large
+    CROP = 2     # Don't resize anything, crop if *.opi too large
     SCROLL = 3   # Don't resize anything, add scrollbars if *.opi too large
 
 
@@ -317,15 +317,30 @@ class GroupingContainer(Widget):
         self.lock_children = True
         self.transparent = True
 
-class TabContainer(Widget):
+
+class TabbedContainer(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.tab'
 
     def __init__(self, x, y, width, height):
-        super(TabContainer, self).__init__(
-            TabContainer.TYPE_ID, x, y, width, height)
-        self.lock_children = True
+        super(TabbedContainer, self).__init__(
+            TabbedContainer.TYPE_ID, x, y, width, height)
         self.transparent = True
+        self.tab_count = 0
+
+    def add_tab(self, name, widget, dw=2, dh=33):
+        """Add a new tab named as *name*, embbed with *widget*.
+
+        _grp.width = self.width - dw
+        _grp.height = self.height - dh
+        """
+        setattr(self, f"tab_{self.tab_count}_title", name)
+        _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
+        _grp.name = name
+        _grp.add_child(widget)
+        self.add_child(_grp)
+        self.tab_count += 1
+
 
 class LinkingContainer(Widget):
 
@@ -335,7 +350,7 @@ class LinkingContainer(Widget):
         super(LinkingContainer, self).__init__(
             LinkingContainer.TYPE_ID, x, y, width, height)
         self.opi_file = opi_file
-        self.resize_behavior = ResizeBehavior.CROP
+        self.resize_behaviour = ResizeBehaviour.CROP
 
 
 class ActionButton(ActionWidget):
