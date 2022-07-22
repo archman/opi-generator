@@ -6,7 +6,15 @@ from opimodel import actions, scalings
 from opimodel.colors import Color
 
 
-class FormatStyle:
+class ResizeBehavior:
+    # for LinkingContainer
+    RESIZE_OPI_TO_FIT_CONTAINER = 0 # Size *.opi to fit the container
+    RESIZE_CONTAINER_TO_FIT_OPI = 1 # Size the container to fit *.opi
+    CROP = 2 # Don't resize anything, crop if *.opi too large
+    SCROLL = 3   # Don't resize anything, add scrollbars if *.opi too large
+
+
+class FormatType:
     DEFAULT = 0
     DECIMAL = 1
     EXPONENTIAL = 2
@@ -318,6 +326,16 @@ class TabContainer(Widget):
             TabContainer.TYPE_ID, x, y, width, height)
         self.lock_children = True
         self.transparent = True
+
+class LinkingContainer(Widget):
+
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.linkingContainer'
+
+    def __init__(self, x, y, width, height, opi_file):
+        super(LinkingContainer, self).__init__(
+            LinkingContainer.TYPE_ID, x, y, width, height)
+        self.opi_file = opi_file
+        self.resize_behavior = ResizeBehavior.CROP
 
 
 class ActionButton(ActionWidget):
