@@ -11,6 +11,11 @@ from renderers.css.points import OpiPoints
 from renderers.css.scalings import OpiScaling, OpiDisplayScaling
 
 
+# there is no limit of total tabs, but here defines the maximum that
+# usually used.
+MAX_TAB_COUNT = 32
+
+
 def get_opi_renderer(widget):
     tr = OpiText()
     wr = OpiWidget(tr)
@@ -32,6 +37,9 @@ def get_opi_renderer(widget):
     wr.add_renderer('border', OpiBorder(tr, cr))
 
     wr.add_renderer('font', OpiFont())
+    # tabbed container
+    for i in range(MAX_TAB_COUNT):
+        wr.add_renderer(f"tab_{i}_font", OpiFont())
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))
