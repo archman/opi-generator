@@ -341,6 +341,12 @@ class TabbedContainer(Widget):
         self.add_child(_grp)
         self.tab_count += 1
 
+    def set_font(self, font):
+        """Set font for each tab. Call this method after added all tabs.
+        """
+        for i in range(self.tab_count):
+            setattr(self, f"tab_{i}_font", font)
+
 
 class LinkingContainer(Widget):
 
