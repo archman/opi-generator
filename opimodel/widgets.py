@@ -466,5 +466,13 @@ class Tank(Widget):
     def __init__(self, x, y, width, height, pv):
         super(Tank, self).__init__(Tank.TYPE_ID, x, y, width, height)
         self.pv_name = pv
+        self.effect_3d = False
 
 
+class DataBrowser(Widget):
+
+    TYPE_ID = 'org.csstudio.trends.databrowser.opiwidget'
+
+    def __init__(self, x, y, width, height, filename):
+        super(DataBrowser, self).__init__(DataBrowser.TYPE_ID, x, y, width, height)
+        self.filename = filename
