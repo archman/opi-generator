@@ -26,3 +26,9 @@ def parse_css_color_file(filepath):
                 r, g, b = [int(x.strip(',')) for x in value.split()]
                 utils.add_attr_to_module(key, Color((r, g, b), key),
                                   sys.modules[__name__])
+
+
+# default widget color configurations
+DEFAULT_DISPLAY_BG = Color((255, 255, 255), "DISPLAY_BG")
+DEFAULT_TEXTUPDATE_BG = Color((240, 240, 240), "TEXTUPDATE_BG")
+
