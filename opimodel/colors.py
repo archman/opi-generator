@@ -31,4 +31,5 @@ def parse_css_color_file(filepath):
 # default widget color configurations
 DEFAULT_DISPLAY_BG = Color((255, 255, 255), "DISPLAY_BG")
 DEFAULT_TEXTUPDATE_BG = Color((240, 240, 240), "TEXTUPDATE_BG")
+DEFAULT_TEXTINPUT_BG = Color((236, 240, 241), "TEXTINPUT_BG")
 

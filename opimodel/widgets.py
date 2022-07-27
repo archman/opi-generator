@@ -4,7 +4,7 @@ of type Display.  To create the opi, add widgets as children of this widget.
 """
 from opimodel import actions, scalings
 from opimodel.colors import Color
-from opimodel.colors import DEFAULT_DISPLAY_BG, DEFAULT_TEXTUPDATE_BG
+from opimodel.colors import DEFAULT_DISPLAY_BG, DEFAULT_TEXTUPDATE_BG, DEFAULT_TEXTINPUT_BG
 
 
 class ResizeBehaviour:
@@ -304,6 +304,7 @@ class TextInput(Widget):
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
+        self.set_bg_color(DEFAULT_TEXTINPUT_BG)
         if style is not None:
             self.set_basic_style(style)
 
@@ -360,6 +361,7 @@ class LinkingContainer(Widget):
             LinkingContainer.TYPE_ID, x, y, width, height)
         self.opi_file = opi_file
         self.resize_behaviour = ResizeBehaviour.CROP
+        self.set_bg_color(DEFAULT_DISPLAY_BG)
 
 
 class ActionButton(ActionWidget):
