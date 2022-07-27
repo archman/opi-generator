@@ -32,11 +32,16 @@ def get_opi_renderer(widget):
     wr.add_renderer('border_color', cr)
     wr.add_renderer('led_border_color', cr)
 
+    # Tank widget
+    wr.add_renderer('color_fillbackground', cr)
+    wr.add_renderer('fill_color', cr)
+
     wr.add_renderer('rules', OpiRule(tr, cr))
 
     wr.add_renderer('border', OpiBorder(tr, cr))
 
     wr.add_renderer('font', OpiFont())
+
     # tabbed container
     for i in range(MAX_TAB_COUNT):
         wr.add_renderer(f"tab_{i}_font", OpiFont())
