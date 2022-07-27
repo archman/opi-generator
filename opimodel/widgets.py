@@ -320,6 +320,7 @@ class GroupingContainer(Widget):
             GroupingContainer.TYPE_ID, x, y, width, height)
         self.lock_children = True
         self.transparent = True
+        self.set_bg_color(DEFAULT_DISPLAY_BG)
 
 
 class TabbedContainer(Widget):
