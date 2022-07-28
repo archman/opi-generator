@@ -502,3 +502,5 @@ class ImageBoolButton(ActionWidget):
             self.on_image = on_image
         if off_image is not None:
             self.off_image = off_image
+        if pv_name is not None:
+            self.pv_name = pv_name
