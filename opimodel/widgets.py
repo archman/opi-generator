@@ -229,7 +229,7 @@ class Display(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.Display'
 
-    def __init__(self, width, height):
+    def __init__(self, width=800, height=600):
         super(Display, self).__init__(Display.TYPE_ID, 0, 0, width, height,
                                       name='display')
         self.auto_zoom_to_fit_all = False
@@ -405,9 +405,12 @@ class ToggleButton(ActionWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.BoolButton'
 
-    def __init__(self, x, y, width, height, on_text, off_text):
+    def __init__(self, x, y, width, height, on_text, off_text, pv_name=None):
         super(ToggleButton, self).__init__(
             ToggleButton.TYPE_ID, x, y, width, height)
+
+        if pv_name is not None:
+            self.pv_name = pv_name
 
         self.on_label = on_text
         self.off_label = off_text
