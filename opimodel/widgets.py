@@ -177,6 +177,11 @@ class Widget(object):
         """
         self.scale_options = scalings.ScaleOptions(width, height, keep_wh_ratio)
 
+    def get_resources(self):
+        """Return a dict of required resources that need to be distributed with the generated OPI.
+        the key is the full path of resource files, and the value is the target path.
+        """
+        return {}
 
 class ActionWidget(Widget):
     """
@@ -485,3 +490,15 @@ class DataBrowser(Widget):
     def __init__(self, x, y, width, height, filename):
         super(DataBrowser, self).__init__(DataBrowser.TYPE_ID, x, y, width, height)
         self.filename = filename
+
+
+class ImageBoolButton(ActionWidget):
+
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.ImageBoolButton'
+
+    def __init__(self, x, y, width, height, pv_name=None, on_image=None, off_image=None):
+        super(ImageBoolButton, self).__init__(ImageBoolButton.TYPE_ID, x, y, width, height)
+        if on_image is not None:
+            self.on_image = on_image
+        if off_image is not None:
+            self.off_image = off_image
