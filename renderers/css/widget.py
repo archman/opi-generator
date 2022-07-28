@@ -12,16 +12,19 @@ class OpiWidget(object):
     def add_renderer(self, tag, renderer):
         self._renderers[tag] = renderer
 
-    def render(self, model, parent):
+    def render(self, model, parent, res={}):
         if parent is None:
             node = et.Element(model.get_name())
         else:
             node = et.SubElement(parent, model.get_name())
+        #
+        res.update(model.get_resources())
+        #
         node.set('typeId', model.get_type_id())
         for var, val in sorted(vars(model).items()):
             if not var.startswith('_'):
                 self._renderers[var].render(node, var, val)
         for child in model.get_children():
-            self.render(child, node)
+            self.render(child, node, res)
 
         return node

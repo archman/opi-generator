@@ -59,11 +59,14 @@ class OpiRenderer(object):
         self._model = model
         self._node = None
         self._widget_renderer = widget_renderer
+        # required resources distributed with the generated OPI.
+        self._resources = {}
 
     def assemble(self, model=None, parent=None):
         if model is None:
             model = self._model
-        self._node = self._widget_renderer.render(model, parent)
+        self._node = self._widget_renderer.render(model, parent,
+                            self._resources)
 
     def get_node(self):
         return self._node
