@@ -1,3 +1,5 @@
+import os
+import shutil
 import lxml.etree as et
 
 from renderers.css.actions import OpiActions
@@ -75,7 +77,16 @@ class OpiRenderer(object):
         self.assemble()
         return str(et.tostring(self._node))
 
+    def write_resources(self, filename):
+        if self._resources:
+            opi_dirpath = os.path.abspath(os.path.dirname(filename))
+            for res_abspath, opi_relpath in self._resources.items():
+                dst_abspath = os.path.join(opi_dirpath, opi_relpath)
+                os.makedirs(os.path.dirname(dst_abspath), exist_ok=True)
+                shutil.copy(res_abspath, dst_abspath)
+
     def write_to_file(self, filename):
         self.assemble()
         tree = et.ElementTree(self._node)
         tree.write(filename, pretty_print=True, encoding='UTF-8', xml_declaration=True)
+        self.write_resources(filename)
