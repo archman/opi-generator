@@ -1,11 +1,13 @@
 import opimodel.widgets as _widgets
 from opimodel.colors import Color
+from opimodel.borders import Border, BorderStyle
 import os
 
 # default widget color configurations
 DEFAULT_DISPLAY_BG = Color((255, 255, 255), "DISPLAY_BG")
 DEFAULT_TEXTUPDATE_BG = Color((240, 240, 240), "TEXTUPDATE_BG")
 DEFAULT_TEXTENTRY_BG = Color((236, 240, 241), "TEXTENTRY_BG")
+DEFAULT_BORDER_COLOR = Color((0, 128, 255), "BORDER_BLUE")
 
 # absolute path for resource files, e.g. images.
 RES_DIRPATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images'))
@@ -57,3 +59,14 @@ class TextEntry(_widgets.TextInput):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
         #
         self.set_bg_color(DEFAULT_TEXTENTRY_BG)
+
+
+class Led(_widgets.Led):
+    def __init__(self, x, y, width, height, pv_name, alarm_sensitive=False):
+        super(self.__class__, self).__init__(x, y, width, height, pv_name)
+        #
+        self.effect_3d = False
+        self.bulb_border = 1
+        self.set_border(
+            Border(BorderStyle.NONE, 1, DEFAULT_BORDER_COLOR, alarm_sensitive))
+
