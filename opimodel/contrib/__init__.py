@@ -1,2 +1,8 @@
-# Pre-cutomized widgets for BOY with Phoebus style.
+# Pre-cutomized widgets for BOY to match (close) Phoebus style.
+from .widgets import Display
 from .widgets import SlideButton
+from .widgets import TextEntry
+from .widgets import TextUpdate
+
+from .widgets import GroupingContainer
+from .widgets import LinkingContainer

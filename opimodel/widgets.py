@@ -4,7 +4,6 @@ of type Display.  To create the opi, add widgets as children of this widget.
 """
 from opimodel import actions, scalings
 from opimodel.colors import Color
-from opimodel.colors import DEFAULT_DISPLAY_BG, DEFAULT_TEXTUPDATE_BG, DEFAULT_TEXTINPUT_BG
 
 
 class ResizeBehaviour:
@@ -239,7 +238,6 @@ class Display(Widget):
                                       name='display')
         self.auto_zoom_to_fit_all = False
         self.show_grid = True
-        self.set_bg_color(DEFAULT_DISPLAY_BG)
 
     def add_scale_options(self, min_width=-1, min_height=-1, autoscale=False):
         """Add scale options to the display.
@@ -294,9 +292,6 @@ class TextMonitor(Widget):
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
-        self.set_bg_color(DEFAULT_TEXTUPDATE_BG)
-
-TextUpdate = TextMonitor
 
 
 class TextInput(Widget):
@@ -309,11 +304,8 @@ class TextInput(Widget):
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
-        self.set_bg_color(DEFAULT_TEXTINPUT_BG)
         if style is not None:
             self.set_basic_style(style)
-
-TextEntry = TextInput
 
 
 class GroupingContainer(Widget):
@@ -325,7 +317,6 @@ class GroupingContainer(Widget):
             GroupingContainer.TYPE_ID, x, y, width, height)
         self.lock_children = True
         self.transparent = True
-        self.set_bg_color(DEFAULT_DISPLAY_BG)
 
 
 class TabbedContainer(Widget):
@@ -367,7 +358,6 @@ class LinkingContainer(Widget):
             LinkingContainer.TYPE_ID, x, y, width, height)
         self.opi_file = opi_file
         self.resize_behaviour = ResizeBehaviour.CROP
-        self.set_bg_color(DEFAULT_DISPLAY_BG)
 
 
 class ActionButton(ActionWidget):
