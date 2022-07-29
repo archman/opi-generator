@@ -21,7 +21,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -36,15 +36,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="856"
-     inkscape:window-height="480"
+     inkscape:window-width="1778"
+     inkscape:window-height="852"
      id="namedview6"
      showgrid="false"
-     inkscape:zoom="5.3636364"
-     inkscape:cx="22"
+     inkscape:zoom="26.139955"
+     inkscape:cx="12.684758"
      inkscape:cy="12"
-     inkscape:window-x="5537"
-     inkscape:window-y="590"
+     inkscape:window-x="1001"
+     inkscape:window-y="787"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4"
      fit-margin-top="0"
@@ -54,6 +54,13 @@
   <path
      d="M 12,24 Q 7,24 3.5,20.5 0,17 0,12 0,7 3.5,3.5 7,0 12,0 H 32 Q 37,0 40.5,3.5 44,7 44,12 44,17 40.5,20.5 37,24 32,24 Z m 20.05,-6.95 q 2.1,0 3.575,-1.475 Q 37.1,14.1 37.1,12 37.1,9.9 35.625,8.425 34.15,6.95 32.05,6.95 29.95,6.95 28.475,8.425 27,9.9 27,12 q 0,2.1 1.475,3.575 1.475,1.475 3.575,1.475 z"
      id="path2"
-     style="fill:#5dff5d;fill-opacity:1"
+     style="fill:#5dff5d;fill-opacity:1;stroke:#888a85;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      inkscape:connector-curvature="0" />
+  <ellipse
+     style="opacity:1;fill:#f1f0ef;fill-opacity:1;fill-rule:nonzero;stroke:#888a85;stroke-width:0.8;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="path812"
+     cx="32.518353"
+     cy="12"
+     rx="9.5816469"
+     ry="9.581646" />
 </svg>
