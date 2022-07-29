@@ -316,7 +316,7 @@ class GroupingContainer(Widget):
         super(GroupingContainer, self).__init__(
             GroupingContainer.TYPE_ID, x, y, width, height)
         self.lock_children = True
-        self.transparent = True
+        self.transparent = True # transparent background
 
 
 class TabbedContainer(Widget):
@@ -326,7 +326,6 @@ class TabbedContainer(Widget):
     def __init__(self, x, y, width, height):
         super(TabbedContainer, self).__init__(
             TabbedContainer.TYPE_ID, x, y, width, height)
-        self.transparent = True
         self.tab_count = 0
 
     def add_tab(self, name, widget, dw=2, dh=33):
