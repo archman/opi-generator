@@ -2,15 +2,15 @@ import os
 import shutil
 import lxml.etree as et
 
-from renderers.css.actions import OpiActions
-from renderers.css.borders import OpiBorder
-from renderers.css.colors import OpiColor
-from renderers.css.fonts import OpiFont
-from renderers.css.rules import OpiRule
-from renderers.css.text import OpiText
-from renderers.css.widget import OpiWidget
-from renderers.css.points import OpiPoints
-from renderers.css.scalings import OpiScaling, OpiDisplayScaling
+from .actions import OpiActions
+from .borders import OpiBorder
+from .colors import OpiColor
+from .fonts import OpiFont
+from .rules import OpiRule
+from .text import OpiText
+from .widget import OpiWidget
+from .points import OpiPoints
+from .scalings import OpiScaling, OpiDisplayScaling
 
 
 # there is no limit of total tabs, but here defines the maximum that
@@ -47,6 +47,8 @@ def get_opi_renderer(widget):
     # tabbed container
     for i in range(MAX_TAB_COUNT):
         wr.add_renderer(f"tab_{i}_font", OpiFont())
+        wr.add_renderer(f"tab_{i}_background_color", cr)
+        wr.add_renderer(f"tab_{i}_foreground_color", cr)
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))

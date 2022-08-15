@@ -1,6 +1,6 @@
 import lxml.etree as et
 
-from opimodel import rules, colors
+from opigen.opimodel import rules, colors
 
 
 class OpiRule(object):

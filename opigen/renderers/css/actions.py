@@ -1,6 +1,6 @@
 import lxml.etree as et
-from opimodel import actions
-from renderers.css import text
+from opigen.opimodel import actions
+from . import text
 
 
 EXIT_SCRIPT = ('importPackage(Packages.org.csstudio.opibuilder.scriptUtil);'

@@ -1,6 +1,6 @@
-import opimodel.widgets as _widgets
-from opimodel.colors import Color
-from opimodel.borders import Border, BorderStyle
+import opigen.opimodel.widgets as _widgets
+from opigen.opimodel.colors import Color
+from opigen.opimodel.borders import Border, BorderStyle
 import os
 
 # default widget color configurations

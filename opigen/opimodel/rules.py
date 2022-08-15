@@ -127,7 +127,7 @@ class SelectionRule(Rule):
     def __init__(self, prop_id, pv, name=None,
                  val_options=None, sevr_options=None, else_val=None, out_exp='false',
                  auto_fill_val=True):
-        # if auto_fill_val is True, expand boo_exp with "pv0" or "pvSev0" with val_options,
+        # if auto_fill_val is True, expand bool_exp with "pv0" or "pvSev0" with val_options,
         # otherwise, only put val_options.
         """ Simple selection rule setting specified property to one of a
             number of possible values based on the pv value, e.g.:

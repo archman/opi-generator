@@ -2,8 +2,8 @@
 Module containing widgets to describe opi files.  An opi has a root widget
 of type Display.  To create the opi, add widgets as children of this widget.
 """
-from opimodel import actions, scalings
-from opimodel.colors import Color
+from . import actions, scalings
+from .colors import Color
 
 
 class ResizeBehaviour:
@@ -328,18 +328,26 @@ class TabbedContainer(Widget):
             TabbedContainer.TYPE_ID, x, y, width, height)
         self.tab_count = 0
 
-    def add_tab(self, name, widget, dw=2, dh=33):
+    def add_tab(self, name, widget, dw=2, dh=33,
+                background_color=None, foreground_color=None):
         """Add a new tab named as *name*, embbed with *widget*.
 
         _grp.width = self.width - dw
         _grp.height = self.height - dh
         """
         setattr(self, f"tab_{self.tab_count}_title", name)
+        if background_color is not None:
+            setattr(self, f"tab_{self.tab_count}_background_color",
+                    background_color)
+        if foreground_color is not None:
+            setattr(self, f"tab_{self.tab_count}_foreground_color",
+                    foreground_color)
         _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
         _grp.name = name
         _grp.add_child(widget)
         self.add_child(_grp)
         self.tab_count += 1
+
 
     def set_font(self, font):
         """Set font for each tab. Call this method after added all tabs.

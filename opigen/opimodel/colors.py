@@ -1,4 +1,4 @@
-from opimodel import utils
+from . import utils
 import sys
 
 
