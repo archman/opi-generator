@@ -51,10 +51,12 @@ class GroupingContainer(_widgets.GroupingContainer):
 
 
 class TextUpdate(_widgets.TextMonitor):
-    def __init__(self, x, y, width, height, pv_name):
+    def __init__(self, x, y, width, height, pv_name, alarm_sensitive=True):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
         #
         self.set_bg_color(DEFAULT_TEXTUPDATE_BG)
+        self.set_border(
+            Border(BorderStyle.NONE, 1, DEFAULT_BORDER_COLOR, alarm_sensitive))
 
 
 class TextEntry(_widgets.TextInput):
