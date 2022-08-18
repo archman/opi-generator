@@ -262,7 +262,7 @@ class Line(Widget):
 
     ID = 'org.csstudio.opibuilder.widgets.polyline'
 
-    def __init__(self, x0, y0, x1, y1):
+    def __init__(self, x0, y0, x1, y1, line_width=1):
         """ Widget x,y location is calculated to be the top-left corner of
             rectangle defined by the diagonal from (x0, y0) to (x1, y1).
             The width and height are the lengths of the sides.
@@ -271,6 +271,7 @@ class Line(Widget):
             Line.ID, x=min(x0, x1), y=min(y0, y1),
             width=abs(x0 - x1) + 1, height=abs(y0 - y1) + 1)
         self.points = [(x0, y0), (x1, y1)]
+        self.line_width = line_width
 
 
 class Label(Widget):
