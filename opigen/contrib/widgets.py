@@ -30,10 +30,12 @@ class SlideButton(_widgets.ImageBoolButton):
 
 
 class Display(_widgets.Display):
-    def __init__(self, width=800, height=600):
+    def __init__(self, width=800, height=600, name=None):
         super(self.__class__, self).__init__(width, height)
         #
         self.set_bg_color(DEFAULT_DISPLAY_BG)
+        if name is not None:
+            self.name = name
 
 
 class LinkingContainer(_widgets.LinkingContainer):
