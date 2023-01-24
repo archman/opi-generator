@@ -1,7 +1,7 @@
 import pytest
 
 from opigen.opimodel import widgets
-from opigen.renderers.css import render
+from opigen.renderers import css_render
 
 
 @pytest.fixture
@@ -17,6 +17,6 @@ def display():
 @pytest.fixture
 def get_renderer():
     def get_renderer(w):
-        return render.get_opi_renderer(w)
+        return css_render.get_opi_renderer(w)
 
     return get_renderer

@@ -7,5 +7,4 @@ from .opimodel import fonts
 from .opimodel import rules
 from .opimodel import widgets
 
-from .renderers.css import render
-from .renderers.css.render import get_opi_renderer
+from .renderers import *
