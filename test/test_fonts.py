@@ -3,7 +3,7 @@ import tempfile
 
 import pytest
 
-from opimodel import fonts
+from opigen.opimodel import fonts
 
 TEST_FONT_FILE = """dummy 1 = Dummy one-bold-19pt
 dummy 2 = Dummy two-italic-15px
@@ -16,6 +16,7 @@ def font_file():
     tmp = tempfile.NamedTemporaryFile('wt', delete=False)
     tmp.write(TEST_FONT_FILE)
     tmp.close()
+    print(tmp.name)
     yield tmp
     os.unlink(tmp.name)
 
@@ -28,12 +29,14 @@ def test_add_font_to_widget(widget, get_renderer):
     node = renderer.get_node()
     font_nodes = node.findall('./font')
     assert len(font_nodes) == 1
-    opifont_nodes = node.findall('./font/opifont.name')
-    assert len(opifont_nodes) == 1
-    assert opifont_nodes[0].text == 'Dummy Font Name'
-    assert opifont_nodes[0].get('fontName') == 'Dummy Font Face'
-    assert opifont_nodes[0].get('height') == '12'
-    assert opifont_nodes[0].get('style') == '0'
+    fontdata_nodes = node.findall('./font/fontdata')
+    assert len(fontdata_nodes) == 1
+    assert fontdata_nodes[0].text == 'Dummy Font Name'
+    assert fontdata_nodes[0].get('fontName') == 'Dummy Font Face'
+    assert fontdata_nodes[0].get('height') == '12'
+    assert fontdata_nodes[0].get('style') == '0'
+    assert fontdata_nodes[0].get('pixels') == 'true'
+    # renderer.write_to_file('/tmp/test.opi')
 
 
 def test_parse_css_font_file(font_file):

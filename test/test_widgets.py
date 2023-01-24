@@ -1,4 +1,4 @@
-from opimodel import widgets
+from opigen.opimodel import widgets
 import pytest
 
 

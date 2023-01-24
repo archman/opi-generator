@@ -1,4 +1,4 @@
-from opimodel import colors
+from opigen.opimodel import colors
 import mock
 import sys
 

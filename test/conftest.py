@@ -1,7 +1,7 @@
 import pytest
 
-from opimodel import widgets
-from renderers.css import render
+from opigen.opimodel import widgets
+from opigen.renderers.css import render
 
 
 @pytest.fixture

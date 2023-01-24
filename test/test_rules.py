@@ -1,4 +1,4 @@
-from opimodel import rules, colors
+from opigen import rules, colors
 
 
 def test_empty_RulesNode_does_not_create_rules_tag(widget, get_renderer):

@@ -1,4 +1,4 @@
-from opimodel import actions, widgets
+from opigen import actions, widgets
 import pytest
 
 
