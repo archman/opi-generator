@@ -21,10 +21,10 @@ def font_file():
     os.unlink(tmp.name)
 
 
-def test_add_font_to_widget(widget, get_renderer):
+def test_add_font_to_widget(widget, get_opi_renderer):
     f = fonts.Font(name='Dummy Font Name', fontface='Dummy Font Face', size=12, style=fonts.REGULAR)
     widget.set_font(f)
-    renderer = get_renderer(widget)
+    renderer = get_opi_renderer(widget)
     renderer.assemble()
     node = renderer.get_node()
     font_nodes = node.findall('./font')

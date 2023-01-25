@@ -16,10 +16,10 @@ Disconnected = 255, 255, 255
 """
 
 
-def test_add_color_to_widget(widget, get_renderer):
+def test_add_color_to_widget(widget, get_opi_renderer):
     c = colors.Color((0, 0, 0), 'black')
     widget.set_fg_color(c)
-    renderer = get_renderer(widget)
+    renderer = get_opi_renderer(widget)
     renderer.assemble()
     fg_color_nodes = renderer.get_node().findall('./foreground_color')
     assert len(fg_color_nodes) == 1
