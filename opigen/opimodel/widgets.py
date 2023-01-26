@@ -237,6 +237,7 @@ class ActionWidget(Widget):
 
     def add_shell_command(
             self, command, description="", directory="$(opi.dir)"):
+        # directory does not apply to phoebus
         self.actions.add_action(actions.ExecuteCommand(
                 command, description, directory))
 

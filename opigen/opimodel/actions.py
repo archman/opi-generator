@@ -134,7 +134,7 @@ class OpenOpi(object):
         #
         self.phoebus_file = path
         self.phoebus_description = self.description
-        self.phoebus_target = self.MODE_MAP[mode]
+        self.phoebus_target = self.MODE_MAP.get(mode, 'tab')
 
     def get_macros(self):
         """Get the macros dict.

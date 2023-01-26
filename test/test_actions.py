@@ -22,6 +22,16 @@ def test_widget_with_no_actions_does_not_have_an_actions_node(widget, get_opi_re
     assert len(actions_nodes) == 0
 
 
+def test_widget_with_no_actions_does_not_have_an_actions_node_phoebus(widget, get_bob_renderer):
+    aw = widgets.ActionWidget('dummy_id', 0, 0, 0, 0)
+    assert len(aw.actions) == 0
+    widget.add_child(aw)
+    renderer = get_bob_renderer(widget)
+    renderer.assemble()
+    actions_nodes = renderer.get_node().findall('./widget/actions')
+    assert len(actions_nodes) == 0
+
+
 @pytest.mark.parametrize('n', [0, 1, 2, 3])
 def test_adding_action_n_times_results_in_n_actions(widget, get_opi_renderer, n):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
@@ -40,6 +50,24 @@ def test_adding_action_n_times_results_in_n_actions(widget, get_opi_renderer, n)
         assert action_nodes[i].find('./command_directory').text == '$(opi.dir)'
 
 
+@pytest.mark.parametrize('n', [0, 1, 2, 3])
+def test_adding_action_n_times_results_in_n_actions_phoebus(widget, get_bob_renderer, n):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    command = actions.ExecuteCommand('ls', 'list directory')
+    widget.add_child(ab)
+    # Add the action n times.  Note that adding the same action twice does
+    # result in more than one action being included in the opi.
+    for i in range(n):
+        ab.add_action(command)
+    renderer = get_bob_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
+    assert len(action_nodes) == n
+    for i in range(n):
+        assert action_nodes[i].find('./command').text == 'ls'
+        assert action_nodes[i].find('./description').text == 'list directory'
+
+
 def test_ActionButton_adds_shell_command(widget, get_opi_renderer):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     widget.add_child(ab)
@@ -50,6 +78,18 @@ def test_ActionButton_adds_shell_command(widget, get_opi_renderer):
     assert action_nodes[0].get('type') == 'EXECUTE_CMD'
     assert action_nodes[0].find('./command').text == 'ls'
     assert action_nodes[0].find('./command_directory').text == '$(opi.dir)'
+
+
+def test_ActionButton_adds_shell_command_phoebus(widget, get_bob_renderer):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    widget.add_child(ab)
+    ab.add_shell_command('ls')
+    renderer = get_bob_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
+    assert action_nodes[0].get('type') == 'command'
+    assert action_nodes[0].find('./command').text == 'ls'
+    assert action_nodes[0].find('./command_directory') == None
 
 
 def test_ActionButton_adds_write_pv(widget, get_opi_renderer):
