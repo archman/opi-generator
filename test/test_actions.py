@@ -222,3 +222,16 @@ def test_ActionButton_adds_exit_action(widget, get_opi_renderer):
     assert len(action_nodes) == 1
     assert action_nodes[0].get('type') == 'EXECUTE_JAVASCRIPT'
     assert action_nodes[0].find('./embedded').text == 'true'
+
+
+def test_ActionButton_adds_exit_action_phoebus(widget, get_bob_renderer):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    ab.add_exit()
+    widget.add_child(ab)
+    renderer = get_bob_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
+    assert len(action_nodes) == 1
+    assert action_nodes[0].get('type') == 'execute'
+    assert action_nodes[0].find('./script').get('file') == 'EmbeddedJs'
+    assert action_nodes[0].find('./description').text == 'Exit'

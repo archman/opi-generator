@@ -4,8 +4,8 @@ from opigen.opimodel import actions
 from . import text
 
 
-EXIT_SCRIPT = ('importPackage(Packages.org.csstudio.opibuilder.scriptUtil);'
-               'ScriptUtil.closeAssociatedOPI(widget);')
+EXIT_SCRIPT = ('importClass(org.csstudio.display.builder.runtime.script.ScriptUtil);'
+               'ScriptUtil.closeDisplay(widget);')
 
 
 class OpiAction(object):
@@ -74,8 +74,12 @@ class OpiExit(OpiAction):
         action_model.embedded = True
         # Render the javascript
         action_node = super(OpiExit, self).render(actions_node, action_model)
-        n = et.SubElement(action_node, 'scriptText')
-        n.text = et.CDATA(EXIT_SCRIPT)
+        script_node = et.SubElement(action_node, 'script')
+        script_node.set('file', 'EmbeddedJs')
+        code_node = et.SubElement(script_node, 'text')
+        code_node.text = et.CDATA(EXIT_SCRIPT)
+        desc_node = et.SubElement(action_node, 'description')
+        desc_node.text = 'Exit'
 
 
 class OpiActions(object):
