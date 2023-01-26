@@ -132,6 +132,19 @@ def test_ActionButton_adds_open_opi_action(widget, get_opi_renderer):
     assert action_nodes[0].find('./mode').text == '42'
 
 
+def test_ActionButton_adds_open_opi_action_phoebus(widget, get_bob_renderer):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    widget.add_child(ab)
+    ab.add_open_opi('file/path', mode=1)
+    renderer = get_bob_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
+    assert len(action_nodes) == 1
+    assert action_nodes[0].get('type') == 'open_display'
+    assert action_nodes[0].find('./file').text == 'file/path'
+    assert action_nodes[0].find('./target').text == 'tab'
+
+
 @pytest.mark.parametrize('parent_macros', (True, False))
 @pytest.mark.parametrize('macros', ({'a': 'b'}, None))
 def test_ActionButton_adds_open_opi_action_with_macros(widget, get_opi_renderer, macros, parent_macros):
@@ -143,6 +156,19 @@ def test_ActionButton_adds_open_opi_action_with_macros(widget, get_opi_renderer,
     macros_node = renderer.get_node().findall('./widget/actions/action/macros')[0]
     parent_macros_expected = 'true' if parent_macros else 'false'
     assert macros_node.find('include_parent_macros').text == parent_macros_expected
+    if macros:
+        for m in macros:
+            assert macros_node.find(m).text == macros[m]
+
+
+@pytest.mark.parametrize('macros', ({'a': 'b'}, None))
+def test_ActionButton_adds_open_opi_action_with_macros_phoebus(widget, get_bob_renderer, macros):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    ab.add_open_opi('file/path', mode=42, macros=macros)
+    widget.add_child(ab)
+    renderer = get_bob_renderer(widget)
+    renderer.assemble()
+    macros_node = renderer.get_node().findall('./widget/actions/action/macros')[0]
     if macros:
         for m in macros:
             assert macros_node.find(m).text == macros[m]
@@ -160,6 +186,25 @@ def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings(wid
     ab.add_open_opi('file/path', mode=42, macros=macros)
     widget.add_child(ab)
     renderer = get_opi_renderer(widget)
+    if raise_expected:
+        with pytest.raises(ValueError):
+            renderer.assemble()
+    else:
+        renderer.assemble()
+
+
+@pytest.mark.parametrize('macros,raise_expected',
+                         (({'a': 'b'}, False),
+                          ({'a': 10}, False),
+                          ({10: 'a'}, True),  # key not a string
+                          ({10: 11}, True),  # key not a string
+                          ({'a b': 11}, True),  # space in key
+                          ({'1': 'a'}, True)))  # key begins with number
+def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings_phoebus(widget, get_bob_renderer, macros, raise_expected):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    ab.add_open_opi('file/path', mode=42, macros=macros)
+    widget.add_child(ab)
+    renderer = get_bob_renderer(widget)
     if raise_expected:
         with pytest.raises(ValueError):
             renderer.assemble()

@@ -121,8 +121,8 @@ class OpenOpi(object):
         Construct OpenOpi action.
 
         Args:
-            path of opi to open
-            mode determining how the opi opens
+            path (file) of opi to open
+            mode (target) determining how the opi opens
             macros: dict of macros with which to open the opi
             parent_macros: whether to inherit parent macros
         """
