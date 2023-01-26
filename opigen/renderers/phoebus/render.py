@@ -8,7 +8,7 @@ from .colors import OpiColor
 from .fonts import OpiFont
 from .rules import OpiRule
 from .text import OpiText
-from .widget import OpiWidget, DisplayWidget
+from .widget import OpiWidget
 from .points import OpiPoints
 from .scalings import OpiScaling, OpiDisplayScaling
 
@@ -17,45 +17,6 @@ from .scalings import OpiScaling, OpiDisplayScaling
 # usually used.
 MAX_TAB_COUNT = 32
 
-
-def get_display_renderer(widget):
-    tr = OpiText()
-    wr = DisplayWidget(tr)
-
-    wr.add_renderer('actions', OpiActions())
-
-    cr = OpiColor()
-    wr.add_renderer('background_color', cr)
-    wr.add_renderer('foreground_color', cr)
-    wr.add_renderer('bulb_border_color', cr)
-    wr.add_renderer('off_color', cr)
-    wr.add_renderer('on_color', cr)
-    wr.add_renderer('line_color', cr)
-    wr.add_renderer('border_color', cr)
-    wr.add_renderer('led_border_color', cr)
-
-    # Tank widget
-    wr.add_renderer('color_fillbackground', cr)
-    wr.add_renderer('fill_color', cr)
-
-    wr.add_renderer('rules', OpiRule(tr, cr))
-
-    wr.add_renderer('border', OpiBorder(tr, cr))
-
-    wr.add_renderer('font', OpiFont())
-
-    # tabbed container
-    for i in range(MAX_TAB_COUNT):
-        wr.add_renderer(f"tab_{i}_font", OpiFont())
-        wr.add_renderer(f"tab_{i}_background_color", cr)
-        wr.add_renderer(f"tab_{i}_foreground_color", cr)
-
-    wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
-    wr.add_renderer('scale_options', OpiScaling(tr))
-
-    wr.add_renderer('points', OpiPoints())
-    return OpiRenderer(widget, wr)
-    
 
 def get_opi_renderer(widget):
     tr = OpiText()

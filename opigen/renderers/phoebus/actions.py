@@ -1,3 +1,4 @@
+import re
 import lxml.etree as et
 from opigen.opimodel import actions
 from . import text
@@ -18,31 +19,35 @@ class OpiAction(object):
         action_node = et.SubElement(actions_node, 'action')
         action_node.set('type', self.ACTION_TYPE)
         for key, value in vars(action_model).items():
-            if not key.startswith('_'):
-                self.text.render(action_node, key, value)
+            r = re.match(r'^phoebus_(.*)', key)
+            if r is None:
+                continue
+            _attr_name = r.group(1)
+            self.text.render(action_node, _attr_name, value)
         return action_node
 
 
 class OpiWritePv(OpiAction):
     """Renderer for write PV actions."""
-    ACTION_TYPE = 'WRITE_PV'
+    ACTION_TYPE = 'write_pv'
 
 
 class OpiExecuteCommand(OpiAction):
     """Renderer for write PV actions."""
-    ACTION_TYPE = 'EXECUTE_CMD'
+    ACTION_TYPE = 'command'
 
 
 class OpiOpen(OpiAction):
     """Renderer for write PV actions."""
-    ACTION_TYPE = 'OPEN_DISPLAY'
+    ACTION_TYPE = 'open_display'
     MACRO_ERROR = 'Invalid macro {}:{} (error {})'
 
     def render(self, actions_node, action_model):
         action_node = super(OpiOpen, self).render(actions_node, action_model)
         macros_node = et.SubElement(action_node, 'macros')
-        parent_macros_node = et.SubElement(macros_node, 'include_parent_macros')
-        parent_macros_node.text = 'true' if action_model.get_parent_macros() else 'false'
+        # phoebus does not have this option
+        #parent_macros_node = et.SubElement(macros_node, 'include_parent_macros')
+        #parent_macros_node.text = 'true' if action_model.get_parent_macros() else 'false'
         for key, value in action_model.get_macros().items():
             try:
                 key_node = et.SubElement(macros_node, key)
@@ -54,7 +59,7 @@ class OpiOpen(OpiAction):
 
 class OpiExit(OpiAction):
     """Render for exit OPI actions."""
-    ACTION_TYPE = 'EXECUTE_JAVASCRIPT'
+    ACTION_TYPE = 'execute'
 
     def render(self, actions_node, action_model):
         """Render an exit action.
@@ -65,7 +70,7 @@ class OpiExit(OpiAction):
         """
         # In CSS exit happens to use javascript.  Add properties to help with
         # rendering.
-        action_model._action_type = 'EXECUTE_JAVASCRIPT'
+        action_model._action_type = 'execute'
         action_model.embedded = True
         # Render the javascript
         action_node = super(OpiExit, self).render(actions_node, action_model)
@@ -83,11 +88,13 @@ class OpiActions(object):
 
     def render(self, widget_node, tag_name, actions_model):
         if actions_model:
+            print("Rendering actions...")
             actions_node = et.SubElement(widget_node, tag_name)
-            hook_first = 'true' if actions_model.get_hook_first() else 'false'
-            hook_all = 'true' if actions_model.get_hook_all() else 'false'
-            actions_node.set('hook', hook_first)
-            actions_node.set('hook_all', hook_all)
+            # phoebus does not have 'hook' or 'hook_all' option
+            #hook_first = 'true' if actions_model.get_hook_first() else 'false'
+            #hook_all = 'true' if actions_model.get_hook_all() else 'false'
+            #actions_node.set('hook', hook_first)
+            #actions_node.set('hook_all', hook_all)
             for action_model in actions_model:
                 action_class = OpiActions.ACTION_MAPPING[type(action_model)]
                 renderer = action_class(text.OpiText())

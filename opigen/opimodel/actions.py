@@ -54,6 +54,10 @@ class WritePv(object):
         self.description = description
         self.value = value
         self.timeout = 10
+        #
+        self.phoebus_pv_name = pv
+        self.phoebus_description = description
+        self.phoebus_value = value
 
 
 class ExecuteCommand(object):
@@ -81,6 +85,9 @@ class ExecuteCommand(object):
         self.description = description
         self.command_directory = directory
         self.wait_time = 10
+        #
+        self.phoebus_command = command
+        self.phoebus_description = description
 
 
 class OpenOpi(object):
@@ -95,6 +102,19 @@ class OpenOpi(object):
     DETACHED_TAB = 6
     NEW_WORKBENCH = 7
     STANDALONE = 8
+
+    # open mode map for phoebus
+    MODE_MAP = {
+        REPLACE_CURRENT: 'replace',
+        WORKBENCH_TAB: 'tab',
+        WORKBENCH_TAB_LEFT: 'tab',
+        WORKBENCH_TAB_RIGHT: 'tab',
+        WORKBENCH_TAB_TOP: 'tab',
+        WORKBENCH_TAB_BOTTOM: 'tab',
+        DETACHED_TAB: 'window',
+        NEW_WORKBENCH: 'window',
+        STANDALONE: 'window'
+    }
 
     def __init__(self, path, mode=STANDALONE, description=None, macros=None, parent_macros=True):
         """
@@ -111,6 +131,10 @@ class OpenOpi(object):
         self._macros = {} if macros is None else macros
         self._parent_macros = parent_macros
         self.description = '' if description is None else description
+        #
+        self.phoebus_file = path
+        self.phoebus_description = self.description
+        self.phoebus_target = self.MODE_MAP[mode]
 
     def get_macros(self):
         """Get the macros dict.
