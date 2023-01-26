@@ -72,23 +72,52 @@ class Widget(object):
         height - the height of the widget in pixels
         name - a name for the widget within the display
     """
-
-    def __init__(self, type_id, x, y, width, height, name='widget'):
+    CNT = {}
+    def __init__(self, type_id, x, y, width, height, name=None):
+        if name is None:
+            k = self.__class__.__name__
+            v = Widget.CNT.setdefault(k, 0)
+            self.phoebus_name = f"{k}_{v}"
+            self.name = f"{k}_{v}"
+            Widget.CNT[k] += 1
+        else:
+            self.phoebus_name = name
+            self.name = name
+        #
         self.x = x
         self.y = y
         self.width = width
         self.height = height
-        self._name = name
         self._children = []
         self._parent = None
         self._type_id = type_id
         self.rules = []
+        # phoebus
+        self.phoebus_x = x
+        self.phoebus_y = y
+        self.phoebus_width = width
+        self.phoebus_height = height
 
-    def get_name(self):
-        return self._name
+    def get_type_name(self):
+        # widget type name, i.e. tag name, followed by a real type string ('label') and other attributes.
+        return "widget"
 
     def get_type_id(self):
         return self._type_id
+
+    def get_version(self):
+        # css
+        return "1.0.0"
+
+    def get_version_phoebus(self):
+        # phoebus
+        return "2.0.0"
+
+    def get_type(self):
+        try:
+            return self.TYPE # phoebus
+        except AttributeError:
+            return self.get_type_id() # css
 
     def get_parent(self):
         """Get the parent widget of this widget.
@@ -182,6 +211,7 @@ class Widget(object):
         """
         return {}
 
+
 class ActionWidget(Widget):
     """
     Base class for any widget that can have a list of actions.
@@ -191,6 +221,7 @@ class ActionWidget(Widget):
     def __init__(self, type_id, x, y, width, height, hook_first=True, hook_all=False):
         super(ActionWidget, self).__init__(type_id, x, y, width, height)
         self.actions = actions.ActionsModel(hook_first, hook_all)
+        self.phoebus_actions = self.actions
 
     def add_action(self, action):
         """
@@ -232,12 +263,17 @@ class Display(Widget):
     """
 
     TYPE_ID = 'org.csstudio.opibuilder.Display'
+    TYPE = None
 
     def __init__(self, width=800, height=600):
         super(Display, self).__init__(Display.TYPE_ID, 0, 0, width, height,
                                       name='display')
         self.auto_zoom_to_fit_all = False
         self.show_grid = True
+        self.phoebus_grid_visible = True
+
+    def get_type_name(self):
+        return "display"
 
     def add_scale_options(self, min_width=-1, min_height=-1, autoscale=False):
         """Add scale options to the display.
@@ -252,15 +288,17 @@ class Display(Widget):
 
 class Rectangle(ActionWidget):
 
-    ID = 'org.csstudio.opibuilder.widgets.Rectangle'
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.Rectangle'
+    TYPE = 'rectangle' # phoebus
 
     def __init__(self, x, y, width, height):
-        super(Rectangle, self).__init__(Rectangle.ID, x, y, width, height)
+        super(Rectangle, self).__init__(Rectangle.TYPE_ID, x, y, width, height)
 
 
 class Line(Widget):
 
-    ID = 'org.csstudio.opibuilder.widgets.polyline'
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.polyline'
+    TYPE = 'polyline'
 
     def __init__(self, x0, y0, x1, y1, line_width=1):
         """ Widget x,y location is calculated to be the top-left corner of
@@ -268,24 +306,29 @@ class Line(Widget):
             The width and height are the lengths of the sides.
         """
         super(Line, self).__init__(
-            Line.ID, x=min(x0, x1), y=min(y0, y1),
+            Line.TYPE_ID, x=min(x0, x1), y=min(y0, y1),
             width=abs(x0 - x1) + 1, height=abs(y0 - y1) + 1)
         self.points = [(x0, y0), (x1, y1)]
+        self.phoebus_points = [(x0, y0), (x1, y1)]
         self.line_width = line_width
+        self.phoebus_line_width = line_width
 
 
 class Label(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.Label'
+    TYPE = 'label' # phoebus
 
     def __init__(self, x, y, width, height, text):
         super(Label, self).__init__(Label.TYPE_ID, x, y, width, height)
         self.text = text
+        self.phoebus_text = text
 
 
 class TextMonitor(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.TextUpdate'
+    TYPE = 'textupdate'
 
     def __init__(self, x, y, width, height, pv):
         super(TextMonitor, self).__init__(
@@ -293,11 +336,14 @@ class TextMonitor(Widget):
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
+        self.phoebus_pv_name = pv
+        self.phoebus_horizontal_alignment = HAlign.CENTER
 
 
 class TextInput(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.TextInput'
+    TYPE = 'textentry'
 
     def __init__(self, x, y, width, height, pv, style=None):
         super(TextInput, self).__init__(
@@ -305,6 +351,10 @@ class TextInput(Widget):
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
+        #
+        self.phoebus_pv_name = pv
+        self.phoebus_horizontal_alignment = HAlign.CENTER
+        #
         if style is not None:
             self.set_basic_style(style)
 
@@ -377,6 +427,7 @@ class ActionButton(ActionWidget):
             ActionButton.TYPE_ID, x, y, width, height, hook_first, hook_all)
 
         self.text = text
+        self.phoebus_text = text
         if style is not None:
             self.set_basic_style(style)
 
@@ -407,6 +458,7 @@ class CheckBox(ActionWidget):
 class ToggleButton(ActionWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.BoolButton'
+    TYPE = 'bool_button'
 
     def __init__(self, x, y, width, height, on_text, off_text, pv_name=None):
         super(ToggleButton, self).__init__(
@@ -414,6 +466,7 @@ class ToggleButton(ActionWidget):
 
         if pv_name is not None:
             self.pv_name = pv_name
+            self.phoebus_pv_name = pv_name
 
         self.on_label = on_text
         self.off_label = off_text
@@ -424,6 +477,10 @@ class ToggleButton(ActionWidget):
         self.show_led = False
         self.push_action_index = 0
         self.released_action_index = 1
+
+        #
+        self.phoebus_on_label = on_text
+        self.phoebus_off_label = off_text
 
     def add_push_action(self, action):
         self.actions.add_action(action)
@@ -437,26 +494,33 @@ class ToggleButton(ActionWidget):
 class Led(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.LED'
+    TYPE = 'led'
 
     def __init__(self, x, y, width, height, pv):
         super(Led, self).__init__(Led.TYPE_ID, x, y, width, height)
         self.pv_name = pv
+        self.phoebus_pv_name = pv
 
 
 class Byte(Widget):
+
     TYPE_ID = 'org.csstudio.opibuilder.widgets.bytemonitor'
+    TYPE = 'byte_monitor'
 
     def __init__(self, x, y, width, height, pv, bits, start_bit=None):
         super(Byte, self).__init__(Byte.TYPE_ID, x, y, width, height)
         self.pv_name = pv
+        self.phoebus_pv_name = pv
         self.effect_3d = False
         self.square_led = True
         self.numBits = bits
+        self.phoebus_numBits = bits
         self.led_border = 1
         self.border_alarm_sensitive = False
         self.led_packed = True
         if start_bit is not None:
             self.startBit = start_bit
+            self.phoebus_startBit = start_bit
 
 
 class Symbol(ActionWidget):
