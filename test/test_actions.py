@@ -105,6 +105,20 @@ def test_ActionButton_adds_write_pv(widget, get_opi_renderer):
     assert action_nodes[0].find('./value').text == 'bye'
 
 
+def test_ActionButton_adds_write_pv_phoebus(widget, get_bob_renderer):
+    ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
+    widget.add_child(ab)
+    ab.add_write_pv('hello', 'bye', "Write pv 'hello' with 'bye'")
+    renderer = get_bob_renderer(widget)
+    renderer.assemble()
+    action_nodes = renderer.get_node().findall('./widget/actions/action')
+    assert len(action_nodes) == 1
+    assert action_nodes[0].get('type') == 'write_pv'
+    assert action_nodes[0].find('./pv_name').text == 'hello'
+    assert action_nodes[0].find('./value').text == 'bye'
+    assert action_nodes[0].find('./description').text == "Write pv 'hello' with 'bye'"
+
+
 def test_ActionButton_adds_open_opi_action(widget, get_opi_renderer):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     widget.add_child(ab)
