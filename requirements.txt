@@ -3,4 +3,3 @@ pytest>=3.0
 coverage
 pytest-cov
 python-coveralls
-mock>=2.0
