@@ -31,17 +31,24 @@ class Font(object):
     """Representation of a font."""
 
     def __init__(self, name=None, fontface='Liberation Sans',
-                 size=15, style=REGULAR, pixels=True):
+                 size=15, style=REGULAR, pixels=True, **kws):
         # If the font name is specified, and defined in CS-Studio's fonts.def
         # than this overrides all over attributes.
+        # keyword arguments:
+        # phoebus_size : font size for phoebus in pixel
         self.fontface = fontface
         self.size = size
         self.style = style
         self.pixels = pixels
         self.name = name
+        _phoebus_size = kws.get('phoebus_size', None)
+        if _phoebus_size is None:
+            _phoebus_size = size
+        self.phoebus_size = _phoebus_size
 
     def __eq__(self, other):
         val = (self.size == other.size and
+               self.phoebus_size == other.phoebus_size and
                self.style == other.style and
                self.pixels == other.pixels)
         return val
@@ -81,7 +88,7 @@ def parse_font_file(filename: str):
             _r = _pattern.match(line.strip())
             if _r is None:
                 continue
-            _name, _family, _style, _size, _unit = _r.groups()
+            _name, _family, _style, _size, _left = _r.groups()
 
             # font name, all upper cases, ' ' -> '_'
             _name = utils.mangle_name(_name.strip())
@@ -90,10 +97,15 @@ def parse_font_file(filename: str):
             # font style
             _style = _style.strip()
             _style_enum = STYLES[_style]
-            # font height or size
+            # font height or size (BOY)
             _size = int(_size)
-            # font size in pixel?
-            _is_pixel = False if _unit == "pt" else True
+            # font size in pixel? (BOY only)
+            _is_pixel = False if "pt" in _left else True
+            _size_bob = re.findall(r'\d+', _left)
+            if not _size_bob:
+                _size_bob = _size
+            else:
+                _size_bob = int(_size_bob[0])  # in px
 
-            _f = Font(_name, _family, _size, _style_enum, _is_pixel)
+            _f = Font(_name, _family, _size, _style_enum, _is_pixel, phoebus_size=_size_bob)
             utils.add_attr_to_module(_name, _f, sys.modules[__name__])

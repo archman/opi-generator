@@ -12,6 +12,8 @@ dummy 3 = Dummy one-regular-14
 # comment line 2
 # do not trim the trailing spaces in the next line!
 dummy 4  =  another dummy font family  - regular  - 20  
+# define size for phoebus
+dummy 5 = Font name contains no digit - bold - 14pt, 24
 """
 
 
@@ -61,16 +63,20 @@ def test_add_font_to_widget_phoebus(widget, get_bob_renderer):
 def test_parse_font_file(font_file):
     fonts.parse_font_file(font_file.name)
     assert fonts.DUMMY_1 == fonts.Font('dummy 1', 'Dummy one', 19,
-                                       fonts.BOLD, pixels=False)
+                                       fonts.BOLD, pixels=False, phoebus_size=19)
     assert fonts.DUMMY_1.name == 'DUMMY_1'
     assert fonts.DUMMY_1.fontface == 'Dummy one'
     assert fonts.DUMMY_1.style == fonts.BOLD
     assert fonts.DUMMY_1.style_as_str() == 'BOLD'
     assert fonts.DUMMY_1.size == 19
+    assert fonts.DUMMY_1.phoebus_size == 19
     assert fonts.DUMMY_1.pixels == False
     assert fonts.DUMMY_2 == fonts.Font('dummy 2', 'Dummy two', 15,
-                                       fonts.ITALIC, pixels=True)
+                                       fonts.ITALIC, pixels=True, phoebus_size=15)
     assert fonts.DUMMY_3 == fonts.Font('dummy 3', 'Dummy one', 14,
-                                       fonts.REGULAR, pixels=True)
+                                       fonts.REGULAR, pixels=True, phoebus_size=14)
     assert fonts.DUMMY_4 == fonts.Font('dummy 4', 'another dummy font family', 20,
-                                       fonts.REGULAR, pixels=True)
+                                       fonts.REGULAR, pixels=True, phoebus_size=20)
+    assert fonts.DUMMY_5 == fonts.Font('dummy 5', 'Font name contains no digit', 14,
+                                       fonts.BOLD, pixels=False,
+                                       phoebus_size=24)
