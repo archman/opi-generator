@@ -180,6 +180,7 @@ class Widget(object):
             Border object
         """
         self.border = border
+        self.phoebus_border = border
 
     def set_font(self, font):
         """Set font for the widget.

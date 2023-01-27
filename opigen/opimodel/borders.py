@@ -1,3 +1,4 @@
+# phoebus does not support border style.
 class BorderStyle:
     NONE = 0
     LINE = 1
@@ -19,7 +20,10 @@ class BorderStyle:
 
 class Border(object):
 
-    def __init__(self, style, width, color, alarm):
+    def __init__(self, style, width, color, alarm: bool):
+        # style: only applies to BOY
+        # alarm refers to 'Alarm Sensitive' in 'Border' section (BOY),
+        # and 'Alarm Border' in 'Behavior' section (BOB)
         self.alarm = alarm
         self.color = color
         self.style = style

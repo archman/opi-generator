@@ -7,5 +7,6 @@ class OpiBorder(object):
     def render(self, widget_node, _, border_model):
         self._text.render(widget_node, 'border_alarm_sensitive', border_model.alarm)
         self._text.render(widget_node, 'border_width', border_model.width)
-        self._text.render(widget_node, 'border_style', border_model.style)
+        # phoebus does not support border style
+        # self._text.render(widget_node, 'border_style', border_model.style)
         self._color.render(widget_node, 'border_color', border_model.color)
