@@ -162,6 +162,7 @@ class Widget(object):
             Color object
         """
         self.background_color = color
+        self.phoebus_background_color = color
 
     def set_fg_color(self, color):
         """Set background color for the widget.
@@ -170,6 +171,7 @@ class Widget(object):
             Color object
         """
         self.foreground_color = color
+        self.phoebus_foreground_color = color
 
     def set_border(self, border):
         """Set border for the widget.
