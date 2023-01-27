@@ -13,6 +13,18 @@ STYLES = {'regular': REGULAR,
           'italic': ITALIC,
           'bold italic': BOLD_ITALIC}
 
+# notes for Phoebus:
+# - Only supports font size in pixels
+# - String as font style
+
+# phoebus font style
+STYLE_MAP = {
+    REGULAR: 'REGULAR',
+    BOLD: 'BOLD',
+    ITALIC: 'ITALIC',
+    BOLD_ITALIC: 'BOLD_ITALIC',
+}
+
 
 class Font(object):
     """Representation of a font."""
@@ -32,6 +44,10 @@ class Font(object):
                self.style == other.style and
                self.pixels == other.pixels)
         return val
+    
+    def style_as_str(self) -> str:
+        # phoebus font style
+        return STYLE_MAP[self.style]
 
     def __str__(self):
         pixels_or_points = 'px' if self.pixels else 'pt'

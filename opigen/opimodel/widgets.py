@@ -186,6 +186,7 @@ class Widget(object):
             Font object
         """
         self.font = font
+        self.phoebus_font = font
 
     def add_rule(self, rule):
         """Add a rule to the widget.

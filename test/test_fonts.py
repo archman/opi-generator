@@ -16,7 +16,6 @@ def font_file():
     tmp = tempfile.NamedTemporaryFile('wt', delete=False)
     tmp.write(TEST_FONT_FILE)
     tmp.close()
-    print(tmp.name)
     yield tmp
     os.unlink(tmp.name)
 
@@ -37,6 +36,22 @@ def test_add_font_to_widget(widget, get_opi_renderer):
     assert fontdata_nodes[0].get('style') == '0'
     assert fontdata_nodes[0].get('pixels') == 'true'
     # renderer.write_to_file('/tmp/test.opi')
+
+
+def test_add_font_to_widget_phoebus(widget, get_bob_renderer):
+    f = fonts.Font(name='Dummy Font Name', fontface='Dummy Font Face', size=12, style=fonts.REGULAR)
+    widget.set_font(f)
+    renderer = get_bob_renderer(widget)
+    renderer.assemble()
+    node = renderer.get_node()
+    font_nodes = node.findall('./font')
+    assert len(font_nodes) == 1
+    fontdata_nodes = node.findall('./font/font')
+    assert len(fontdata_nodes) == 1
+    assert fontdata_nodes[0].text == 'Dummy Font Name'
+    assert fontdata_nodes[0].get('family') == 'Dummy Font Face'
+    assert fontdata_nodes[0].get('size') == '12'
+    assert fontdata_nodes[0].get('style') == 'REGULAR'
 
 
 def test_parse_css_font_file(font_file):
