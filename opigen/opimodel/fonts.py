@@ -1,3 +1,4 @@
+import re
 from . import utils
 import sys
 
@@ -30,7 +31,7 @@ class Font(object):
     """Representation of a font."""
 
     def __init__(self, name=None, fontface='Liberation Sans',
-            size=15, style=REGULAR, pixels=True):
+                 size=15, style=REGULAR, pixels=True):
         # If the font name is specified, and defined in CS-Studio's fonts.def
         # than this overrides all over attributes.
         self.fontface = fontface
@@ -44,41 +45,55 @@ class Font(object):
                self.style == other.style and
                self.pixels == other.pixels)
         return val
-    
+
     def style_as_str(self) -> str:
         # phoebus font style
         return STYLE_MAP[self.style]
 
     def __str__(self):
         pixels_or_points = 'px' if self.pixels else 'pt'
-        format_string = 'Font name {}: {} style {} size {}{}'
-        return format_string.format(self.name, self.fontface, self.style,
+        format_string = 'Font name {}: {} style {} ({}) size {}{}'
+        return format_string.format(self.name, self.fontface,
+                                    self.style, self.style_as_str(),
                                     self.size, pixels_or_points)
 
+    def __repr__(self):
+        return str(self)
 
-def parse_css_font_file(filename):
-    """Parse the provided font.def file, create Font objects for each
-       defined font and attach them to the namespace of this module wth
-       names converted into appropriate constants by the
-       utils.mangle_name() function.
 
-    Args:
-        filepath of the font file
+_pattern = re.compile(
+    r'([0-9a-zA-Z ]+)\s*=\s*([a-zA-Z ]+)\s*-\s*([a-zA-Z ]+)\s*-\s*([0-9]+)\s*(.*)')
+
+
+def parse_font_file(filename: str):
+    """ Parse the provided font.def file, create Font objects for each
+    defined font and attach them to the namespace of this module with
+    names converted into appropriate constants by the utils.mangle_name()
+    function. By default the font size unit is 'px'.
+
+    Parameters
+    ----------
+    filename : str
+        Filepath of the font definition file.
     """
-    with open(filename) as f:
-        for line in (l.strip() for l in f.readlines()):
-            if line and not line.startswith('#'):
-                key, value = [x.strip() for x in line.split('=')]
-                face, style, size = [x.strip(',') for x in value.split('-')]
-                pixels = True
-                if size.endswith('px'):
-                    size = int(size[:-2])
-                elif size.endswith('pt'):
-                    size = int(size[:-2])
-                    pixels = False
-                else:
-                    size = int(size)
-                    pixels = False
-                style_int = STYLES[style]
-                f = Font(key, face, size, style_int, pixels)
-                utils.add_attr_to_module(key, f, sys.modules[__name__])
+    with open(filename, "r") as f:
+        for line in f.readlines():
+            _r = _pattern.match(line.strip())
+            if _r is None:
+                continue
+            _name, _family, _style, _size, _unit = _r.groups()
+
+            # font name, all upper cases, ' ' -> '_'
+            _name = _name.strip().replace(' ', '_').upper()
+            # font face or family
+            _family = _family.strip()
+            # font style
+            _style = _style.strip()
+            _style_enum = STYLES[_style]
+            # font height or size
+            _size = int(_size)
+            # font size in pixel?
+            _is_pixel = False if _unit == "pt" else True
+
+            _f = Font(_name, _family, _size, _style_enum, _is_pixel)
+            utils.add_attr_to_module(_name, _f, sys.modules[__name__])

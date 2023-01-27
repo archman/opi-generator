@@ -8,6 +8,9 @@ from opigen.opimodel import fonts
 TEST_FONT_FILE = """dummy 1 = Dummy one-bold-19pt
 dummy 2 = Dummy two-italic-15px
 dummy 3 = Dummy one-regular-14
+// comment line 1
+# comment line 2
+dummy 4  =  another dummy font family  - regular  - 20  
 """
 
 
@@ -54,13 +57,19 @@ def test_add_font_to_widget_phoebus(widget, get_bob_renderer):
     assert fontdata_nodes[0].get('style') == 'REGULAR'
 
 
-def test_parse_css_font_file(font_file):
-    fonts.parse_css_font_file(font_file.name)
-    print(fonts.DUMMY_1)
-    print(fonts.BOLD)
+def test_parse_font_file(font_file):
+    fonts.parse_font_file(font_file.name)
     assert fonts.DUMMY_1 == fonts.Font('dummy 1', 'Dummy one', 19,
                                        fonts.BOLD, pixels=False)
+    assert fonts.DUMMY_1.name == 'DUMMY_1'
+    assert fonts.DUMMY_1.fontface == 'Dummy one'
+    assert fonts.DUMMY_1.style == fonts.BOLD
+    assert fonts.DUMMY_1.style_as_str() == 'BOLD'
+    assert fonts.DUMMY_1.size == 19
+    assert fonts.DUMMY_1.pixels == False
     assert fonts.DUMMY_2 == fonts.Font('dummy 2', 'Dummy two', 15,
                                        fonts.ITALIC, pixels=True)
     assert fonts.DUMMY_3 == fonts.Font('dummy 3', 'Dummy one', 14,
-                                       fonts.REGULAR, pixels=False)
+                                       fonts.REGULAR, pixels=True)
+    assert fonts.DUMMY_4 == fonts.Font('dummy 4', 'another dummy font family', 20,
+                                       fonts.REGULAR, pixels=True)
