@@ -84,7 +84,7 @@ def parse_font_file(filename: str):
             _name, _family, _style, _size, _unit = _r.groups()
 
             # font name, all upper cases, ' ' -> '_'
-            _name = _name.strip().replace(' ', '_').upper()
+            _name = utils.mangle_name(_name.strip())
             # font face or family
             _family = _family.strip()
             # font style

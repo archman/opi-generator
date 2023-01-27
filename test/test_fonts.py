@@ -10,6 +10,7 @@ dummy 2 = Dummy two-italic-15px
 dummy 3 = Dummy one-regular-14
 // comment line 1
 # comment line 2
+# do not trim the trailing spaces in the next line!
 dummy 4  =  another dummy font family  - regular  - 20  
 """
 
