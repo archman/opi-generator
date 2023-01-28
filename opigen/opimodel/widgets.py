@@ -92,6 +92,7 @@ class Widget(object):
         self._parent = None
         self._type_id = type_id
         self.rules = []
+        self.phoebus_rules = []
         # phoebus
         self.phoebus_x = x
         self.phoebus_y = y
@@ -198,6 +199,7 @@ class Widget(object):
             Rule object
         """
         self.rules.append(rule)
+        self.phoebus_rules.append(rule)
 
     def add_scale_options(self, width=True, height=True, keep_wh_ratio=False):
         """Add scale options to the widget.
