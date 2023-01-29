@@ -43,7 +43,8 @@ def parse_color_file(filepath: str):
             if _r is None:
                 continue
             _name, _cr, _cg, _cb = _r.groups()
-            _name = utils.mangle_name(_name.strip())
-            utils.add_attr_to_module(_name,
-                                     Color((int(_cr), int(_cg), int(_cb)), _name),
+            _color_name = _name.strip()
+            _module_name = utils.mangle_name(_color_name)
+            utils.add_attr_to_module(_module_name,
+                                     Color((int(_cr), int(_cg), int(_cb)), _color_name),
                                      sys.modules[__name__])

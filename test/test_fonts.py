@@ -64,7 +64,7 @@ def test_parse_font_file(font_file):
     fonts.parse_font_file(font_file.name)
     assert fonts.DUMMY_1 == fonts.Font('dummy 1', 'Dummy one', 19,
                                        fonts.BOLD, pixels=False, phoebus_size=19)
-    assert fonts.DUMMY_1.name == 'DUMMY_1'
+    assert fonts.DUMMY_1.name == 'dummy 1'
     assert fonts.DUMMY_1.fontface == 'Dummy one'
     assert fonts.DUMMY_1.style == fonts.BOLD
     assert fonts.DUMMY_1.style_as_str() == 'BOLD'

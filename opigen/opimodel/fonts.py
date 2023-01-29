@@ -91,7 +91,8 @@ def parse_font_file(filename: str):
             _name, _family, _style, _size, _left = _r.groups()
 
             # font name, all upper cases, ' ' -> '_'
-            _name = utils.mangle_name(_name.strip())
+            _font_name = _name.strip()
+            _module_name = utils.mangle_name(_font_name)
             # font face or family
             _family = _family.strip()
             # font style
@@ -107,5 +108,5 @@ def parse_font_file(filename: str):
             else:
                 _size_bob = int(_size_bob[0])  # in px
 
-            _f = Font(_name, _family, _size, _style_enum, _is_pixel, phoebus_size=_size_bob)
-            utils.add_attr_to_module(_name, _f, sys.modules[__name__])
+            _f = Font(_font_name, _family, _size, _style_enum, _is_pixel, phoebus_size=_size_bob)
+            utils.add_attr_to_module(_module_name, _f, sys.modules[__name__])
