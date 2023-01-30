@@ -2,6 +2,19 @@ from opigen.opimodel import widgets
 import pytest
 
 
+def test_widget_attribute_map(widget, get_opi_renderer, get_bob_renderer):
+    assert hasattr(widget, 'phoebus_x') == True
+    assert widget.x == widget.phoebus_x
+    assert hasattr(widget, 'phoebus_y') == True
+    assert widget.y == widget.phoebus_y
+    assert hasattr(widget, 'phoebus_width') == True
+    assert widget.width == widget.phoebus_width
+    assert hasattr(widget, 'phoebus_height') == True
+    assert widget.height == widget.phoebus_height
+    assert hasattr(widget, 'phoebus_name') == True
+    assert widget.name == widget.phoebus_name
+
+
 def test_widget_render_contains_correct_values(widget, get_opi_renderer):
     renderer = get_opi_renderer(widget)
     renderer.assemble()
