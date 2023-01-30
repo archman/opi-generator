@@ -1,0 +1,37 @@
+#
+# Attribute map between CS-Studio and Phoebus
+# DEFAULT section is shared by all widgets
+#
+[DEFAULT]
+name = 'name'
+x = 'x'
+y = 'y'
+width = 'width'
+height = 'height'
+background_color = 'background_color'
+foreground_color = 'foreground_color'
+show_grid = 'grid_visible'
+horizontal_alignment = 'horizontal_alignment'
+vertical_alignment = 'vertical_alignment'
+pv_name = 'pv_name'
+
+[Line]
+points = 'points'
+line_width = 'line_width'
+
+[Label]
+text = 'text'
+
+[GroupingContainer]
+transparent = 'transparent'
+
+[ActionButton]
+text = 'text'
+
+[ToggleButton]
+on_label = 'on_label'
+off_label = 'off_label'
+
+[Byte]
+numBits = 'numBits'
+startBit = 'startBit'
