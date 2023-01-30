@@ -4,7 +4,9 @@ of type Display.  To create the opi, add widgets as children of this widget.
 """
 from . import actions, scalings
 from .colors import Color
+from opigen.config import get_attr_conf 
 
+ATTR_MAP = get_attr_conf()
 
 class ResizeBehaviour:
     # for LinkingContainer
@@ -77,11 +79,9 @@ class Widget(object):
         if name is None:
             k = self.__class__.__name__
             v = Widget.CNT.setdefault(k, 0)
-            self.phoebus_name = f"{k}_{v}"
             self.name = f"{k}_{v}"
             Widget.CNT[k] += 1
         else:
-            self.phoebus_name = name
             self.name = name
         #
         self.x = x
@@ -93,11 +93,22 @@ class Widget(object):
         self._type_id = type_id
         self.rules = []
         self.phoebus_rules = []
-        # phoebus
-        self.phoebus_x = x
-        self.phoebus_y = y
-        self.phoebus_width = width
-        self.phoebus_height = height
+
+    def __setattr__(self, name, value):
+        _cls_name = self.__class__.__name__
+        _conf_default = ATTR_MAP['DEFAULT']
+        if _cls_name in ATTR_MAP:
+            _conf = ATTR_MAP.get(_cls_name)
+            _conf.update(_conf_default)
+        else:
+            _conf = _conf_default
+
+        if name in _conf:
+            super().__setattr__(name, value)
+            super().__setattr__(f"phoebus_{_conf[name]}", value)
+        else:
+            super().__setattr__(name, value)
+
 
     def get_type_name(self):
         # widget type name, i.e. tag name, followed by a real type string ('label') and other attributes.
@@ -163,7 +174,6 @@ class Widget(object):
             Color object
         """
         self.background_color = color
-        self.phoebus_background_color = color
 
     def set_fg_color(self, color):
         """Set background color for the widget.
@@ -172,7 +182,6 @@ class Widget(object):
             Color object
         """
         self.foreground_color = color
-        self.phoebus_foreground_color = color
 
     def set_border(self, border):
         """Set border for the widget.
@@ -277,7 +286,6 @@ class Display(Widget):
                                       name='display')
         self.auto_zoom_to_fit_all = False
         self.show_grid = True
-        self.phoebus_grid_visible = True
 
     def get_type_name(self):
         return "display"
@@ -316,9 +324,7 @@ class Line(Widget):
             Line.TYPE_ID, x=min(x0, x1), y=min(y0, y1),
             width=abs(x0 - x1) + 1, height=abs(y0 - y1) + 1)
         self.points = [(x0, y0), (x1, y1)]
-        self.phoebus_points = [(x0, y0), (x1, y1)]
         self.line_width = line_width
-        self.phoebus_line_width = line_width
 
 
 class Label(Widget):
@@ -329,7 +335,6 @@ class Label(Widget):
     def __init__(self, x, y, width, height, text):
         super(Label, self).__init__(Label.TYPE_ID, x, y, width, height)
         self.text = text
-        self.phoebus_text = text
 
 
 class TextMonitor(Widget):
@@ -343,8 +348,6 @@ class TextMonitor(Widget):
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
-        self.phoebus_pv_name = pv
-        self.phoebus_horizontal_alignment = HAlign.CENTER
 
 
 class TextInput(Widget):
@@ -359,9 +362,6 @@ class TextInput(Widget):
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
         #
-        self.phoebus_pv_name = pv
-        self.phoebus_horizontal_alignment = HAlign.CENTER
-        #
         if style is not None:
             self.set_basic_style(style)
 
@@ -369,10 +369,11 @@ class TextInput(Widget):
 class GroupingContainer(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.groupingContainer'
+    TYPE = 'group'
 
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, name=''):
         super(GroupingContainer, self).__init__(
-            GroupingContainer.TYPE_ID, x, y, width, height)
+            GroupingContainer.TYPE_ID, x, y, width, height, name)
         self.lock_children = True
         self.transparent = True # transparent background
 
@@ -428,13 +429,13 @@ class LinkingContainer(Widget):
 class ActionButton(ActionWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.ActionButton'
+    TYPE = 'action_button'
 
     def __init__(self, x, y, width, height, text, style=None, hook_first=True, hook_all=False):
         super(ActionButton, self).__init__(
             ActionButton.TYPE_ID, x, y, width, height, hook_first, hook_all)
 
         self.text = text
-        self.phoebus_text = text
         if style is not None:
             self.set_basic_style(style)
 
@@ -473,7 +474,6 @@ class ToggleButton(ActionWidget):
 
         if pv_name is not None:
             self.pv_name = pv_name
-            self.phoebus_pv_name = pv_name
 
         self.on_label = on_text
         self.off_label = off_text
@@ -484,10 +484,6 @@ class ToggleButton(ActionWidget):
         self.show_led = False
         self.push_action_index = 0
         self.released_action_index = 1
-
-        #
-        self.phoebus_on_label = on_text
-        self.phoebus_off_label = off_text
 
     def add_push_action(self, action):
         self.actions.add_action(action)
@@ -506,7 +502,6 @@ class Led(Widget):
     def __init__(self, x, y, width, height, pv):
         super(Led, self).__init__(Led.TYPE_ID, x, y, width, height)
         self.pv_name = pv
-        self.phoebus_pv_name = pv
 
 
 class Byte(Widget):
@@ -517,17 +512,14 @@ class Byte(Widget):
     def __init__(self, x, y, width, height, pv, bits, start_bit=None):
         super(Byte, self).__init__(Byte.TYPE_ID, x, y, width, height)
         self.pv_name = pv
-        self.phoebus_pv_name = pv
         self.effect_3d = False
         self.square_led = True
         self.numBits = bits
-        self.phoebus_numBits = bits
         self.led_border = 1
         self.border_alarm_sensitive = False
         self.led_packed = True
         if start_bit is not None:
             self.startBit = start_bit
-            self.phoebus_startBit = start_bit
 
 
 class Symbol(ActionWidget):
