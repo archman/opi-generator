@@ -27,6 +27,21 @@ transparent = 'transparent'
 
 [TextUpdate]
 transparent = 'transparent'
+show_units = 'show_units'
+precision = 'precision'
+
+[TextMonitor]
+transparent = 'transparent'
+show_units = 'show_units'
+precision = 'precision'
+
+[TextEntry]
+show_units = 'show_units'
+precision = 'precision'
+
+[TextInput]
+show_units = 'show_units'
+precision = 'precision'
 
 [GroupingContainer]
 transparent = 'transparent'
