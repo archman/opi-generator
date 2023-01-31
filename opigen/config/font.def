@@ -1,0 +1,19 @@
+#
+# lines starts with # or // will be skipped
+# CS-Studio (.opi) supports both font size in pt and px
+# Phoebus (.bob) only support px
+#
+# Name           Family            Style     size (boy), size (phoebus)
+Title          = Cantarell       - bold    - 24 pt, 28
+Header 1       = Cantarell       - bold    - 20 pt, 24
+Header 2       = Cantarell       - bold    - 18 pt, 22
+Header 3       = Cantarell       - bold    - 16 pt, 20
+Header 4       = Cantarell       - bold    - 14 pt, 18
+Header 5       = Cantarell       - bold    - 12 pt, 16
+Default        = Cantarell       - regular - 12 pt, 16
+Default Bold   = Cantarell       - bold    - 12 pt, 16
+Label Small    = Liberation Sans - regular - 13 px, 17
+Fine Print     = Liberation Sans - regular - 12 px, 16
+Monospace      = Liberation Mono - regular - 12 pt, 16
+Monospace Bold = Liberation Mono - bold    - 12 pt, 16
+Groupbox Name  = Liberation Mono - regular - 10 pt, 14

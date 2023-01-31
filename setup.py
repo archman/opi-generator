@@ -16,4 +16,5 @@ setup(name='opigen',
           'opigen.contrib': 'opigen/contrib',
           'opigen': 'opigen',
       },
+      include_package_data=True,
       install_requires=['lxml'])
