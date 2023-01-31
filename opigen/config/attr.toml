@@ -41,3 +41,9 @@ off_label = 'off_label'
 [Byte]
 numBits = 'numBits'
 startBit = 'startBit'
+
+[Led]
+on_color = 'on_color'
+off_color = 'off_color'
+on_label = 'on_label'
+off_label = 'off_label'
