@@ -26,6 +26,8 @@ def get_attr_conf():
         _user_confpath = os.path.expanduser("~/.opigen/attr.toml")
         if os.path.isfile(_user_confpath):
             _confpath = _user_confpath
+        else:
+            return deployed_conf
     # override
     _user_conf = toml.load(_confpath)
     for k, v in _user_conf.items():
