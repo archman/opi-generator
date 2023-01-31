@@ -30,6 +30,32 @@ class FormatType:
     SEXAGESIMAL_HMS = 9
     SEXAGESIMAL_DMS = 10
 
+class FormatType_PHOEBUS:
+    DEFAULT = 0
+    DECIMAL = 1
+    EXPONENTIAL = 2
+    ENGINEERING = 3
+    HEXADECIMAL = 4
+    COMPACT = 5
+    STRING = 6
+    SEXAGESIMAL = 7
+    SEXAGESIMAL_HMS = 8
+    SEXAGESIMAL_DMS = 9
+
+# for phoebus (BOY to BOB)
+FormatType_MAP = {
+    FormatType.DEFAULT: FormatType_PHOEBUS.DEFAULT,
+    FormatType.DECIMAL: FormatType_PHOEBUS.DECIMAL,
+    FormatType.EXPONENTIAL: FormatType_PHOEBUS.EXPONENTIAL,
+    FormatType.HEX_32: FormatType_PHOEBUS.HEXADECIMAL,
+    FormatType.STRING: FormatType_PHOEBUS.STRING,
+    FormatType.HEX_64: FormatType_PHOEBUS.HEXADECIMAL,
+    FormatType.COMPACT: FormatType_PHOEBUS.COMPACT,
+    FormatType.ENGINEERING: FormatType_PHOEBUS.ENGINEERING,
+    FormatType.SEXAGESIMAL: FormatType_PHOEBUS.SEXAGESIMAL,
+    FormatType.SEXAGESIMAL_HMS: FormatType_PHOEBUS.SEXAGESIMAL_HMS,
+    FormatType.SEXAGESIMAL_DMS: FormatType_PHOEBUS.SEXAGESIMAL_DMS,
+}
 
 class BasicStyle:
     # ActionButton, TextInput
@@ -117,7 +143,10 @@ class Widget(object):
 
         if name in _conf:
             super().__setattr__(name, value)
-            super().__setattr__(f"phoebus_{_conf[name]}", value)
+            if name == 'format_type':
+                super().__setattr__(f"phoebus_{_conf[name]}", FormatType_MAP[value])
+            else:
+                super().__setattr__(f"phoebus_{_conf[name]}", value)
         else:
             super().__setattr__(name, value)
 

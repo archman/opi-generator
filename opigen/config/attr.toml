@@ -14,6 +14,7 @@ show_grid = 'grid_visible'
 horizontal_alignment = 'horizontal_alignment'
 vertical_alignment = 'vertical_alignment'
 pv_name = 'pv_name'
+format_type = 'format'
 
 [Line]
 line_width = 'line_width'
