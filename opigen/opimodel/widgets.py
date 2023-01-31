@@ -130,9 +130,6 @@ class Widget(object):
         self._type_id = type_id
         self.rules = []
         self.phoebus_rules = []
-        #
-        self.horizontal_alignment = HAlign.CENTER
-        self.vertical_alignment = VAlign.MIDDLE
 
     def __setattr__(self, name, value):
         _cls_name = self.__class__.__name__
