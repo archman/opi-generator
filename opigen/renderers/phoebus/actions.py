@@ -94,7 +94,6 @@ class OpiActions(object):
 
     def render(self, widget_node, tag_name, actions_model):
         if actions_model:
-            print("Rendering actions...")
             actions_node = et.SubElement(widget_node, tag_name)
             # phoebus does not have 'hook' or 'hook_all' option
             #hook_first = 'true' if actions_model.get_hook_first() else 'false'

@@ -4,7 +4,6 @@ import lxml.etree as et
 class OpiFont(object):
 
     def render(self, widget_node, tag_name, font_model):
-        print("Rendering fonts...")
         font_node = et.SubElement(widget_node, tag_name)
         # opifont_node = et.SubElement(font_node, 'opifont.name')
         opifont_node = et.SubElement(font_node, 'font')

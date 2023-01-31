@@ -48,7 +48,7 @@ def get_font_def_path():
     r : str
         The absolute path of the font definition file.
     """
-    print(f"Found font def file: {_get_def_path('font.def')}")
+    # print(f"Found font def file: {_get_def_path('font.def')}")
     return _get_def_path('font.def')
 
 
@@ -63,7 +63,7 @@ def get_color_def_path():
     r : str
         The absolute path of the color definition file.
     """
-    print(f"Found color def file: {_get_def_path('color.def')}")
+    # print(f"Found color def file: {_get_def_path('color.def')}")
     return _get_def_path('color.def')
  
     
