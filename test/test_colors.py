@@ -3,7 +3,6 @@ from opigen.opimodel import colors
 import pytest
 import tempfile
 
-
 COLOR_FILE_CONTENTS = """
 # Alarm colours
 Minor = 255, 241, 0
@@ -15,6 +14,7 @@ Button: BG = 205, 205, 205
 Related Display: FG = 128, 64, 0
 Grey 90% = 230, 230, 230
 """
+
 
 @pytest.fixture
 def color_file():
@@ -77,5 +77,6 @@ def test_parse_color_file(color_file):
     assert colors.DISCONNECTED.name == 'Disconnected'
 
     assert colors.BUTTON_BG == colors.Color((205, 205, 205), 'Button: BG')
-    assert colors.RELATED_DISPLAY_FG == colors.Color((128, 64, 0), 'Related Display: FG')
+    assert colors.RELATED_DISPLAY_FG == colors.Color((128, 64, 0),
+                                                     'Related Display: FG')
     assert colors.GREY_90_ == colors.Color((230, 230, 230), 'Grey 90%')

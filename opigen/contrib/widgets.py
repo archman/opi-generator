@@ -10,10 +10,12 @@ DEFAULT_TEXTENTRY_BG = Color((236, 240, 241), "TEXTENTRY_BG")
 DEFAULT_BORDER_COLOR = Color((0, 128, 255), "BORDER_BLUE")
 
 # absolute path for resource files, e.g. images.
-RES_DIRPATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images'))
+RES_DIRPATH = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                           'images'))
 
 
 class SlideButton(_widgets.ImageBoolButton):
+
     def __init__(self, x, y, width, height, pv_name, alarm_sensitive=False):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
         self.on_image = ".images/toggle_on.png"
@@ -25,11 +27,13 @@ class SlideButton(_widgets.ImageBoolButton):
     def get_resources(self):
         """Get required resource files and distribute with the final generate OPI.
         """
-        return [(os.path.abspath(os.path.join(RES_DIRPATH, os.path.basename(p))), p)
-                    for p in (self.on_image, self.off_image)]
+        return [(os.path.abspath(os.path.join(RES_DIRPATH,
+                                              os.path.basename(p))), p)
+                for p in (self.on_image, self.off_image)]
 
 
 class Display(_widgets.Display):
+
     def __init__(self, width=800, height=600, name=None):
         super(self.__class__, self).__init__(width, height)
         #
@@ -39,6 +43,7 @@ class Display(_widgets.Display):
 
 
 class LinkingContainer(_widgets.LinkingContainer):
+
     def __init__(self, x, y, width, height, opi_file):
         super(self.__class__, self).__init__(x, y, width, height, opi_file)
         #
@@ -46,6 +51,7 @@ class LinkingContainer(_widgets.LinkingContainer):
 
 
 class GroupingContainer(_widgets.GroupingContainer):
+
     def __init__(self, x, y, width, height, name=None):
         super(self.__class__, self).__init__(x, y, width, height, name)
         #
@@ -53,6 +59,7 @@ class GroupingContainer(_widgets.GroupingContainer):
 
 
 class TextUpdate(_widgets.TextMonitor):
+
     def __init__(self, x, y, width, height, pv_name, alarm_sensitive=True):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
         #
@@ -62,6 +69,7 @@ class TextUpdate(_widgets.TextMonitor):
 
 
 class TextEntry(_widgets.TextInput):
+
     def __init__(self, x, y, width, height, pv_name):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
         #
@@ -69,6 +77,7 @@ class TextEntry(_widgets.TextInput):
 
 
 class Led(_widgets.Led):
+
     def __init__(self, x, y, width, height, pv_name, alarm_sensitive=False):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
         #
@@ -76,4 +85,3 @@ class Led(_widgets.Led):
         self.bulb_border = 1
         self.set_border(
             Border(BorderStyle.NONE, 1, DEFAULT_BORDER_COLOR, alarm_sensitive))
-

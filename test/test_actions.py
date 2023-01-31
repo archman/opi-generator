@@ -12,7 +12,8 @@ def test_ActionsModel_obeys_sequence_protocol():
     assert a[0] == 'dummy'
 
 
-def test_widget_with_no_actions_does_not_have_an_actions_node(widget, get_opi_renderer):
+def test_widget_with_no_actions_does_not_have_an_actions_node(
+        widget, get_opi_renderer):
     aw = widgets.ActionWidget('dummy_id', 0, 0, 0, 0)
     assert len(aw.actions) == 0
     widget.add_child(aw)
@@ -22,7 +23,8 @@ def test_widget_with_no_actions_does_not_have_an_actions_node(widget, get_opi_re
     assert len(actions_nodes) == 0
 
 
-def test_widget_with_no_actions_does_not_have_an_actions_node_phoebus(widget, get_bob_renderer):
+def test_widget_with_no_actions_does_not_have_an_actions_node_phoebus(
+        widget, get_bob_renderer):
     aw = widgets.ActionWidget('dummy_id', 0, 0, 0, 0)
     assert len(aw.actions) == 0
     widget.add_child(aw)
@@ -33,7 +35,8 @@ def test_widget_with_no_actions_does_not_have_an_actions_node_phoebus(widget, ge
 
 
 @pytest.mark.parametrize('n', [0, 1, 2, 3])
-def test_adding_action_n_times_results_in_n_actions(widget, get_opi_renderer, n):
+def test_adding_action_n_times_results_in_n_actions(widget, get_opi_renderer,
+                                                    n):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     command = actions.ExecuteCommand('ls', 'list directory')
     widget.add_child(ab)
@@ -51,7 +54,8 @@ def test_adding_action_n_times_results_in_n_actions(widget, get_opi_renderer, n)
 
 
 @pytest.mark.parametrize('n', [0, 1, 2, 3])
-def test_adding_action_n_times_results_in_n_actions_phoebus(widget, get_bob_renderer, n):
+def test_adding_action_n_times_results_in_n_actions_phoebus(
+        widget, get_bob_renderer, n):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     command = actions.ExecuteCommand('ls', 'list directory')
     widget.add_child(ab)
@@ -116,7 +120,8 @@ def test_ActionButton_adds_write_pv_phoebus(widget, get_bob_renderer):
     assert action_nodes[0].get('type') == 'write_pv'
     assert action_nodes[0].find('./pv_name').text == 'hello'
     assert action_nodes[0].find('./value').text == 'bye'
-    assert action_nodes[0].find('./description').text == "Write pv 'hello' with 'bye'"
+    assert action_nodes[0].find(
+        './description').text == "Write pv 'hello' with 'bye'"
 
 
 def test_ActionButton_adds_open_opi_action(widget, get_opi_renderer):
@@ -147,41 +152,65 @@ def test_ActionButton_adds_open_opi_action_phoebus(widget, get_bob_renderer):
 
 @pytest.mark.parametrize('parent_macros', (True, False))
 @pytest.mark.parametrize('macros', ({'a': 'b'}, None))
-def test_ActionButton_adds_open_opi_action_with_macros(widget, get_opi_renderer, macros, parent_macros):
+def test_ActionButton_adds_open_opi_action_with_macros(widget,
+                                                       get_opi_renderer,
+                                                       macros, parent_macros):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
-    ab.add_open_opi('file/path', mode=42, macros=macros, parent_macros=parent_macros)
+    ab.add_open_opi('file/path',
+                    mode=42,
+                    macros=macros,
+                    parent_macros=parent_macros)
     widget.add_child(ab)
     renderer = get_opi_renderer(widget)
     renderer.assemble()
-    macros_node = renderer.get_node().findall('./widget/actions/action/macros')[0]
+    macros_node = renderer.get_node().findall(
+        './widget/actions/action/macros')[0]
     parent_macros_expected = 'true' if parent_macros else 'false'
-    assert macros_node.find('include_parent_macros').text == parent_macros_expected
+    assert macros_node.find(
+        'include_parent_macros').text == parent_macros_expected
     if macros:
         for m in macros:
             assert macros_node.find(m).text == macros[m]
 
 
 @pytest.mark.parametrize('macros', ({'a': 'b'}, None))
-def test_ActionButton_adds_open_opi_action_with_macros_phoebus(widget, get_bob_renderer, macros):
+def test_ActionButton_adds_open_opi_action_with_macros_phoebus(
+        widget, get_bob_renderer, macros):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     ab.add_open_opi('file/path', mode=42, macros=macros)
     widget.add_child(ab)
     renderer = get_bob_renderer(widget)
     renderer.assemble()
-    macros_node = renderer.get_node().findall('./widget/actions/action/macros')[0]
+    macros_node = renderer.get_node().findall(
+        './widget/actions/action/macros')[0]
     if macros:
         for m in macros:
             assert macros_node.find(m).text == macros[m]
 
 
-@pytest.mark.parametrize('macros,raise_expected',
-                         (({'a': 'b'}, False),
-                          ({'a': 10}, False),
-                          ({10: 'a'}, True),  # key not a string
-                          ({10: 11}, True),  # key not a string
-                          ({'a b': 11}, True),  # space in key
-                          ({'1': 'a'}, True)))  # key begins with number
-def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings(widget, get_opi_renderer, macros, raise_expected):
+@pytest.mark.parametrize(
+    'macros,raise_expected',
+    (
+        ({
+            'a': 'b'
+        }, False),
+        ({
+            'a': 10
+        }, False),
+        ({
+            10: 'a'
+        }, True),  # key not a string
+        ({
+            10: 11
+        }, True),  # key not a string
+        ({
+            'a b': 11
+        }, True),  # space in key
+        ({
+            '1': 'a'
+        }, True)))  # key begins with number
+def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings(
+        widget, get_opi_renderer, macros, raise_expected):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     ab.add_open_opi('file/path', mode=42, macros=macros)
     widget.add_child(ab)
@@ -193,14 +222,29 @@ def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings(wid
         renderer.assemble()
 
 
-@pytest.mark.parametrize('macros,raise_expected',
-                         (({'a': 'b'}, False),
-                          ({'a': 10}, False),
-                          ({10: 'a'}, True),  # key not a string
-                          ({10: 11}, True),  # key not a string
-                          ({'a b': 11}, True),  # space in key
-                          ({'1': 'a'}, True)))  # key begins with number
-def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings_phoebus(widget, get_bob_renderer, macros, raise_expected):
+@pytest.mark.parametrize(
+    'macros,raise_expected',
+    (
+        ({
+            'a': 'b'
+        }, False),
+        ({
+            'a': 10
+        }, False),
+        ({
+            10: 'a'
+        }, True),  # key not a string
+        ({
+            10: 11
+        }, True),  # key not a string
+        ({
+            'a b': 11
+        }, True),  # space in key
+        ({
+            '1': 'a'
+        }, True)))  # key begins with number
+def test_ActionButton_open_opi_macros_raise_ValueError_if_macros_not_strings_phoebus(
+        widget, get_bob_renderer, macros, raise_expected):
     ab = widgets.ActionButton(0, 0, 0, 0, 'dummy')
     ab.add_open_opi('file/path', mode=42, macros=macros)
     widget.add_child(ab)

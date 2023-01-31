@@ -3,9 +3,9 @@ import lxml.etree as et
 from opigen.opimodel import actions
 from . import text
 
-
-EXIT_SCRIPT = ('importClass(org.csstudio.display.builder.runtime.script.ScriptUtil);'
-               'ScriptUtil.closeDisplay(widget);')
+EXIT_SCRIPT = (
+    'importClass(org.csstudio.display.builder.runtime.script.ScriptUtil);'
+    'ScriptUtil.closeDisplay(widget);')
 
 
 class OpiAction(object):
@@ -85,10 +85,12 @@ class OpiExit(OpiAction):
 class OpiActions(object):
     """Renderer for actions."""
 
-    ACTION_MAPPING = {actions.ExecuteCommand: OpiExecuteCommand,
-                      actions.WritePv: OpiWritePv,
-                      actions.Exit: OpiExit,
-                      actions.OpenOpi: OpiOpen}
+    ACTION_MAPPING = {
+        actions.ExecuteCommand: OpiExecuteCommand,
+        actions.WritePv: OpiWritePv,
+        actions.Exit: OpiExit,
+        actions.OpenOpi: OpiOpen
+    }
 
     def render(self, widget_node, tag_name, actions_model):
         if actions_model:

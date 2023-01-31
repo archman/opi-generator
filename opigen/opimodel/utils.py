@@ -36,5 +36,6 @@ def add_attr_to_module(name, value, module):
     """
     var = mangle_name(name)
     if hasattr(module, var):
-        print('Warning: overwriting variable {} in module {}'.format(var, module))
+        print('Warning: overwriting variable {} in module {}'.format(
+            var, module))
     setattr(module, var, value)

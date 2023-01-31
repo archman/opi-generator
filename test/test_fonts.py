@@ -27,7 +27,10 @@ def font_file():
 
 
 def test_add_font_to_widget(widget, get_opi_renderer):
-    f = fonts.Font(name='Dummy Font Name', fontface='Dummy Font Face', size=12, style=fonts.REGULAR)
+    f = fonts.Font(name='Dummy Font Name',
+                   fontface='Dummy Font Face',
+                   size=12,
+                   style=fonts.REGULAR)
     widget.set_font(f)
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -45,7 +48,10 @@ def test_add_font_to_widget(widget, get_opi_renderer):
 
 
 def test_add_font_to_widget_phoebus(widget, get_bob_renderer):
-    f = fonts.Font(name='Dummy Font Name', fontface='Dummy Font Face', size=12, style=fonts.REGULAR)
+    f = fonts.Font(name='Dummy Font Name',
+                   fontface='Dummy Font Face',
+                   size=12,
+                   style=fonts.REGULAR)
     widget.set_font(f)
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -62,8 +68,12 @@ def test_add_font_to_widget_phoebus(widget, get_bob_renderer):
 
 def test_parse_font_file(font_file):
     fonts.parse_font_file(font_file.name)
-    assert fonts.DUMMY_1 == fonts.Font('dummy 1', 'Dummy one', 19,
-                                       fonts.BOLD, pixels=False, phoebus_size=19)
+    assert fonts.DUMMY_1 == fonts.Font('dummy 1',
+                                       'Dummy one',
+                                       19,
+                                       fonts.BOLD,
+                                       pixels=False,
+                                       phoebus_size=19)
     assert fonts.DUMMY_1.name == 'dummy 1'
     assert fonts.DUMMY_1.fontface == 'Dummy one'
     assert fonts.DUMMY_1.style == fonts.BOLD
@@ -71,12 +81,27 @@ def test_parse_font_file(font_file):
     assert fonts.DUMMY_1.size == 19
     assert fonts.DUMMY_1.phoebus_size == 19
     assert fonts.DUMMY_1.pixels == False
-    assert fonts.DUMMY_2 == fonts.Font('dummy 2', 'Dummy two', 15,
-                                       fonts.ITALIC, pixels=True, phoebus_size=15)
-    assert fonts.DUMMY_3 == fonts.Font('dummy 3', 'Dummy one', 14,
-                                       fonts.REGULAR, pixels=True, phoebus_size=14)
-    assert fonts.DUMMY_4 == fonts.Font('dummy 4', 'another dummy font family', 20,
-                                       fonts.REGULAR, pixels=True, phoebus_size=20)
-    assert fonts.DUMMY_5 == fonts.Font('dummy 5', 'Font name contains no digit', 14,
-                                       fonts.BOLD, pixels=False,
+    assert fonts.DUMMY_2 == fonts.Font('dummy 2',
+                                       'Dummy two',
+                                       15,
+                                       fonts.ITALIC,
+                                       pixels=True,
+                                       phoebus_size=15)
+    assert fonts.DUMMY_3 == fonts.Font('dummy 3',
+                                       'Dummy one',
+                                       14,
+                                       fonts.REGULAR,
+                                       pixels=True,
+                                       phoebus_size=14)
+    assert fonts.DUMMY_4 == fonts.Font('dummy 4',
+                                       'another dummy font family',
+                                       20,
+                                       fonts.REGULAR,
+                                       pixels=True,
+                                       phoebus_size=20)
+    assert fonts.DUMMY_5 == fonts.Font('dummy 5',
+                                       'Font name contains no digit',
+                                       14,
+                                       fonts.BOLD,
+                                       pixels=False,
                                        phoebus_size=24)

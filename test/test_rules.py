@@ -8,8 +8,8 @@ def test_empty_RulesNode_does_not_create_rules_tag(widget, get_opi_renderer):
 
 
 def test_greater_than_rule(widget, get_opi_renderer):
-    widget.add_rule(rules.GreaterThanRule(
-        'vis', 'dummy_pv', '0', name="positive_rule"))
+    widget.add_rule(
+        rules.GreaterThanRule('vis', 'dummy_pv', '0', name="positive_rule"))
     renderer = get_opi_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -26,8 +26,7 @@ def test_greater_than_rule(widget, get_opi_renderer):
 
 
 def test_greater_than_rule_default_name(widget, get_opi_renderer):
-    widget.add_rule(rules.GreaterThanRule(
-        'vis', 'dummy_pv', '0'))
+    widget.add_rule(rules.GreaterThanRule('vis', 'dummy_pv', '0'))
     renderer = get_opi_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -36,8 +35,8 @@ def test_greater_than_rule_default_name(widget, get_opi_renderer):
 
 
 def test_greater_than_rule_sets_val(widget, get_opi_renderer):
-    widget.add_rule(rules.GreaterThanRule(
-        'image_index', 'dummy_pv', '1', val=99))
+    widget.add_rule(
+        rules.GreaterThanRule('image_index', 'dummy_pv', '1', val=99))
     renderer = get_opi_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -52,8 +51,12 @@ def test_greater_than_rule_sets_val(widget, get_opi_renderer):
 
 
 def test_greater_than_rule_sets_false_val(widget, get_opi_renderer):
-    widget.add_rule(rules.GreaterThanRule(
-        'image_index', 'dummy_pv', '1', val=99, false_val=33))
+    widget.add_rule(
+        rules.GreaterThanRule('image_index',
+                              'dummy_pv',
+                              '1',
+                              val=99,
+                              false_val=33))
     renderer = get_opi_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -68,9 +71,14 @@ def test_greater_than_rule_sets_false_val(widget, get_opi_renderer):
 
 
 def test_between_rule_both_closed_0_lte_x_lte_5(widget, get_opi_renderer):
-    widget.add_rule(rules.BetweenRule(
-        'vis', 'dummy_pv', '0', '5', name="betweenRule",
-        min_equals=True, max_equals=True))
+    widget.add_rule(
+        rules.BetweenRule('vis',
+                          'dummy_pv',
+                          '0',
+                          '5',
+                          name="betweenRule",
+                          min_equals=True,
+                          max_equals=True))
     renderer = get_opi_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -101,8 +109,8 @@ def test_between_rule_default_name(widget, get_opi_renderer):
 
 
 def test_between_rule_lower_half_closed_0_lte_x_lt_5(widget, get_opi_renderer):
-    widget.add_rule(rules.BetweenRule(
-        'vis', 'dummy_pv', '0', '5', max_equals=False))
+    widget.add_rule(
+        rules.BetweenRule('vis', 'dummy_pv', '0', '5', max_equals=False))
     renderer = get_opi_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -122,8 +130,8 @@ def test_between_rule_lower_half_closed_0_lte_x_lt_5(widget, get_opi_renderer):
 
 
 def test_between_rule_upper_half_closed_0_lt_x_lte_5(widget, get_opi_renderer):
-    widget.add_rule(rules.BetweenRule(
-        'vis', 'dummy_pv', '0', '5', min_equals=False))
+    widget.add_rule(
+        rules.BetweenRule('vis', 'dummy_pv', '0', '5', min_equals=False))
     renderer = get_opi_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -143,8 +151,13 @@ def test_between_rule_upper_half_closed_0_lt_x_lte_5(widget, get_opi_renderer):
 
 
 def test_between_rule_both_open_0_lt_x_lt_5(widget, get_opi_renderer):
-    widget.add_rule(rules.BetweenRule(
-        'vis', 'dummy_pv', '0', '5', min_equals=False, max_equals=False))
+    widget.add_rule(
+        rules.BetweenRule('vis',
+                          'dummy_pv',
+                          '0',
+                          '5',
+                          min_equals=False,
+                          max_equals=False))
     renderer = get_opi_renderer(widget)
     renderer.assemble()
     rule_element = renderer.get_node().find('./rules/rule')
@@ -164,8 +177,11 @@ def test_between_rule_both_open_0_lt_x_lt_5(widget, get_opi_renderer):
 
 
 def test_selection_rule_one_string_value(widget, get_opi_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('1', 'strval')], name="stringSelection"))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'strval')],
+                            name="stringSelection"))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -183,8 +199,11 @@ def test_selection_rule_one_string_value(widget, get_opi_renderer):
 
 
 def test_selection_rule_one_string_value_phoebus(widget, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('1', 'strval')], name="stringSelection"))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'strval')],
+                            name="stringSelection"))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -202,10 +221,13 @@ def test_selection_rule_one_string_value_phoebus(widget, get_bob_renderer):
 
 
 def test_selection_rule_out_exp(widget, get_opi_renderer, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('true', 'pvStr0')], name="outStr0",
-        out_exp="true",
-        auto_fill_val=False))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('true', 'pvStr0')],
+                            name="outStr0",
+                            out_exp="true",
+                            auto_fill_val=False))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -238,9 +260,12 @@ def test_selection_rule_out_exp(widget, get_opi_renderer, get_bob_renderer):
 
 
 def test_selection_rule_auto_fill(widget, get_opi_renderer, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('pv0==1', 'strval')], name="stringSelection",
-        auto_fill_val=False))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('pv0==1', 'strval')],
+                            name="stringSelection",
+                            auto_fill_val=False))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -273,8 +298,10 @@ def test_selection_rule_auto_fill(widget, get_opi_renderer, get_bob_renderer):
 
 
 def test_selection_rule_default_name(widget, get_opi_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('1', 'strval')]))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'strval')]))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -283,8 +310,10 @@ def test_selection_rule_default_name(widget, get_opi_renderer):
 
 
 def test_selection_rule_default_name_phoebus(widget, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('1', 'strval')]))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'strval')]))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -292,9 +321,12 @@ def test_selection_rule_default_name_phoebus(widget, get_bob_renderer):
     assert rule_element.attrib['name'] == 'SelectionRule'
 
 
-def test_selection_rule_one_string_value_using_severity(widget, get_opi_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', sevr_options=[('1', 'strval')]))
+def test_selection_rule_one_string_value_using_severity(
+        widget, get_opi_renderer):
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            sevr_options=[('1', 'strval')]))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -310,9 +342,12 @@ def test_selection_rule_one_string_value_using_severity(widget, get_opi_renderer
     assert value_element.text == 'strval'
 
 
-def test_selection_rule_one_string_value_using_severity_phoebus(widget, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', sevr_options=[('1', 'strval')]))
+def test_selection_rule_one_string_value_using_severity_phoebus(
+        widget, get_bob_renderer):
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            sevr_options=[('1', 'strval')]))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -329,8 +364,10 @@ def test_selection_rule_one_string_value_using_severity_phoebus(widget, get_bob_
 
 
 def test_selection_rule_two_string_value(widget, get_opi_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('1', 'val_one'), ('2', 'val_two')]))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'val_one'), ('2', 'val_two')]))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -351,8 +388,10 @@ def test_selection_rule_two_string_value(widget, get_opi_renderer):
 
 
 def test_selection_rule_two_string_value_phoebus(widget, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('1', 'val_one'), ('2', 'val_two')]))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'val_one'), ('2', 'val_two')]))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -372,9 +411,12 @@ def test_selection_rule_two_string_value_phoebus(widget, get_bob_renderer):
     assert value_element.text == 'val_two'
 
 
-def test_selection_rule_one_string_value_numeric_test(widget, get_opi_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[(1, 'val_one')]))
+def test_selection_rule_one_string_value_numeric_test(widget,
+                                                      get_opi_renderer):
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[(1, 'val_one')]))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -390,9 +432,12 @@ def test_selection_rule_one_string_value_numeric_test(widget, get_opi_renderer):
     assert value_element.text == 'val_one'
 
 
-def test_selection_rule_one_string_value_numeric_test_phoebus(widget, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[(1, 'val_one')]))
+def test_selection_rule_one_string_value_numeric_test_phoebus(
+        widget, get_bob_renderer):
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[(1, 'val_one')]))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -410,8 +455,10 @@ def test_selection_rule_one_string_value_numeric_test_phoebus(widget, get_bob_re
 
 def test_selection_rule_one_color_value(widget, get_opi_renderer):
     col = colors.Color(rgb=(64, 128, 32), name="murky green")
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[(1, col)]))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[(1, col)]))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -433,8 +480,10 @@ def test_selection_rule_one_color_value(widget, get_opi_renderer):
 
 def test_selection_rule_one_color_value_phoebus(widget, get_bob_renderer):
     col = colors.Color(rgb=(64, 128, 32), name="murky green")
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[(1, col)]))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[(1, col)]))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -454,11 +503,15 @@ def test_selection_rule_one_color_value_phoebus(widget, get_bob_renderer):
     assert color_element.attrib['name'] == 'murky green'
 
 
-def test_selection_rule_sets_else_condition_when_specified(widget, get_opi_renderer):
+def test_selection_rule_sets_else_condition_when_specified(
+        widget, get_opi_renderer):
     col = colors.Color(rgb=(64, 128, 32), name="murky green")
     red = colors.Color(rgb=(255, 0, 0), name="red")
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[(1, col)], else_val=red))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[(1, col)],
+                            else_val=red))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -485,11 +538,15 @@ def test_selection_rule_sets_else_condition_when_specified(widget, get_opi_rende
     assert color_element.attrib['name'] == 'red'
 
 
-def test_selection_rule_sets_else_condition_when_specified_phoebus(widget, get_bob_renderer):
+def test_selection_rule_sets_else_condition_when_specified_phoebus(
+        widget, get_bob_renderer):
     col = colors.Color(rgb=(64, 128, 32), name="murky green")
     red = colors.Color(rgb=(255, 0, 0), name="red")
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[(1, col)], else_val=red))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[(1, col)],
+                            else_val=red))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -517,8 +574,10 @@ def test_selection_rule_sets_else_condition_when_specified_phoebus(widget, get_b
 
 
 def test_selection_rule_two_string_val_options(widget, get_opi_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('1', 'val_one'), ('2', 'val_two')]))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'val_one'), ('2', 'val_two')]))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -538,9 +597,12 @@ def test_selection_rule_two_string_val_options(widget, get_opi_renderer):
     assert value_element.text == 'val_two'
 
 
-def test_selection_rule_two_string_val_options_phoebus(widget, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv', val_options=[('1', 'val_one'), ('2', 'val_two')]))
+def test_selection_rule_two_string_val_options_phoebus(widget,
+                                                       get_bob_renderer):
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'val_one'), ('2', 'val_two')]))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -561,9 +623,10 @@ def test_selection_rule_two_string_val_options_phoebus(widget, get_bob_renderer)
 
 
 def test_selection_rule_two_string_sevr_options(widget, get_opi_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv',
-        sevr_options=[('1', 'val_one'), ('2', 'val_two')]))
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            sevr_options=[('1', 'val_one'), ('2', 'val_two')]))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -583,10 +646,12 @@ def test_selection_rule_two_string_sevr_options(widget, get_opi_renderer):
     assert value_element.text == 'val_two'
 
 
-def test_selection_rule_two_string_sevr_options_phoebus(widget, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv',
-        sevr_options=[('1', 'val_one'), ('2', 'val_two')]))
+def test_selection_rule_two_string_sevr_options_phoebus(
+        widget, get_bob_renderer):
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            sevr_options=[('1', 'val_one'), ('2', 'val_two')]))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()
@@ -606,11 +671,14 @@ def test_selection_rule_two_string_sevr_options_phoebus(widget, get_bob_renderer
     assert value_element.text == 'val_two'
 
 
-def test_selection_rule_sevr_options_before_val_options(widget, get_opi_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv',
-        val_options=[('1', 'val_one'), ('2', 'val_two')],
-        sevr_options=[('-1', 'sevr_one'), ('-2', 'sevr_two')]))
+def test_selection_rule_sevr_options_before_val_options(
+        widget, get_opi_renderer):
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'val_one'), ('2', 'val_two')],
+                            sevr_options=[('-1', 'sevr_one'),
+                                          ('-2', 'sevr_two')]))
 
     renderer = get_opi_renderer(widget)
     renderer.assemble()
@@ -638,11 +706,14 @@ def test_selection_rule_sevr_options_before_val_options(widget, get_opi_renderer
     assert value_element.text == 'val_two'
 
 
-def test_selection_rule_sevr_options_before_val_options_phoebus(widget, get_bob_renderer):
-    widget.add_rule(rules.SelectionRule(
-        'test_property', 'dummy_pv',
-        val_options=[('1', 'val_one'), ('2', 'val_two')],
-        sevr_options=[('-1', 'sevr_one'), ('-2', 'sevr_two')]))
+def test_selection_rule_sevr_options_before_val_options_phoebus(
+        widget, get_bob_renderer):
+    widget.add_rule(
+        rules.SelectionRule('test_property',
+                            'dummy_pv',
+                            val_options=[('1', 'val_one'), ('2', 'val_two')],
+                            sevr_options=[('-1', 'sevr_one'),
+                                          ('-2', 'sevr_two')]))
 
     renderer = get_bob_renderer(widget)
     renderer.assemble()

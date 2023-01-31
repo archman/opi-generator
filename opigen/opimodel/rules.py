@@ -1,4 +1,3 @@
-
 PV_VAL = "pv0"
 PV_SEVR = "pvSev0"
 
@@ -29,6 +28,7 @@ class Rule(object):
 
 
 class RawRule(Rule):
+
     def __init__(self, prop_id, rule_xml, name=None, out_exp='false'):
         """ Construct a rule using logic specified in the rule
 
@@ -45,8 +45,15 @@ class RawRule(Rule):
 
 class BetweenRule(Rule):
 
-    def __init__(self, prop_id, pv, min_val, max_val,
-             min_equals=True, max_equals=True, name=None, out_exp='false'):
+    def __init__(self,
+                 prop_id,
+                 pv,
+                 min_val,
+                 max_val,
+                 min_equals=True,
+                 max_equals=True,
+                 name=None,
+                 out_exp='false'):
         """ Construct an rule setting the specified boolean property
                 - True if min_val <= pv <= max_val
                 - False otherwise
@@ -73,8 +80,15 @@ class BetweenRule(Rule):
 
 class GreaterThanRule(Rule):
 
-    def __init__(self, prop_id, pv, threshold, name=None,
-                 val=True, false_val=False, sevr_options=None, out_exp='false'):
+    def __init__(self,
+                 prop_id,
+                 pv,
+                 threshold,
+                 name=None,
+                 val=True,
+                 false_val=False,
+                 sevr_options=None,
+                 out_exp='false'):
         """ Construct an rule setting the specified boolean property.
 
             In the created rule the sevr_options are tested before the
@@ -124,8 +138,14 @@ class GreaterThanRule(Rule):
 
 class SelectionRule(Rule):
 
-    def __init__(self, prop_id, pv, name=None,
-                 val_options=None, sevr_options=None, else_val=None, out_exp='false',
+    def __init__(self,
+                 prop_id,
+                 pv,
+                 name=None,
+                 val_options=None,
+                 sevr_options=None,
+                 else_val=None,
+                 out_exp='false',
                  auto_fill_val=True):
         # if auto_fill_val is True, expand bool_exp with "pv0" or "pvSev0" with val_options,
         # otherwise, only put val_options.

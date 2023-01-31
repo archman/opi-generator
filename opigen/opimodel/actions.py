@@ -1,4 +1,3 @@
-
 class ActionsModel(object):
     """
     Represents all actions attached to a widget.
@@ -116,7 +115,12 @@ class OpenOpi(object):
         STANDALONE: 'window'
     }
 
-    def __init__(self, path, mode=STANDALONE, description=None, macros=None, parent_macros=True):
+    def __init__(self,
+                 path,
+                 mode=STANDALONE,
+                 description=None,
+                 macros=None,
+                 parent_macros=True):
         """
         Construct OpenOpi action.
 

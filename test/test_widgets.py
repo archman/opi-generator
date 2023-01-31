@@ -26,7 +26,8 @@ def test_widget_render_contains_correct_values(widget, get_opi_renderer):
     assert "<width>10</width>" in output
 
 
-def test_widget_render_contains_correct_values_phoebus(widget, get_bob_renderer):
+def test_widget_render_contains_correct_values_phoebus(widget,
+                                                       get_bob_renderer):
     renderer = get_bob_renderer(widget)
     renderer.assemble()
     output = str(renderer)
@@ -50,8 +51,8 @@ def test_Display_render_contains_default_values(display, get_opi_renderer):
     assert renderer.get_node().get('version') == display.get_version()
 
 
-
-def test_Display_render_contains_default_values_phoebus(display, get_bob_renderer):
+def test_Display_render_contains_default_values_phoebus(
+        display, get_bob_renderer):
     renderer = get_bob_renderer(display)
     renderer.assemble()
     output = str(renderer)
@@ -72,7 +73,8 @@ def test_Display_render_contains_child_widgets(display, get_opi_renderer):
     assert 'typeId="org.csstudio.opibuilder.widgets.Rectangle"' in output
 
 
-def test_Display_render_contains_child_widgets_phoebus(display, get_bob_renderer):
+def test_Display_render_contains_child_widgets_phoebus(display,
+                                                       get_bob_renderer):
     renderer = get_bob_renderer(display)
     r = widgets.Rectangle(10, 10, 10, 10)
     display.add_child(r)
@@ -81,7 +83,8 @@ def test_Display_render_contains_child_widgets_phoebus(display, get_bob_renderer
     assert 'type="rectangle"' in output
 
 
-def test_Display_render_contains_default_autoscale_options(display, get_opi_renderer):
+def test_Display_render_contains_default_autoscale_options(
+        display, get_opi_renderer):
     display.add_scale_options()
     renderer = get_opi_renderer(display)
     renderer.assemble()
@@ -103,9 +106,10 @@ def test_Display_render_sets_custom_scale_options(display, get_opi_renderer):
     assert "<auto_scale_widgets>true</auto_scale_widgets>" in output
 
 
-@pytest.mark.parametrize('widget_type', (widgets.TextMonitor,
-                                         widgets.TextInput))
-def test_text_widgets_have_correct_attributes(display, get_opi_renderer, widget_type):
+@pytest.mark.parametrize('widget_type',
+                         (widgets.TextMonitor, widgets.TextInput))
+def test_text_widgets_have_correct_attributes(display, get_opi_renderer,
+                                              widget_type):
     tb = widget_type(10, 10, 20, 20, 'pvname')
     display.add_child(tb)
     renderer = get_opi_renderer(display)
@@ -115,9 +119,11 @@ def test_text_widgets_have_correct_attributes(display, get_opi_renderer, widget_
     assert '<horizontal_alignment>1</horizontal_alignment>' in output
 
 
-@pytest.mark.parametrize('widget_type', (widgets.TextMonitor,
-                                         widgets.TextInput))
-def test_text_widgets_have_correct_attributes_phoebus(display, get_bob_renderer, widget_type):
+@pytest.mark.parametrize('widget_type',
+                         (widgets.TextMonitor, widgets.TextInput))
+def test_text_widgets_have_correct_attributes_phoebus(display,
+                                                      get_bob_renderer,
+                                                      widget_type):
     tb = widget_type(10, 10, 20, 20, 'pvname')
     display.add_child(tb)
     renderer = get_bob_renderer(display)
@@ -138,7 +144,8 @@ def test_ToggleButton_has_correct_attributes(display, get_opi_renderer):
     assert '<effect_3d>true</effect_3d>' in output
 
 
-def test_ToggleButton_has_correct_attributes_phoebus(display, get_bob_renderer):
+def test_ToggleButton_has_correct_attributes_phoebus(display,
+                                                     get_bob_renderer):
     tb = widgets.ToggleButton(10, 10, 20, 20, 'on', 'off')
     display.add_child(tb)
     renderer = get_bob_renderer(display)
@@ -199,7 +206,8 @@ def test_Byte_includes_start_bit_if_specified(display, get_opi_renderer):
     assert '<startBit>5</startBit>' in output
 
 
-def test_Byte_includes_start_bit_if_specified_phoebus(display, get_bob_renderer):
+def test_Byte_includes_start_bit_if_specified_phoebus(display,
+                                                      get_bob_renderer):
     byte = widgets.Byte(10, 10, 20, 20, 'TEST', 3, start_bit=5)
     display.add_child(byte)
     renderer = get_bob_renderer(display)
@@ -238,7 +246,8 @@ def test_Line_has_correct_attributes_phoebus(display, get_bob_renderer):
     assert '<line_width>2</line_width>' in output
 
 
-def test_ActionWidget_renders_hook_attributes_correctly(display, get_opi_renderer):
+def test_ActionWidget_renders_hook_attributes_correctly(
+        display, get_opi_renderer):
     aw = widgets.ActionWidget('dummy', 10, 100, 50, 20)
     aw.add_exit()
     display.add_child(aw)
@@ -274,7 +283,8 @@ def test_ToggleButton_adds_actions_correctly():
     assert tb.actions.get_hook_all() is False
 
 
-def test_GroupBox_render_contains_default_autoscale_options(display, get_opi_renderer):
+def test_GroupBox_render_contains_default_autoscale_options(
+        display, get_opi_renderer):
     gp = widgets.GroupingContainer(0, 0, 100, 100)
     gp.add_scale_options()
     display.add_child(gp)

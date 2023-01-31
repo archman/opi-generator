@@ -45,10 +45,10 @@ class OpiRule(object):
             The inequalities are replaced by p >= a and p <= b respectively if
             min_equals or max_equals are True
         """
-        min_rule = 'pv0 {} {}'.format(
-            ">=" if rule_model._min_equals else ">", rule_model._min)
-        max_rule = 'pv0 {} {}'.format(
-            "<=" if rule_model._max_equals else "<", rule_model._max)
+        min_rule = 'pv0 {} {}'.format(">=" if rule_model._min_equals else ">",
+                                      rule_model._min)
+        max_rule = 'pv0 {} {}'.format("<=" if rule_model._max_equals else "<",
+                                      rule_model._max)
 
         pv_node = et.SubElement(self.rule_node, 'pv')
         pv_node.set('trig', 'true')
@@ -64,7 +64,8 @@ class OpiRule(object):
 
         if rule_model._sevr_options is not None:
             for (pv_val, prop_val) in rule_model._sevr_options:
-                self._render_value('{} == {}'.format(rules.PV_SEVR, pv_val), prop_val)
+                self._render_value('{} == {}'.format(rules.PV_SEVR, pv_val),
+                                   prop_val)
 
         self._render_value(
             '{} > {}'.format(rules.PV_VAL, rule_model._threshold),
@@ -81,14 +82,16 @@ class OpiRule(object):
         if rule_model._sevr_options is not None:
             for (pv_val, prop_val) in rule_model._sevr_options:
                 if auto_fill_val:
-                    self._render_value('{} == {}'.format(rules.PV_SEVR, pv_val), prop_val)
+                    self._render_value(
+                        '{} == {}'.format(rules.PV_SEVR, pv_val), prop_val)
                 else:
                     self._render_value(f'{pv_val}', prop_val)
 
         if rule_model._val_options is not None:
             for (pv_val, prop_val) in rule_model._val_options:
                 if auto_fill_val:
-                    self._render_value('{} == {}'.format(rules.PV_VAL, pv_val), prop_val)
+                    self._render_value('{} == {}'.format(rules.PV_VAL, pv_val),
+                                       prop_val)
                 else:
                     self._render_value(f'{pv_val}', prop_val)
 

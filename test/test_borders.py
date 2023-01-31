@@ -1,8 +1,8 @@
 from opigen.opimodel import colors
 from opigen.opimodel.borders import Border, BorderStyle
 
-
 BLACK = colors.Color((0, 0, 0), 'Black')
+
 
 def test_add_border_to_widget(widget, get_opi_renderer):
     b = Border(BorderStyle.LINE, 1, BLACK, False)

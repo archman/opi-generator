@@ -2,7 +2,6 @@ import lxml.etree as et
 from opigen.opimodel import actions
 from . import text
 
-
 EXIT_SCRIPT = ('importPackage(Packages.org.csstudio.opibuilder.scriptUtil);'
                'ScriptUtil.closeAssociatedOPI(widget);')
 
@@ -41,8 +40,10 @@ class OpiOpen(OpiAction):
     def render(self, actions_node, action_model):
         action_node = super(OpiOpen, self).render(actions_node, action_model)
         macros_node = et.SubElement(action_node, 'macros')
-        parent_macros_node = et.SubElement(macros_node, 'include_parent_macros')
-        parent_macros_node.text = 'true' if action_model.get_parent_macros() else 'false'
+        parent_macros_node = et.SubElement(macros_node,
+                                           'include_parent_macros')
+        parent_macros_node.text = 'true' if action_model.get_parent_macros(
+        ) else 'false'
         for key, value in action_model.get_macros().items():
             try:
                 key_node = et.SubElement(macros_node, key)
@@ -76,10 +77,12 @@ class OpiExit(OpiAction):
 class OpiActions(object):
     """Renderer for actions."""
 
-    ACTION_MAPPING = {actions.ExecuteCommand: OpiExecuteCommand,
-                      actions.WritePv: OpiWritePv,
-                      actions.Exit: OpiExit,
-                      actions.OpenOpi: OpiOpen}
+    ACTION_MAPPING = {
+        actions.ExecuteCommand: OpiExecuteCommand,
+        actions.WritePv: OpiWritePv,
+        actions.Exit: OpiExit,
+        actions.OpenOpi: OpiOpen
+    }
 
     def render(self, widget_node, tag_name, actions_model):
         if actions_model:

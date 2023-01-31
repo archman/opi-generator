@@ -13,9 +13,11 @@ class OpiBorder(object):
             # support style
             _style = BorderStyle_GroupBoxStyle_MAP.get(border_model.style, 0)
             self._text.render(widget_node, 'style', _style)
-            self._color.render(widget_node, 'foreground_color', border_model.color)
+            self._color.render(widget_node, 'foreground_color',
+                               border_model.color)
         else:
-            self._text.render(widget_node, 'border_alarm_sensitive', border_model.alarm)
+            self._text.render(widget_node, 'border_alarm_sensitive',
+                              border_model.alarm)
             self._text.render(widget_node, 'border_width', border_model.width)
             # phoebus does not support border style
             # self._text.render(widget_node, 'border_style', border_model.style)

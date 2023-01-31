@@ -12,7 +12,6 @@ from .widget import OpiWidget
 from .points import OpiPoints
 from .scalings import OpiScaling, OpiDisplayScaling
 
-
 # there is no limit of total tabs, but here defines the maximum that
 # usually used.
 MAX_TAB_COUNT = 32
@@ -70,7 +69,7 @@ class OpiRenderer(object):
         if model is None:
             model = self._model
         self._node = self._widget_renderer.render(model, parent,
-                            self._resources)
+                                                  self._resources)
 
     def get_node(self):
         return self._node
@@ -90,5 +89,8 @@ class OpiRenderer(object):
     def write_to_file(self, filename):
         self.assemble()
         tree = et.ElementTree(self._node)
-        tree.write(filename, pretty_print=True, encoding='UTF-8', xml_declaration=True)
+        tree.write(filename,
+                   pretty_print=True,
+                   encoding='UTF-8',
+                   xml_declaration=True)
         self.write_resources(filename)

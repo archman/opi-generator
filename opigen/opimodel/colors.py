@@ -6,7 +6,7 @@ import sys
 class Color(object):
     """Representation of a color."""
 
-    def __init__(self, rgb=(0, 0, 0),  name=None):
+    def __init__(self, rgb=(0, 0, 0), name=None):
         self.red, self.green, self.blue = rgb
         self.name = name
 
@@ -45,6 +45,6 @@ def parse_color_file(filepath: str):
             _name, _cr, _cg, _cb = _r.groups()
             _color_name = _name.strip()
             _module_name = utils.mangle_name(_color_name)
-            utils.add_attr_to_module(_module_name,
-                                     Color((int(_cr), int(_cg), int(_cb)), _color_name),
-                                     sys.modules[__name__])
+            utils.add_attr_to_module(
+                _module_name, Color((int(_cr), int(_cg), int(_cb)),
+                                    _color_name), sys.modules[__name__])

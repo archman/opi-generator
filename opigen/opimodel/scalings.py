@@ -1,6 +1,6 @@
-
 class ScaleOptions(object):
     """ Representation of a widget scaling."""
+
     def __init__(self, width=True, height=True, keep_ratio=False):
 
         self.width_scalable = width
@@ -10,6 +10,7 @@ class ScaleOptions(object):
 
 class DisplayScaleOptions(object):
     """ Representation of a Display scaling."""
+
     def __init__(self, min_width=-1, min_height=-1, autoscale=True):
 
         self.min_width = min_width

@@ -17,6 +17,7 @@ def display():
 
 @pytest.fixture
 def get_opi_renderer():
+
     def get_renderer(w):
         return css_render.get_opi_renderer(w)
 
@@ -25,6 +26,7 @@ def get_opi_renderer():
 
 @pytest.fixture
 def get_bob_renderer():
+
     def get_renderer(w):
         return phoebus_render.get_opi_renderer(w)
 

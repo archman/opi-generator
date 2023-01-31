@@ -4,16 +4,17 @@ of type Display.  To create the opi, add widgets as children of this widget.
 """
 from . import actions, scalings
 from .colors import Color
-from opigen.config import get_attr_conf 
+from opigen.config import get_attr_conf
 
 ATTR_MAP = get_attr_conf()
 
+
 class ResizeBehaviour:
     # for LinkingContainer
-    RESIZE_OPI_TO_FIT_CONTAINER = 0 # Size *.opi to fit the container
-    RESIZE_CONTAINER_TO_FIT_OPI = 1 # Size the container to fit *.opi
-    CROP = 2     # Don't resize anything, crop if *.opi too large
-    SCROLL = 3   # Don't resize anything, add scrollbars if *.opi too large
+    RESIZE_OPI_TO_FIT_CONTAINER = 0  # Size *.opi to fit the container
+    RESIZE_CONTAINER_TO_FIT_OPI = 1  # Size the container to fit *.opi
+    CROP = 2  # Don't resize anything, crop if *.opi too large
+    SCROLL = 3  # Don't resize anything, add scrollbars if *.opi too large
 
 
 class FormatType:
@@ -55,6 +56,7 @@ class VAlign:
     MIDDLE = 1
     BOTTOM = 2
 
+
 HA_RIGHT = HAlign.RIGHT
 HA_CENTER = HAlign.CENTER
 HA_LEFT = HAlign.LEFT
@@ -75,6 +77,7 @@ class Widget(object):
         name - a name for the widget within the display
     """
     CNT = {}
+
     def __init__(self, type_id, x, y, width, height, name=None):
         if name is None:
             k = self.__class__.__name__
@@ -109,7 +112,6 @@ class Widget(object):
         else:
             super().__setattr__(name, value)
 
-
     def get_type_name(self):
         # widget type name, i.e. tag name, followed by a real type string ('label') and other attributes.
         return "widget"
@@ -127,9 +129,9 @@ class Widget(object):
 
     def get_type(self):
         try:
-            return self.TYPE # phoebus
+            return self.TYPE  # phoebus
         except AttributeError:
-            return self.get_type_id() # css
+            return self.get_type_id()  # css
 
     def get_parent(self):
         """Get the parent widget of this widget.
@@ -218,7 +220,8 @@ class Widget(object):
             height (bool): True if widget height is scalable
             keep_wh_ratio (bool):
         """
-        self.scale_options = scalings.ScaleOptions(width, height, keep_wh_ratio)
+        self.scale_options = scalings.ScaleOptions(width, height,
+                                                   keep_wh_ratio)
 
     def get_resources(self):
         """Return a dict of required resources that need to be distributed with the generated OPI.
@@ -233,7 +236,14 @@ class ActionWidget(Widget):
     """
 
     # No ID, designed to be subclassed only
-    def __init__(self, type_id, x, y, width, height, hook_first=True, hook_all=False):
+    def __init__(self,
+                 type_id,
+                 x,
+                 y,
+                 width,
+                 height,
+                 hook_first=True,
+                 hook_all=False):
         super(ActionWidget, self).__init__(type_id, x, y, width, height)
         self.actions = actions.ActionsModel(hook_first, hook_all)
         self.phoebus_actions = self.actions
@@ -250,14 +260,22 @@ class ActionWidget(Widget):
     def add_write_pv(self, pv, value, description=""):
         self.actions.add_action(actions.WritePv(pv, value, description))
 
-    def add_shell_command(
-            self, command, description="", directory="$(opi.dir)"):
+    def add_shell_command(self,
+                          command,
+                          description="",
+                          directory="$(opi.dir)"):
         # directory does not apply to phoebus
-        self.actions.add_action(actions.ExecuteCommand(
-                command, description, directory))
+        self.actions.add_action(
+            actions.ExecuteCommand(command, description, directory))
 
-    def add_open_opi(self, path, mode=actions.OpenOpi.STANDALONE, description=None, macros=None, parent_macros=True):
-        self.actions.add_action(actions.OpenOpi(path, mode, description, macros, parent_macros))
+    def add_open_opi(self,
+                     path,
+                     mode=actions.OpenOpi.STANDALONE,
+                     description=None,
+                     macros=None,
+                     parent_macros=True):
+        self.actions.add_action(
+            actions.OpenOpi(path, mode, description, macros, parent_macros))
 
     def add_exit(self):
         self.actions.add_action(actions.Exit())
@@ -267,9 +285,10 @@ class ActionWidget(Widget):
         if style == BasicStyle.CLASSIC:
             self.alarm_pulsing = False
             self.backcolor_alarm_sensitive = False
-            self.set_bg_color(Color((218, 218, 218), 'ControlAndButtons Background'))
+            self.set_bg_color(
+                Color((218, 218, 218), 'ControlAndButtons Background'))
             self.style = style
-        else: # NATIVE
+        else:  # NATIVE
             self.style = style
 
 
@@ -282,7 +301,11 @@ class Display(Widget):
     TYPE = None
 
     def __init__(self, width=800, height=600):
-        super(Display, self).__init__(Display.TYPE_ID, 0, 0, width, height,
+        super(Display, self).__init__(Display.TYPE_ID,
+                                      0,
+                                      0,
+                                      width,
+                                      height,
                                       name='display')
         self.auto_zoom_to_fit_all = False
         self.show_grid = True
@@ -298,13 +321,14 @@ class Display(Widget):
             min_height (int): Display min height, -1 for no scaling
             autoscale (bool): Autoscale child widgets
         """
-        self.auto_scale_widgets = scalings.DisplayScaleOptions(min_width, min_height, autoscale)
+        self.auto_scale_widgets = scalings.DisplayScaleOptions(
+            min_width, min_height, autoscale)
 
 
 class Rectangle(ActionWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.Rectangle'
-    TYPE = 'rectangle' # phoebus
+    TYPE = 'rectangle'  # phoebus
 
     def __init__(self, x, y, width, height):
         super(Rectangle, self).__init__(Rectangle.TYPE_ID, x, y, width, height)
@@ -320,9 +344,11 @@ class Line(Widget):
             rectangle defined by the diagonal from (x0, y0) to (x1, y1).
             The width and height are the lengths of the sides.
         """
-        super(Line, self).__init__(
-            Line.TYPE_ID, x=min(x0, x1), y=min(y0, y1),
-            width=abs(x0 - x1) + 1, height=abs(y0 - y1) + 1)
+        super(Line, self).__init__(Line.TYPE_ID,
+                                   x=min(x0, x1),
+                                   y=min(y0, y1),
+                                   width=abs(x0 - x1) + 1,
+                                   height=abs(y0 - y1) + 1)
         self.points = [(x0, y0), (x1, y1)]
         self.line_width = line_width
 
@@ -330,7 +356,7 @@ class Line(Widget):
 class Label(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.Label'
-    TYPE = 'label' # phoebus
+    TYPE = 'label'  # phoebus
 
     def __init__(self, x, y, width, height, text):
         super(Label, self).__init__(Label.TYPE_ID, x, y, width, height)
@@ -343,8 +369,8 @@ class TextMonitor(Widget):
     TYPE = 'textupdate'
 
     def __init__(self, x, y, width, height, pv):
-        super(TextMonitor, self).__init__(
-            TextMonitor.TYPE_ID, x, y, width, height)
+        super(TextMonitor, self).__init__(TextMonitor.TYPE_ID, x, y, width,
+                                          height)
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
@@ -356,8 +382,7 @@ class TextInput(Widget):
     TYPE = 'textentry'
 
     def __init__(self, x, y, width, height, pv, style=None):
-        super(TextInput, self).__init__(
-            TextInput.TYPE_ID, x, y, width, height)
+        super(TextInput, self).__init__(TextInput.TYPE_ID, x, y, width, height)
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
@@ -372,10 +397,10 @@ class GroupingContainer(Widget):
     TYPE = 'group'
 
     def __init__(self, x, y, width, height, name=''):
-        super(GroupingContainer, self).__init__(
-            GroupingContainer.TYPE_ID, x, y, width, height, name)
+        super(GroupingContainer, self).__init__(GroupingContainer.TYPE_ID, x,
+                                                y, width, height, name)
         self.lock_children = True
-        self.transparent = True # transparent background
+        self.transparent = True  # transparent background
 
 
 class TabbedContainer(Widget):
@@ -383,12 +408,17 @@ class TabbedContainer(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.tab'
 
     def __init__(self, x, y, width, height):
-        super(TabbedContainer, self).__init__(
-            TabbedContainer.TYPE_ID, x, y, width, height)
+        super(TabbedContainer, self).__init__(TabbedContainer.TYPE_ID, x, y,
+                                              width, height)
         self.tab_count = 0
 
-    def add_tab(self, name, widget, dw=2, dh=33,
-                background_color=None, foreground_color=None):
+    def add_tab(self,
+                name,
+                widget,
+                dw=2,
+                dh=33,
+                background_color=None,
+                foreground_color=None):
         """Add a new tab named as *name*, embbed with *widget*.
 
         _grp.width = self.width - dw
@@ -407,7 +437,6 @@ class TabbedContainer(Widget):
         self.add_child(_grp)
         self.tab_count += 1
 
-
     def set_font(self, font):
         """Set font for each tab. Call this method after added all tabs.
         """
@@ -420,8 +449,8 @@ class LinkingContainer(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.linkingContainer'
 
     def __init__(self, x, y, width, height, opi_file):
-        super(LinkingContainer, self).__init__(
-            LinkingContainer.TYPE_ID, x, y, width, height)
+        super(LinkingContainer, self).__init__(LinkingContainer.TYPE_ID, x, y,
+                                               width, height)
         self.opi_file = opi_file
         self.resize_behaviour = ResizeBehaviour.CROP
 
@@ -431,9 +460,17 @@ class ActionButton(ActionWidget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.ActionButton'
     TYPE = 'action_button'
 
-    def __init__(self, x, y, width, height, text, style=None, hook_first=True, hook_all=False):
-        super(ActionButton, self).__init__(
-            ActionButton.TYPE_ID, x, y, width, height, hook_first, hook_all)
+    def __init__(self,
+                 x,
+                 y,
+                 width,
+                 height,
+                 text,
+                 style=None,
+                 hook_first=True,
+                 hook_all=False):
+        super(ActionButton, self).__init__(ActionButton.TYPE_ID, x, y, width,
+                                           height, hook_first, hook_all)
 
         self.text = text
         if style is not None:
@@ -445,8 +482,8 @@ class MenuButton(ActionWidget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.MenuButton'
 
     def __init__(self, x, y, width, height, text):
-        super(MenuButton, self).__init__(
-            MenuButton.TYPE_ID, x, y, width, height)
+        super(MenuButton, self).__init__(MenuButton.TYPE_ID, x, y, width,
+                                         height)
 
         self.label = text
 
@@ -456,8 +493,7 @@ class CheckBox(ActionWidget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.checkbox'
 
     def __init__(self, x, y, width, height, text, pv_name):
-        super(CheckBox, self).__init__(
-            CheckBox.TYPE_ID, x, y, width, height)
+        super(CheckBox, self).__init__(CheckBox.TYPE_ID, x, y, width, height)
 
         self.label = text
         self.pv_name = pv_name
@@ -469,8 +505,8 @@ class ToggleButton(ActionWidget):
     TYPE = 'bool_button'
 
     def __init__(self, x, y, width, height, on_text, off_text, pv_name=None):
-        super(ToggleButton, self).__init__(
-            ToggleButton.TYPE_ID, x, y, width, height)
+        super(ToggleButton, self).__init__(ToggleButton.TYPE_ID, x, y, width,
+                                           height)
 
         if pv_name is not None:
             self.pv_name = pv_name
@@ -525,7 +561,15 @@ class Byte(Widget):
 class Symbol(ActionWidget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.edm.symbolwidget'
 
-    def __init__(self, x, y, width, height, pv, image_file, image_width, image_index=0):
+    def __init__(self,
+                 x,
+                 y,
+                 width,
+                 height,
+                 pv,
+                 image_file,
+                 image_width,
+                 image_index=0):
         super(Symbol, self).__init__(Symbol.TYPE_ID, x, y, width, height)
         self.pv_name = pv
         self.image_file = image_file
@@ -549,7 +593,8 @@ class DataBrowser(Widget):
     TYPE_ID = 'org.csstudio.trends.databrowser.opiwidget'
 
     def __init__(self, x, y, width, height, filename):
-        super(DataBrowser, self).__init__(DataBrowser.TYPE_ID, x, y, width, height)
+        super(DataBrowser, self).__init__(DataBrowser.TYPE_ID, x, y, width,
+                                          height)
         self.filename = filename
 
 
@@ -557,8 +602,16 @@ class ImageBoolButton(ActionWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.ImageBoolButton'
 
-    def __init__(self, x, y, width, height, pv_name=None, on_image=None, off_image=None):
-        super(ImageBoolButton, self).__init__(ImageBoolButton.TYPE_ID, x, y, width, height)
+    def __init__(self,
+                 x,
+                 y,
+                 width,
+                 height,
+                 pv_name=None,
+                 on_image=None,
+                 off_image=None):
+        super(ImageBoolButton, self).__init__(ImageBoolButton.TYPE_ID, x, y,
+                                              width, height)
         if on_image is not None:
             self.on_image = on_image
         if off_image is not None:
