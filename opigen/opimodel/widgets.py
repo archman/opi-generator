@@ -130,6 +130,9 @@ class Widget(object):
         self._type_id = type_id
         self.rules = []
         self.phoebus_rules = []
+        #
+        self.horizontal_alignment = HAlign.CENTER
+        self.vertical_alignment = VAlign.MIDDLE
 
     def __setattr__(self, name, value):
         _cls_name = self.__class__.__name__
@@ -670,3 +673,15 @@ class ImageBoolButton(ActionWidget):
             self.off_image = off_image
         if pv_name is not None:
             self.pv_name = pv_name
+
+class SlideButton(ActionWidget):
+
+    TYPE_ID = None # not available for BOY
+    TYPE = 'slide_button'
+
+    def __init__(self, x, y, width, height, pv_name=None):
+        super(SlideButton, self).__init__(SlideButton.TYPE_ID, x, y, width,
+                                          height)
+        if pv_name is not None:
+            self.phoebus_pv_name = pv_name
+        self.phoebus_label = ''

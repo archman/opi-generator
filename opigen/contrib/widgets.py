@@ -16,6 +16,8 @@ RES_DIRPATH = os.path.abspath(os.path.join(os.path.dirname(__file__),
 
 class SlideButton(_widgets.ImageBoolButton):
 
+    # Emulates SlideButton in Phoebus
+
     def __init__(self, x, y, width, height, pv_name, alarm_sensitive=False):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
         self.on_image = ".images/toggle_on.png"
