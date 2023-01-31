@@ -65,6 +65,14 @@ VA_MIDDLE = VAlign.MIDDLE
 VA_BOTTOM = VAlign.BOTTOM
 
 
+class LineStyle:
+    SOLID = 0
+    DASH = 1
+    DOT = 2
+    DASHDOT = 3
+    DASHDOTDOT =4
+
+
 class Widget(object):
     """Base class for any widget to extend.
 
@@ -101,8 +109,9 @@ class Widget(object):
         _cls_name = self.__class__.__name__
         _conf_default = ATTR_MAP['DEFAULT']
         if _cls_name in ATTR_MAP:
-            _conf = ATTR_MAP.get(_cls_name)
-            _conf.update(_conf_default)
+            _conf = {k: v for k, v in _conf_default.items()}
+            _conf_ = ATTR_MAP.get(_cls_name)
+            _conf.update(_conf_)
         else:
             _conf = _conf_default
 
@@ -339,7 +348,7 @@ class Line(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.polyline'
     TYPE = 'polyline'
 
-    def __init__(self, x0, y0, x1, y1, line_width=1):
+    def __init__(self, x0, y0, x1, y1, line_width=1, line_style=LineStyle.SOLID):
         """ Widget x,y location is calculated to be the top-left corner of
             rectangle defined by the diagonal from (x0, y0) to (x1, y1).
             The width and height are the lengths of the sides.
@@ -350,7 +359,21 @@ class Line(Widget):
                                    width=abs(x0 - x1) + 1,
                                    height=abs(y0 - y1) + 1)
         self.points = [(x0, y0), (x1, y1)]
+        self.phoebus_points = [(x0 - self.x, y0 - self.y), (x1 - self.x, y1 - self.y)]
         self.line_width = line_width
+        self.line_style = line_style
+        self.set_line_color()
+    
+    def add_point(self, x, y):
+        """Add a point with x, y coordinate."""
+        self.points.append((x, y))
+    
+    def set_line_color(self, c: Color = None):
+        """Set the line color."""
+        if c is None:
+            c = Color((189, 195, 199), 'Silver')
+        # background_color
+        self.set_bg_color(c)
 
 
 class Label(Widget):

@@ -26,6 +26,7 @@ def get_opi_renderer(widget):
     cr = OpiColor()
     wr.add_renderer('background_color', cr)
     wr.add_renderer('foreground_color', cr)
+    wr.add_renderer('line_color', cr)
     wr.add_renderer('bulb_border_color', cr)
     wr.add_renderer('off_color', cr)
     wr.add_renderer('on_color', cr)

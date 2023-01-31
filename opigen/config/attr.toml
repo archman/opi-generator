@@ -16,11 +16,16 @@ vertical_alignment = 'vertical_alignment'
 pv_name = 'pv_name'
 
 [Line]
-points = 'points'
 line_width = 'line_width'
+line_style = 'line_style'
+background_color = 'line_color'
 
 [Label]
 text = 'text'
+transparent = 'transparent'
+
+[TextUpdate]
+transparent = 'transparent'
 
 [GroupingContainer]
 transparent = 'transparent'
