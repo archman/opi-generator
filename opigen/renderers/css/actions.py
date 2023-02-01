@@ -1,3 +1,4 @@
+import re
 import lxml.etree as et
 from opigen.opimodel import actions
 from . import text
@@ -17,7 +18,7 @@ class OpiAction(object):
         action_node = et.SubElement(actions_node, 'action')
         action_node.set('type', self.ACTION_TYPE)
         for key, value in vars(action_model).items():
-            if not key.startswith('_'):
+            if all(re.match(rf'^{w}', key) == None for w in ('phoebus', '_')):
                 self.text.render(action_node, key, value)
         return action_node
 
