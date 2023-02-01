@@ -15,6 +15,7 @@ horizontal_alignment = 'horizontal_alignment'
 vertical_alignment = 'vertical_alignment'
 pv_name = 'pv_name'
 format_type = 'format'
+enabled = 'enabled'
 
 [Line]
 line_width = 'line_width'
