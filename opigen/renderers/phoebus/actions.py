@@ -33,12 +33,12 @@ class OpiWritePv(OpiAction):
 
 
 class OpiExecuteCommand(OpiAction):
-    """Renderer for write PV actions."""
+    """Renderer for execute command actions."""
     ACTION_TYPE = 'command'
 
 
 class OpiOpen(OpiAction):
-    """Renderer for write PV actions."""
+    """Renderer for open OPI actions."""
     ACTION_TYPE = 'open_display'
     MACRO_ERROR = 'Invalid macro {}:{} (error {})'
 
