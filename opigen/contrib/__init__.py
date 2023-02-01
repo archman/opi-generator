@@ -6,4 +6,4 @@ from .widgets import TextUpdate
 from .widgets import Led
 
 from .widgets import GroupingContainer
-from .widgets import LinkingContainer
+from .widgets import EmbeddedContainer

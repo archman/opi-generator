@@ -44,7 +44,7 @@ class Display(_widgets.Display):
             self.name = name
 
 
-class LinkingContainer(_widgets.LinkingContainer):
+class EmbeddedContainer(_widgets.EmbeddedContainer):
 
     def __init__(self, x, y, width, height, opi_file):
         super(self.__class__, self).__init__(x, y, width, height, opi_file)

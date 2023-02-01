@@ -62,3 +62,7 @@ on_color = 'on_color'
 off_color = 'off_color'
 on_label = 'on_label'
 off_label = 'off_label'
+
+[EmbeddedContainer]
+opi_file = 'file'
+resize_behaviour = 'resize'

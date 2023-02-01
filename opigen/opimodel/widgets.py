@@ -10,11 +10,26 @@ ATTR_MAP = get_attr_conf()
 
 
 class ResizeBehaviour:
-    # for LinkingContainer
+    # for LinkingContainer (BOY)
     RESIZE_OPI_TO_FIT_CONTAINER = 0  # Size *.opi to fit the container
     RESIZE_CONTAINER_TO_FIT_OPI = 1  # Size the container to fit *.opi
     CROP = 2  # Don't resize anything, crop if *.opi too large
     SCROLL = 3  # Don't resize anything, add scrollbars if *.opi too large
+
+class ResizeBehaviour_Embeded:
+    # for embeded display (Phoebus)
+    NO_RESIZE = 0 # no resize, add scroll if needed
+    RESIZE_OPI_TO_FIT_CONTAINER = 1  # Size content to fit widget
+    RESIZE_CONTAINER_TO_FIT_OPI = 2  # Size widget to match content
+    STRETCH_OPI_TO_FIT_CONTAINER = 3  # Stretch content to fit widget
+    CROP = 4  # Crop content
+
+ResizeBehaviour_MAP = {
+    ResizeBehaviour.RESIZE_OPI_TO_FIT_CONTAINER: ResizeBehaviour_Embeded.RESIZE_OPI_TO_FIT_CONTAINER,
+    ResizeBehaviour.RESIZE_CONTAINER_TO_FIT_OPI: ResizeBehaviour_Embeded.RESIZE_CONTAINER_TO_FIT_OPI,
+    ResizeBehaviour.CROP: ResizeBehaviour_Embeded.CROP,
+    ResizeBehaviour.SCROLL: ResizeBehaviour_Embeded.NO_RESIZE, 
+}
 
 
 class FormatType:
@@ -145,6 +160,8 @@ class Widget(object):
             super().__setattr__(name, value)
             if name == 'format_type':
                 super().__setattr__(f"phoebus_{_conf[name]}", FormatType_MAP[value])
+            elif _cls_name == 'EmbeddedContainer' and name == 'resize_behaviour':
+                super().__setattr__(f"phoebus_{_conf[name]}", ResizeBehaviour_MAP[value])
             else:
                 super().__setattr__(f"phoebus_{_conf[name]}", value)
         else:
@@ -496,13 +513,14 @@ class TabbedContainer(Widget):
             setattr(self, f"tab_{i}_font", font)
 
 
-class LinkingContainer(Widget):
+class EmbeddedContainer(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.linkingContainer'
+    TYPE = 'embedded'
 
     def __init__(self, x, y, width, height, opi_file):
-        super(LinkingContainer, self).__init__(LinkingContainer.TYPE_ID, x, y,
-                                               width, height)
+        super(EmbeddedContainer, self).__init__(EmbeddedContainer.TYPE_ID, x, y,
+                                                width, height)
         self.opi_file = opi_file
         self.resize_behaviour = ResizeBehaviour.CROP
 
