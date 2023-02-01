@@ -16,19 +16,23 @@ class ResizeBehaviour:
     CROP = 2  # Don't resize anything, crop if *.opi too large
     SCROLL = 3  # Don't resize anything, add scrollbars if *.opi too large
 
+
 class ResizeBehaviour_Embeded:
     # for embeded display (Phoebus)
-    NO_RESIZE = 0 # no resize, add scroll if needed
+    NO_RESIZE = 0  # no resize, add scroll if needed
     RESIZE_OPI_TO_FIT_CONTAINER = 1  # Size content to fit widget
     RESIZE_CONTAINER_TO_FIT_OPI = 2  # Size widget to match content
     STRETCH_OPI_TO_FIT_CONTAINER = 3  # Stretch content to fit widget
     CROP = 4  # Crop content
 
+
 ResizeBehaviour_MAP = {
-    ResizeBehaviour.RESIZE_OPI_TO_FIT_CONTAINER: ResizeBehaviour_Embeded.RESIZE_OPI_TO_FIT_CONTAINER,
-    ResizeBehaviour.RESIZE_CONTAINER_TO_FIT_OPI: ResizeBehaviour_Embeded.RESIZE_CONTAINER_TO_FIT_OPI,
+    ResizeBehaviour.RESIZE_OPI_TO_FIT_CONTAINER:
+    ResizeBehaviour_Embeded.RESIZE_OPI_TO_FIT_CONTAINER,
+    ResizeBehaviour.RESIZE_CONTAINER_TO_FIT_OPI:
+    ResizeBehaviour_Embeded.RESIZE_CONTAINER_TO_FIT_OPI,
     ResizeBehaviour.CROP: ResizeBehaviour_Embeded.CROP,
-    ResizeBehaviour.SCROLL: ResizeBehaviour_Embeded.NO_RESIZE, 
+    ResizeBehaviour.SCROLL: ResizeBehaviour_Embeded.NO_RESIZE,
 }
 
 
@@ -45,6 +49,7 @@ class FormatType:
     SEXAGESIMAL_HMS = 9
     SEXAGESIMAL_DMS = 10
 
+
 class FormatType_PHOEBUS:
     DEFAULT = 0
     DECIMAL = 1
@@ -56,6 +61,7 @@ class FormatType_PHOEBUS:
     SEXAGESIMAL = 7
     SEXAGESIMAL_HMS = 8
     SEXAGESIMAL_DMS = 9
+
 
 # for phoebus (BOY to BOB)
 FormatType_MAP = {
@@ -72,8 +78,9 @@ FormatType_MAP = {
     FormatType.SEXAGESIMAL_DMS: FormatType_PHOEBUS.SEXAGESIMAL_DMS,
 }
 
+
 class BasicStyle:
-    # ActionButton, TextInput
+    # ActionButton, TextEntry
     CLASSIC = 0
     NATIVE = 1
 
@@ -111,7 +118,7 @@ class LineStyle:
     DASH = 1
     DOT = 2
     DASHDOT = 3
-    DASHDOTDOT =4
+    DASHDOTDOT = 4
 
 
 class Widget(object):
@@ -159,9 +166,11 @@ class Widget(object):
         if name in _conf:
             super().__setattr__(name, value)
             if name == 'format_type':
-                super().__setattr__(f"phoebus_{_conf[name]}", FormatType_MAP[value])
+                super().__setattr__(f"phoebus_{_conf[name]}",
+                                    FormatType_MAP[value])
             elif _cls_name == 'EmbeddedContainer' and name == 'resize_behaviour':
-                super().__setattr__(f"phoebus_{_conf[name]}", ResizeBehaviour_MAP[value])
+                super().__setattr__(f"phoebus_{_conf[name]}",
+                                    ResizeBehaviour_MAP[value])
             else:
                 super().__setattr__(f"phoebus_{_conf[name]}", value)
         else:
@@ -394,7 +403,13 @@ class Line(Widget):
     TYPE_ID = 'org.csstudio.opibuilder.widgets.polyline'
     TYPE = 'polyline'
 
-    def __init__(self, x0, y0, x1, y1, line_width=1, line_style=LineStyle.SOLID):
+    def __init__(self,
+                 x0,
+                 y0,
+                 x1,
+                 y1,
+                 line_width=1,
+                 line_style=LineStyle.SOLID):
         """ Widget x,y location is calculated to be the top-left corner of
             rectangle defined by the diagonal from (x0, y0) to (x1, y1).
             The width and height are the lengths of the sides.
@@ -405,15 +420,16 @@ class Line(Widget):
                                    width=abs(x0 - x1) + 1,
                                    height=abs(y0 - y1) + 1)
         self.points = [(x0, y0), (x1, y1)]
-        self.phoebus_points = [(x0 - self.x, y0 - self.y), (x1 - self.x, y1 - self.y)]
+        self.phoebus_points = [(x0 - self.x, y0 - self.y),
+                               (x1 - self.x, y1 - self.y)]
         self.line_width = line_width
         self.line_style = line_style
         self.set_line_color()
-    
+
     def add_point(self, x, y):
         """Add a point with x, y coordinate."""
         self.points.append((x, y))
-    
+
     def set_line_color(self, c: Color = None):
         """Set the line color."""
         if c is None:
@@ -432,26 +448,26 @@ class Label(Widget):
         self.text = text
 
 
-class TextMonitor(Widget):
+class TextUpdate(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.TextUpdate'
     TYPE = 'textupdate'
 
     def __init__(self, x, y, width, height, pv):
-        super(TextMonitor, self).__init__(TextMonitor.TYPE_ID, x, y, width,
-                                          height)
+        super(TextUpdate, self).__init__(TextUpdate.TYPE_ID, x, y, width,
+                                         height)
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
 
 
-class TextInput(Widget):
+class TextEntry(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.TextInput'
     TYPE = 'textentry'
 
     def __init__(self, x, y, width, height, pv, style=None):
-        super(TextInput, self).__init__(TextInput.TYPE_ID, x, y, width, height)
+        super(TextEntry, self).__init__(TextEntry.TYPE_ID, x, y, width, height)
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
@@ -519,8 +535,8 @@ class EmbeddedContainer(Widget):
     TYPE = 'embedded'
 
     def __init__(self, x, y, width, height, opi_file):
-        super(EmbeddedContainer, self).__init__(EmbeddedContainer.TYPE_ID, x, y,
-                                                width, height)
+        super(EmbeddedContainer, self).__init__(EmbeddedContainer.TYPE_ID, x,
+                                                y, width, height)
         self.opi_file = opi_file
         self.resize_behaviour = ResizeBehaviour.CROP
 
@@ -689,9 +705,10 @@ class ImageBoolButton(ActionWidget):
         if pv_name is not None:
             self.pv_name = pv_name
 
+
 class SlideButton(ActionWidget):
 
-    TYPE_ID = None # not available for BOY
+    TYPE_ID = None  # not available for BOY
     TYPE = 'slide_button'
 
     def __init__(self, x, y, width, height, pv_name=None):

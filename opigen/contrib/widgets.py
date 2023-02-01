@@ -60,7 +60,7 @@ class GroupingContainer(_widgets.GroupingContainer):
         self.set_bg_color(DEFAULT_DISPLAY_BG)
 
 
-class TextUpdate(_widgets.TextMonitor):
+class TextUpdate(_widgets.TextUpdate):
 
     def __init__(self, x, y, width, height, pv_name, alarm_sensitive=True):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
@@ -70,7 +70,7 @@ class TextUpdate(_widgets.TextMonitor):
             Border(BorderStyle.NONE, 0, DEFAULT_BORDER_COLOR, alarm_sensitive))
 
 
-class TextEntry(_widgets.TextInput):
+class TextEntry(_widgets.TextEntry):
 
     def __init__(self, x, y, width, height, pv_name):
         super(self.__class__, self).__init__(x, y, width, height, pv_name)
