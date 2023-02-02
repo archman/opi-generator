@@ -106,31 +106,31 @@ def test_Display_render_sets_custom_scale_options(display, get_opi_renderer):
     assert "<auto_scale_widgets>true</auto_scale_widgets>" in output
 
 
-@pytest.mark.parametrize('widget_type',
-                         (widgets.TextUpdate, widgets.TextEntry))
+@pytest.mark.parametrize('widget_type,alignbit',
+                         [(widgets.TextUpdate, widgets.HA_CENTER), (widgets.TextEntry, widgets.HA_LEFT)])
 def test_text_widgets_have_correct_attributes(display, get_opi_renderer,
-                                              widget_type):
+                                              widget_type, alignbit):
     tb = widget_type(10, 10, 20, 20, 'pvname')
     display.add_child(tb)
     renderer = get_opi_renderer(display)
     renderer.assemble()
     output = str(renderer)
     assert '<pv_name>pvname</pv_name>' in output
-    assert '<horizontal_alignment>1</horizontal_alignment>' in output
+    assert f'<horizontal_alignment>{alignbit}</horizontal_alignment>' in output
 
 
-@pytest.mark.parametrize('widget_type',
-                         (widgets.TextUpdate, widgets.TextEntry))
+@pytest.mark.parametrize('widget_type,alignbit',
+                         [(widgets.TextUpdate, widgets.HA_CENTER), (widgets.TextEntry, widgets.HA_LEFT)])
 def test_text_widgets_have_correct_attributes_phoebus(display,
                                                       get_bob_renderer,
-                                                      widget_type):
+                                                      widget_type, alignbit):
     tb = widget_type(10, 10, 20, 20, 'pvname')
     display.add_child(tb)
     renderer = get_bob_renderer(display)
     renderer.assemble()
     output = str(renderer)
     assert '<pv_name>pvname</pv_name>' in output
-    assert '<horizontal_alignment>1</horizontal_alignment>' in output
+    assert f'<horizontal_alignment>{alignbit}</horizontal_alignment>' in output
 
 
 def test_ToggleButton_has_correct_attributes(display, get_opi_renderer):
