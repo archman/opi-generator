@@ -232,17 +232,18 @@ def test_Line_has_correct_attributes(display, get_opi_renderer):
 
 
 def test_Line_has_correct_attributes_phoebus(display, get_bob_renderer):
-    byte = widgets.Line(10, 100, 50, 20, 2)
-    display.add_child(byte)
+    line = widgets.Line(10, 100, 50, 20, 2)
+    assert line.x == 10
+    assert line.y == 20
+    display.add_child(line)
     renderer = get_bob_renderer(display)
     renderer.assemble()
     output = str(renderer)
-    node = renderer.get_node()
     assert '<x>10</x>' in output
     assert '<y>20</y>' in output
     assert '<points>' in output
-    assert '<point x="10" y="100"/>' in output
-    assert '<point x="50" y="20"/>' in output
+    assert '<point x="0" y="80"/>' in output
+    assert '<point x="40" y="0"/>' in output
     assert '<line_width>2</line_width>' in output
 
 
