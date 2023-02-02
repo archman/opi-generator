@@ -11,10 +11,11 @@ from .text import OpiText
 from .widget import OpiWidget
 from .points import OpiPoints
 from .scalings import OpiScaling, OpiDisplayScaling
+from .tabs import OpiTabs
 
 # there is no limit of total tabs, but here defines the maximum that
 # usually used.
-MAX_TAB_COUNT = 32
+MAX_TAB_COUNT = 128
 
 
 def get_opi_renderer(widget):
@@ -44,10 +45,9 @@ def get_opi_renderer(widget):
     wr.add_renderer('font', OpiFont())
 
     # tabbed container
+    wr.add_renderer("tabs", OpiTabs())
     for i in range(MAX_TAB_COUNT):
         wr.add_renderer(f"tab_{i}_font", OpiFont())
-        wr.add_renderer(f"tab_{i}_background_color", cr)
-        wr.add_renderer(f"tab_{i}_foreground_color", cr)
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))

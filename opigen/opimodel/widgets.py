@@ -4,6 +4,7 @@ of type Display.  To create the opi, add widgets as children of this widget.
 """
 from . import actions, scalings
 from .colors import Color
+from .borders import Border, BorderStyle
 from opigen.config import get_attr_conf
 
 ATTR_MAP = get_attr_conf()
@@ -76,6 +77,13 @@ FormatType_MAP = {
     FormatType.SEXAGESIMAL: FormatType_PHOEBUS.SEXAGESIMAL,
     FormatType.SEXAGESIMAL_HMS: FormatType_PHOEBUS.SEXAGESIMAL_HMS,
     FormatType.SEXAGESIMAL_DMS: FormatType_PHOEBUS.SEXAGESIMAL_DMS,
+}
+
+
+# tab direction map (BOY to BOB)
+TAB_HORIZONTAL_MAP = {
+    True: 0,
+    False: 1
 }
 
 
@@ -171,6 +179,9 @@ class Widget(object):
             elif _cls_name == 'EmbeddedContainer' and name == 'resize_behaviour':
                 super().__setattr__(f"phoebus_{_conf[name]}",
                                     ResizeBehaviour_MAP[value])
+            elif _cls_name == 'TabbedContainer' and name == 'horizontal_tabs':
+                super().__setattr__(f"phoebus_{_conf[name]}",
+                                    TAB_HORIZONTAL_MAP[value])
             else:
                 super().__setattr__(f"phoebus_{_conf[name]}", value)
         else:
@@ -491,11 +502,14 @@ class GroupingContainer(Widget):
 class TabbedContainer(Widget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.tab'
+    TYPE = 'tabs'
 
     def __init__(self, x, y, width, height):
         super(TabbedContainer, self).__init__(TabbedContainer.TYPE_ID, x, y,
                                               width, height)
         self.tab_count = 0
+        self.tabs = []
+        self.phoebus_tabs = self.tabs
 
     def add_tab(self,
                 name,
@@ -509,22 +523,18 @@ class TabbedContainer(Widget):
         _grp.width = self.width - dw
         _grp.height = self.height - dh
         """
-        setattr(self, f"tab_{self.tab_count}_title", name)
-        if background_color is not None:
-            setattr(self, f"tab_{self.tab_count}_background_color",
-                    background_color)
-        if foreground_color is not None:
-            setattr(self, f"tab_{self.tab_count}_foreground_color",
-                    foreground_color)
+        # create a grouping container for the content widget
         _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
-        _grp.name = name
         _grp.add_child(widget)
-        self.add_child(_grp)
+        _grp.set_border(Border(BorderStyle.NONE, 0, Color((255, 255, 255)), False))
+        _grp.name = name
+        self.tabs.append((name, _grp, background_color, foreground_color))
         self.tab_count += 1
 
     def set_font(self, font):
-        """Set font for each tab. Call this method after added all tabs.
+        """Set font for each tab. Call this method after added all tabs (only for BOY).
         """
+        self.phoebus_font = font
         for i in range(self.tab_count):
             setattr(self, f"tab_{i}_font", font)
 

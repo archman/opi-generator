@@ -58,3 +58,8 @@ off_label = 'off_label'
 [EmbeddedContainer]
 opi_file = 'file'
 resize_behaviour = 'resize'
+
+[TabbedContainer]
+active_tab = 'active_tab'
+minimum_tab_height = 'tab_height'
+horizontal_tabs = 'direction'
