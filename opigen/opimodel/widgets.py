@@ -457,6 +457,8 @@ class Label(Widget):
     def __init__(self, x, y, width, height, text):
         super(Label, self).__init__(Label.TYPE_ID, x, y, width, height)
         self.text = text
+        self.horizontal_alignment = HAlign.LEFT
+        self.vertical_alignment = VAlign.MIDDLE
 
 
 class TextUpdate(Widget):
@@ -470,6 +472,7 @@ class TextUpdate(Widget):
 
         self.pv_name = pv
         self.horizontal_alignment = HAlign.CENTER
+        self.vertical_alignment = VAlign.MIDDLE
 
 
 class TextEntry(Widget):
@@ -481,7 +484,8 @@ class TextEntry(Widget):
         super(TextEntry, self).__init__(TextEntry.TYPE_ID, x, y, width, height)
 
         self.pv_name = pv
-        self.horizontal_alignment = HAlign.CENTER
+        self.horizontal_alignment = HAlign.LEFT
+        self.vertical_alignment = VAlign.MIDDLE
         #
         if style is not None:
             self.set_basic_style(style)
