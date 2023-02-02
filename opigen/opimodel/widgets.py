@@ -649,7 +649,7 @@ class Byte(Widget):
         super(Byte, self).__init__(Byte.TYPE_ID, x, y, width, height)
         self.pv_name = pv
         self.effect_3d = False
-        self.square_led = True
+        self.square_led = False
         self.numBits = bits
         self.led_border = 1
         self.border_alarm_sensitive = False
