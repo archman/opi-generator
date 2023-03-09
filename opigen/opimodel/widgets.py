@@ -440,6 +440,7 @@ class Line(Widget):
     def add_point(self, x, y):
         """Add a point with x, y coordinate."""
         self.points.append((x, y))
+        self.phoebus_points.append((x - self.x, y - self.y))
 
     def set_line_color(self, c: Color = None):
         """Set the line color."""
