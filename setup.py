@@ -8,6 +8,15 @@ def readme():
         return f.read()
 
 
+def set_entry_points():
+    r = {}
+    r['console_scripts'] = [
+        'opigen-export_font_def=opigen.config:export_font_def',
+        'opigen-export_color_def=opigen.config:export_color_def',
+    ]
+    return r
+
+
 setup(
     name='opigen',
     version='1.0.2',
@@ -40,4 +49,5 @@ setup(
         'Topic :: Scientific/Engineering',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
+    entry_points=set_entry_points(),
 )
