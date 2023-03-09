@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='opigen',
-      version='0.1.0',
+      version='1.0.0',
       url='https://github.com/dls-controls/cssgen',
       license='APACHE',
       packages=[
