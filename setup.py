@@ -19,7 +19,7 @@ def set_entry_points():
 
 setup(
     name='opigen',
-    version='1.0.2',
+    version='1.0.3',
     description='OPI Generation for CS-Studio and Phoebus',
     long_description=readme(),
     long_description_content_type='text/markdown',
