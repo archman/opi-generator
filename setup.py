@@ -13,6 +13,7 @@ def set_entry_points():
     r['console_scripts'] = [
         'opigen-export_font_def=opigen.config:export_font_def',
         'opigen-export_color_def=opigen.config:export_color_def',
+        'opigen-export_attr_map=opigen.config:export_attr_map',
     ]
     return r
 
