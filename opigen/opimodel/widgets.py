@@ -230,6 +230,13 @@ class Widget(object):
         self._children.append(child)
         child.set_parent(self)
 
+    def add_children(self, child_list):
+        """Add a list of widget to this widget.
+        """
+        for child in child_list:
+            self._children.append(child)
+            child.set_parent(self)
+
     def add_children(self, children):
         """Add multiple widgets as children of this widget.
 
