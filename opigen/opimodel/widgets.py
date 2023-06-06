@@ -516,25 +516,34 @@ class TabbedContainer(Widget):
         self.tabs = []
         self.phoebus_tabs = self.tabs
 
-    def add_tab(self,
-                name,
-                widget,
-                dw=2,
-                dh=33,
-                background_color=None,
-                foreground_color=None):
-        """Add a new tab named as *name*, embbed with *widget*.
+    def add_tab(
+        self,
+        name,
+        dw=2,
+        dh=33,
+        background_color=None,
+        foreground_color=None,
+    ):
+        """Add a new tab named as *name*
 
         _grp.width = self.width - dw
         _grp.height = self.height - dh
         """
         # create a grouping container for the content widget
         _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
-        _grp.add_child(widget)
         _grp.set_border(Border(BorderStyle.NONE, 0, Color((255, 255, 255)), False))
         _grp.name = name
         self.tabs.append((name, _grp, background_color, foreground_color))
         self.tab_count += 1
+
+    def add_child_to_tab(self, tab_name, widget):
+        """Adds a new *widget* to tab with name *tab*"""
+        for tab in self.tabs:
+            if tab[0] == tab_name:
+                tab[1].add_child(widget)
+                return
+            
+        raise ValueError(f"Error! {tab_name} not found in available tabs.")
 
     def set_font(self, font):
         """Set font for each tab. Call this method after added all tabs (only for BOY).
