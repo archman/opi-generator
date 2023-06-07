@@ -79,12 +79,8 @@ FormatType_MAP = {
     FormatType.SEXAGESIMAL_DMS: FormatType_PHOEBUS.SEXAGESIMAL_DMS,
 }
 
-
 # tab direction map (BOY to BOB)
-TAB_HORIZONTAL_MAP = {
-    True: 0,
-    False: 1
-}
+TAB_HORIZONTAL_MAP = {True: 0, False: 1}
 
 
 class BasicStyle:
@@ -519,7 +515,7 @@ class TabbedContainer(Widget):
     def add_tab(
         self,
         name,
-        widget = None,
+        widget=None,
         dw=2,
         dh=33,
         background_color=None,
@@ -532,11 +528,12 @@ class TabbedContainer(Widget):
         """
         # create a grouping container for the content widget
         _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
-        
+
         if widget != None:
             _grp.add_child(widget)
 
-        _grp.set_border(Border(BorderStyle.NONE, 0, Color((255, 255, 255)), False))
+        _grp.set_border(
+            Border(BorderStyle.NONE, 0, Color((255, 255, 255)), False))
         _grp.name = name
 
         self.tabs.append((name, _grp, background_color, foreground_color))
@@ -548,7 +545,7 @@ class TabbedContainer(Widget):
             if tab[0] == tab_name:
                 tab[1].add_child(widget)
                 return
-            
+
         raise ValueError(f"Error! {tab_name} not found in available tabs.")
 
     def set_font(self, font):
