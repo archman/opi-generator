@@ -521,7 +521,7 @@ class TabbedContainer(Widget):
         background_color=None,
         foreground_color=None,
     ):
-        """Add a new tab named as *name*
+        """Add a new tab named as *name*, containing *widget*
 
         _grp.width = self.width - dw
         _grp.height = self.height - dh
