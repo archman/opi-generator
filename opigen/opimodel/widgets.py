@@ -519,6 +519,7 @@ class TabbedContainer(Widget):
     def add_tab(
         self,
         name,
+        widget = None,
         dw=2,
         dh=33,
         background_color=None,
@@ -531,8 +532,13 @@ class TabbedContainer(Widget):
         """
         # create a grouping container for the content widget
         _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
+        
+        if widget != None:
+            _grp.add_child(widget)
+
         _grp.set_border(Border(BorderStyle.NONE, 0, Color((255, 255, 255)), False))
         _grp.name = name
+
         self.tabs.append((name, _grp, background_color, foreground_color))
         self.tab_count += 1
 
