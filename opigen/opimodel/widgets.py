@@ -755,20 +755,16 @@ class XYGraph(Widget):
         self.trace_count = 0
         self.show_legend = False
 
-    def set_axis_scale(self, minimum, maximum, x_axis=True):
-        if x_axis:
-            self.axis_0_auto_scale = False
-            self.axis_0_minimum = minimum
-            self.axis_0_maximum = maximum
-        else:
-            self.axis_1_auto_scale = False
-            self.axis_1_minimum = minimum
-            self.axis_1_maximum = maximum
+    def set_axis_scale(self, minimum, maximum, axis=0):
+        setattr(self, f"axis_{axis}_auto_scale", False)
+        setattr(self, f"axis_{axis}_minimum", minimum)
+        setattr(self, f"axis_{axis}_maximum", maximum)
 
     def add_trace(self, x_pv, y_pv):
-        setattr(self, f"trace_{self.trace_count}_x_pv", x_pv)
-        setattr(self, f"trace_{self.trace_count}_y_pv", y_pv)
-        setattr(self, f"trace_{self.trace_count}_trace_type", 3)
-        setattr(self, f"trace_{self.trace_count}_buffer_size", 1)
-        setattr(self, f"trace_{self.trace_count}_line_width", 10)
+        trace_index = self.trace_count
+        setattr(self, f"trace_{trace_index}_x_pv", x_pv)
+        setattr(self, f"trace_{trace_index}_y_pv", y_pv)
+        setattr(self, f"trace_{trace_index}_trace_type", 3)
+        setattr(self, f"trace_{trace_index}_buffer_size", 1)
+        setattr(self, f"trace_{trace_index}_line_width", 10)
         self.trace_count += 1
