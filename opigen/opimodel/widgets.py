@@ -744,3 +744,31 @@ class SlideButton(ActionWidget):
         if pv_name is not None:
             self.phoebus_pv_name = pv_name
         self.phoebus_label = ''
+
+
+class XYGraph(Widget):
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
+
+    def __init__(self, x, y, width, height):
+        super().__init__(XYGraph.TYPE_ID, x, y, width, height)
+        self.show_toolbar = False
+        self.trace_count = 0
+        self.show_legend = False
+
+    def set_axis_scale(self, minimum, maximum, x_axis=True):
+        if x_axis:
+            self.axis_0_auto_scale = False
+            self.axis_0_minimum = minimum
+            self.axis_0_maximum = maximum
+        else:
+            self.axis_1_auto_scale = False
+            self.axis_1_minimum = minimum
+            self.axis_1_maximum = maximum
+
+    def add_trace(self, x_pv, y_pv):
+        setattr(self, f"trace_{self.trace_count}_x_pv", x_pv)
+        setattr(self, f"trace_{self.trace_count}_y_pv", y_pv)
+        setattr(self, f"trace_{self.trace_count}_trace_type", 3)
+        setattr(self, f"trace_{self.trace_count}_buffer_size", 1)
+        setattr(self, f"trace_{self.trace_count}_line_width", 10)
+        self.trace_count += 1
