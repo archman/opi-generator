@@ -747,24 +747,26 @@ class SlideButton(ActionWidget):
 
 
 class XYGraph(Widget):
+    """Class for XYGraph Widget"""
     TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
 
     def __init__(self, x, y, width, height):
         super().__init__(XYGraph.TYPE_ID, x, y, width, height)
         self.show_toolbar = False
         self.trace_count = 0
-        self.show_legend = False
 
     def set_axis_scale(self, minimum, maximum, axis=0):
+        """Sets the minimum and maximum values for a given axis"""
         setattr(self, f"axis_{axis}_auto_scale", False)
         setattr(self, f"axis_{axis}_minimum", minimum)
         setattr(self, f"axis_{axis}_maximum", maximum)
 
-    def add_trace(self, x_pv, y_pv):
+    def add_trace(self, x_pv, y_pv, line_width=10):
+        """Adds a trace to the graph in the form of a bar graph with a given line width"""
         trace_index = self.trace_count
         setattr(self, f"trace_{trace_index}_x_pv", x_pv)
         setattr(self, f"trace_{trace_index}_y_pv", y_pv)
         setattr(self, f"trace_{trace_index}_trace_type", 3)
-        setattr(self, f"trace_{trace_index}_buffer_size", 1)
-        setattr(self, f"trace_{trace_index}_line_width", 10)
+        setattr(self, f"trace_{trace_index}_line_width", line_width)
+        setattr(self, f"trace_{trace_index}_concatenate_data", False)
         self.trace_count += 1
