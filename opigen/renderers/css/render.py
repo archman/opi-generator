@@ -16,6 +16,7 @@ from .tabs import OpiTabs
 # there is no limit of total tabs, but here defines the maximum that
 # usually used.
 MAX_TAB_COUNT = 128
+MAX_TRACE_COUNT = 20
 
 
 def get_opi_renderer(widget):
@@ -48,6 +49,10 @@ def get_opi_renderer(widget):
     wr.add_renderer("tabs", OpiTabs())
     for i in range(MAX_TAB_COUNT):
         wr.add_renderer(f"tab_{i}_font", OpiFont())
+
+    # tabbed container
+    for i in range(MAX_TRACE_COUNT):
+        wr.add_renderer(f"trace_{i}_trace_color", cr)
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))

@@ -761,12 +761,28 @@ class XYGraph(Widget):
         setattr(self, f"axis_{axis}_minimum", minimum)
         setattr(self, f"axis_{axis}_maximum", maximum)
 
-    def add_trace(self, x_pv, y_pv, line_width=10):
+    def set_axis_title(self, title, axis=0):
+        """Sets the title of a given axis, defaulting to x-axis"""
+        setattr(self, f"axis_{axis}_axis_title", title)
+
+    def add_trace(self,
+                  x_pv,
+                  y_pv,
+                  legend=None,
+                  line_width=10,
+                  trace_color=None):
         """Adds a trace to the graph in the form of a bar graph with a given line width"""
         trace_index = self.trace_count
         setattr(self, f"trace_{trace_index}_x_pv", x_pv)
         setattr(self, f"trace_{trace_index}_y_pv", y_pv)
-        setattr(self, f"trace_{trace_index}_trace_type", 3)
-        setattr(self, f"trace_{trace_index}_line_width", line_width)
         setattr(self, f"trace_{trace_index}_concatenate_data", False)
+        setattr(self, f"trace_{trace_index}_line_width", line_width)
+        setattr(self, f"trace_{trace_index}_trace_type", 3)
+
+        if legend is not None:
+            setattr(self, f"trace_{trace_index}_name", legend)
+
+        if trace_color is not None:
+            setattr(self, f"trace_{trace_index}_trace_color", trace_color)
+
         self.trace_count += 1
