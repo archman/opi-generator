@@ -50,7 +50,7 @@ def get_opi_renderer(widget):
     for i in range(MAX_TAB_COUNT):
         wr.add_renderer(f"tab_{i}_font", OpiFont())
 
-    # tabbed container
+    # Renders trace colors
     for i in range(MAX_TRACE_COUNT):
         wr.add_renderer(f"trace_{i}_trace_color", cr)
 
