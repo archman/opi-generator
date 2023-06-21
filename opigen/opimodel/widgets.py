@@ -749,11 +749,26 @@ class SlideButton(ActionWidget):
 class XYGraph(Widget):
     """Class for XYGraph Widget"""
     TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
+    TYPE = "xyplot"
 
     def __init__(self, x, y, width, height):
         super().__init__(XYGraph.TYPE_ID, x, y, width, height)
         self.show_toolbar = False
         self.trace_count = 0
+        self.axis_count = 2
+
+        self.phoebus_x_axis = ["X Axis", 0, 100, True]
+        self.phoebus_y_axes = [["Y Axis 1", 0, 100, True]]
+        self.phoebus_traces = []
+
+    def add_y_axis(self):
+        """Adds a y-axis to the graph"""
+        self.axis_count += 1
+        setattr(self, f"axis_{self.axis_count - 1}_y_axis", True)
+
+        self.phoebus_y_axes.append([f"Y Axis {self.axis_count - 1}", 0, 100, True])
+
+        return self.axis_count
 
     def set_axis_scale(self, minimum, maximum, axis=0):
         """Sets the minimum and maximum values for a given axis"""
@@ -761,16 +776,25 @@ class XYGraph(Widget):
         setattr(self, f"axis_{axis}_minimum", minimum)
         setattr(self, f"axis_{axis}_maximum", maximum)
 
+        if axis == 0:
+            self.phoebus_x_axis[1] = minimum
+            self.phoebus_x_axis[2] = maximum
+            self.phoebus_x_axis[3] = False
+        else:
+            self.phoebus_y_axes[axis - 1][1] = minimum
+            self.phoebus_y_axes[axis - 1][2] = maximum
+            self.phoebus_y_axes[axis - 1][3] = False
+
     def set_axis_title(self, title, axis=0):
         """Sets the title of a given axis, defaulting to x-axis"""
         setattr(self, f"axis_{axis}_axis_title", title)
 
-    def add_trace(self,
-                  x_pv,
-                  y_pv,
-                  legend=None,
-                  line_width=10,
-                  trace_color=None):
+        if axis == 0:
+            self.phoebus_x_axis[0] = title
+        else:
+            self.phoebus_y_axes[axis - 1][0] = title
+
+    def add_trace(self, x_pv, y_pv, legend=None, line_width=10, trace_color=None, y_axis=1):
         """Adds a trace to the graph in the form of a bar graph with a given line width"""
         trace_index = self.trace_count
         setattr(self, f"trace_{trace_index}_x_pv", x_pv)
@@ -785,4 +809,8 @@ class XYGraph(Widget):
         if trace_color is not None:
             setattr(self, f"trace_{trace_index}_trace_color", trace_color)
 
+        setattr(self, f"trace_{trace_index}_y_axis_index", y_axis)
+
         self.trace_count += 1
+
+        self.phoebus_traces.append([legend, x_pv, y_pv, line_width, y_axis - 1])

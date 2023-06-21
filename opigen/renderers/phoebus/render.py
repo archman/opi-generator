@@ -6,12 +6,15 @@ from .actions import OpiActions
 from .borders import OpiBorder
 from .colors import OpiColor
 from .fonts import OpiFont
-from .rules import OpiRule
-from .text import OpiText
-from .widget import OpiWidget
 from .points import OpiPoints
-from .scalings import OpiScaling, OpiDisplayScaling
+from .rules import OpiRule
+from .scalings import OpiDisplayScaling, OpiScaling
 from .tabs import OpiTabs
+from .text import OpiText
+from .traces import OpiTraces
+from .widget import OpiWidget
+from .x_axis import OpiXAxis
+from .y_axes import OpiYAxis
 
 
 def get_opi_renderer(widget):
@@ -45,6 +48,11 @@ def get_opi_renderer(widget):
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))
+
+    # Necessary for rendering of XYGraph
+    wr.add_renderer('traces', OpiTraces())
+    wr.add_renderer('x_axis', OpiXAxis())
+    wr.add_renderer('y_axes', OpiYAxis())
 
     wr.add_renderer('points', OpiPoints())
     return OpiRenderer(widget, wr)
