@@ -50,7 +50,7 @@ def get_opi_renderer(widget):
     wr.add_renderer('scale_options', OpiScaling(tr))
 
     # Necessary for rendering of XYGraph
-    wr.add_renderer('traces', OpiTraces())
+    wr.add_renderer('traces', OpiTraces(cr))
     wr.add_renderer('x_axis', OpiXAxis())
     wr.add_renderer('y_axes', OpiYAxis())
 

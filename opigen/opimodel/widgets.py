@@ -813,4 +813,4 @@ class XYGraph(Widget):
 
         self.trace_count += 1
 
-        self.phoebus_traces.append([legend, x_pv, y_pv, line_width, y_axis - 1])
+        self.phoebus_traces.append([legend, x_pv, y_pv, line_width, y_axis - 1, trace_color])
