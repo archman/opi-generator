@@ -3,6 +3,7 @@ import shutil
 import lxml.etree as et
 
 from .actions import OpiActions
+from .axes import OpiAxis
 from .borders import OpiBorder
 from .colors import OpiColor
 from .fonts import OpiFont
@@ -13,8 +14,6 @@ from .tabs import OpiTabs
 from .text import OpiText
 from .traces import OpiTraces
 from .widget import OpiWidget
-from .x_axis import OpiXAxis
-from .y_axes import OpiYAxis
 
 
 def get_opi_renderer(widget):
@@ -51,8 +50,7 @@ def get_opi_renderer(widget):
 
     # Necessary for rendering of XYGraph
     wr.add_renderer('traces', OpiTraces(cr))
-    wr.add_renderer('x_axis', OpiXAxis())
-    wr.add_renderer('y_axes', OpiYAxis())
+    wr.add_renderer('axes', OpiAxis())
 
     wr.add_renderer('points', OpiPoints())
     return OpiRenderer(widget, wr)
