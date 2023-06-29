@@ -79,12 +79,8 @@ FormatType_MAP = {
     FormatType.SEXAGESIMAL_DMS: FormatType_PHOEBUS.SEXAGESIMAL_DMS,
 }
 
-
 # tab direction map (BOY to BOB)
-TAB_HORIZONTAL_MAP = {
-    True: 0,
-    False: 1
-}
+TAB_HORIZONTAL_MAP = {True: 0, False: 1}
 
 
 class BasicStyle:
@@ -516,25 +512,41 @@ class TabbedContainer(Widget):
         self.tabs = []
         self.phoebus_tabs = self.tabs
 
-    def add_tab(self,
-                name,
-                widget,
-                dw=2,
-                dh=33,
-                background_color=None,
-                foreground_color=None):
-        """Add a new tab named as *name*, embbed with *widget*.
+    def add_tab(
+        self,
+        name,
+        widget=None,
+        dw=2,
+        dh=33,
+        background_color=None,
+        foreground_color=None,
+    ):
+        """Add a new tab named as *name*, containing *widget*
 
         _grp.width = self.width - dw
         _grp.height = self.height - dh
         """
         # create a grouping container for the content widget
         _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
-        _grp.add_child(widget)
-        _grp.set_border(Border(BorderStyle.NONE, 0, Color((255, 255, 255)), False))
+
+        if widget != None:
+            _grp.add_child(widget)
+
+        _grp.set_border(
+            Border(BorderStyle.NONE, 0, Color((255, 255, 255)), False))
         _grp.name = name
+
         self.tabs.append((name, _grp, background_color, foreground_color))
         self.tab_count += 1
+
+    def add_child_to_tab(self, tab_name, widget):
+        """Adds a new *widget* to tab with name *tab*"""
+        for tab in self.tabs:
+            if tab[0] == tab_name:
+                tab[1].add_child(widget)
+                return
+
+        raise ValueError(f"Error! {tab_name} not found in available tabs.")
 
     def set_font(self, font):
         """Set font for each tab. Call this method after added all tabs (only for BOY).
@@ -732,3 +744,64 @@ class SlideButton(ActionWidget):
         if pv_name is not None:
             self.phoebus_pv_name = pv_name
         self.phoebus_label = ''
+
+
+class XYGraph(Widget):
+    """Class for XYGraph Widget"""
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
+    TYPE = "xyplot"
+
+    def __init__(self, x, y, width, height):
+        super().__init__(XYGraph.TYPE_ID, x, y, width, height)
+        self.show_toolbar = False
+        self.trace_count = 0
+        self.axis_count = 2
+
+        self.phoebus_axes = [["X Axis", 0, 100, True], ["Y Axis 1", 0, 100, True]]
+        self.phoebus_traces = []
+
+    def add_y_axis(self):
+        """Adds a y-axis to the graph"""
+        self.axis_count += 1
+        setattr(self, f"axis_{self.axis_count - 1}_y_axis", True)
+
+        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", 0, 100, True])
+
+        return self.axis_count
+
+    def set_axis_scale(self, minimum, maximum, axis=0):
+        """Sets the minimum and maximum values for a given axis"""
+        setattr(self, f"axis_{axis}_auto_scale", False)
+        setattr(self, f"axis_{axis}_minimum", minimum)
+        setattr(self, f"axis_{axis}_maximum", maximum)
+
+        self.phoebus_axes[axis][1] = minimum
+        self.phoebus_axes[axis][2] = maximum
+        self.phoebus_axes[axis][3] = False
+
+    def set_axis_title(self, title, axis=0):
+        """Sets the title of a given axis, defaulting to x-axis"""
+        setattr(self, f"axis_{axis}_axis_title", title)
+
+        self.phoebus_axes[axis][0] = title
+
+    def add_trace(self, x_pv, y_pv, legend=None, line_width=10, trace_color=None, y_axis=1):
+        """Adds a trace to the graph in the form of a bar graph with a given line width"""
+        trace_index = self.trace_count
+        setattr(self, f"trace_{trace_index}_x_pv", x_pv)
+        setattr(self, f"trace_{trace_index}_y_pv", y_pv)
+        setattr(self, f"trace_{trace_index}_concatenate_data", False)
+        setattr(self, f"trace_{trace_index}_line_width", line_width)
+        setattr(self, f"trace_{trace_index}_trace_type", 3)
+
+        if legend is not None:
+            setattr(self, f"trace_{trace_index}_name", legend)
+
+        if trace_color is not None:
+            setattr(self, f"trace_{trace_index}_trace_color", trace_color)
+
+        setattr(self, f"trace_{trace_index}_y_axis_index", y_axis)
+
+        self.trace_count += 1
+
+        self.phoebus_traces.append([legend, x_pv, y_pv, line_width, y_axis - 1, trace_color])
