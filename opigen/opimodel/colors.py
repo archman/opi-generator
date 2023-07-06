@@ -6,11 +6,14 @@ import sys
 class Color(object):
     """Representation of a color."""
 
-    def __init__(self, rgb=(0, 0, 0), name=None):
+    def __init__(self, rgb=(0, 0, 0), name=None, alpha=None):
         self.red, self.green, self.blue = rgb
         self.name = name
+        self.alpha = alpha
 
     def __str__(self):
+        if self.alpha is not None:
+            return f"Color {self.name}: ({self.red}, {self.green}, {self.blue}, {self.alpha})"
         return f"Color {self.name}: ({self.red}, {self.green}, {self.blue})"
 
     def __repr__(self):
@@ -20,7 +23,8 @@ class Color(object):
         return self.red == other.red and \
             self.green == other.green and \
             self.blue == other.blue and \
-            self.name == other.name
+            self.name == other.name and \
+            self.alpha == other.alpha
 
 
 _pattern = re.compile(r'(.*)=\s*(\d+)\D*(\d+)\D*(\d+)')
