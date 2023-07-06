@@ -156,6 +156,7 @@ class Widget(object):
         self._type_id = type_id
         self.rules = []
         self.phoebus_rules = []
+        self.scripts = []
 
     def __setattr__(self, name, value):
         _cls_name = self.__class__.__name__
@@ -282,6 +283,15 @@ class Widget(object):
         """
         self.rules.append(rule)
         self.phoebus_rules.append(rule)
+
+    def add_script(self, script_path, pvs):
+        """Add a script to the widget.
+        
+        Args:
+            Script path
+            PVs list
+        """
+        self.scripts.append([script_path, pvs])
 
     def add_scale_options(self, width=True, height=True, keep_wh_ratio=False):
         """Add scale options to the widget.
@@ -753,11 +763,11 @@ class XYGraph(Widget):
 
     def __init__(self, x, y, width, height):
         super().__init__(XYGraph.TYPE_ID, x, y, width, height)
-        self.show_toolbar = False
+        self.show_toolbar = True
         self.trace_count = 0
         self.axis_count = 2
 
-        self.phoebus_axes = [["X Axis", 0, 100, True], ["Y Axis 1", 0, 100, True]]
+        self.phoebus_axes = [["X Axis", True, 0, 100], ["Y Axis 1", True, 0, 100]]
         self.phoebus_traces = []
 
     def add_y_axis(self):
@@ -765,7 +775,7 @@ class XYGraph(Widget):
         self.axis_count += 1
         setattr(self, f"axis_{self.axis_count - 1}_y_axis", True)
 
-        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", 0, 100, True])
+        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", True, 0, 100])
 
         return self.axis_count
 
@@ -775,9 +785,9 @@ class XYGraph(Widget):
         setattr(self, f"axis_{axis}_minimum", minimum)
         setattr(self, f"axis_{axis}_maximum", maximum)
 
-        self.phoebus_axes[axis][1] = minimum
-        self.phoebus_axes[axis][2] = maximum
-        self.phoebus_axes[axis][3] = False
+        self.phoebus_axes[axis][1] = False
+        self.phoebus_axes[axis][2] = minimum
+        self.phoebus_axes[axis][3] = maximum
 
     def set_axis_title(self, title, axis=0):
         """Sets the title of a given axis, defaulting to x-axis"""

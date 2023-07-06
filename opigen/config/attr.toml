@@ -67,3 +67,6 @@ resize_behaviour = "resize"
 active_tab = "active_tab"
 minimum_tab_height = "tab_height"
 horizontal_tabs = "direction"
+
+[XYGraph]
+show_toolbar = "show_toolbar"
