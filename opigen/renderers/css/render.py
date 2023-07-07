@@ -18,6 +18,7 @@ from .widget import OpiWidget
 # usually used.
 MAX_TAB_COUNT = 128
 MAX_TRACE_COUNT = 20
+MAX_AXIS_COUNT = 10
 
 
 def get_opi_renderer(widget):
@@ -54,6 +55,9 @@ def get_opi_renderer(widget):
     # Renders trace colors
     for i in range(MAX_TRACE_COUNT):
         wr.add_renderer(f"trace_{i}_trace_color", cr)
+
+    for i in range(MAX_AXIS_COUNT):
+        wr.add_renderer(f"axis_{i}_axis_color", cr)
 
     wr.add_renderer('scripts', OpiScripts())
 

@@ -767,7 +767,7 @@ class XYGraph(Widget):
         self.trace_count = 0
         self.axis_count = 2
 
-        self.phoebus_axes = [["X Axis", True, 0, 100], ["Y Axis 1", True, 0, 100]]
+        self.phoebus_axes = [["X Axis", True, 0, 100, None], ["Y Axis 1", True, 0, 100, None]]
         self.phoebus_traces = []
 
     def add_y_axis(self):
@@ -775,7 +775,7 @@ class XYGraph(Widget):
         self.axis_count += 1
         setattr(self, f"axis_{self.axis_count - 1}_y_axis", True)
 
-        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", True, 0, 100])
+        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", True, 0, 100, None])
 
         return self.axis_count
 
@@ -794,6 +794,12 @@ class XYGraph(Widget):
         setattr(self, f"axis_{axis}_axis_title", title)
 
         self.phoebus_axes[axis][0] = title
+
+    def set_axis_color(self, color, axis=0):
+        """Sets the color for a given axis"""
+        setattr(self, f"axis_{axis}_axis_color", color)
+
+        self.phoebus_axes[axis][4] = color
 
     def add_trace(self, x_pv, y_pv, legend=None, line_width=10, trace_color=None, y_axis=1):
         """Adds a trace to the graph in the form of a bar graph with a given line width"""

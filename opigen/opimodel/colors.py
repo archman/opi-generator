@@ -7,6 +7,8 @@ class Color(object):
     """Representation of a color."""
 
     def __init__(self, rgb=(0, 0, 0), name=None, alpha=None):
+        """Creates a color object with given RGB values.
+        Please note that alpha only works properly in Phoebus!"""
         self.red, self.green, self.blue = rgb
         self.name = name
         self.alpha = alpha
