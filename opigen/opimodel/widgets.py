@@ -156,7 +156,6 @@ class Widget(object):
         self._type_id = type_id
         self.rules = []
         self.phoebus_rules = []
-        self.scripts = []
 
     def __setattr__(self, name, value):
         _cls_name = self.__class__.__name__
@@ -283,15 +282,6 @@ class Widget(object):
         """
         self.rules.append(rule)
         self.phoebus_rules.append(rule)
-
-    def add_script(self, script_path, pvs):
-        """Add a script to the widget.
-        
-        Args:
-            Script path
-            PVs list
-        """
-        self.scripts.append([script_path, pvs])
 
     def add_scale_options(self, width=True, height=True, keep_wh_ratio=False):
         """Add scale options to the widget.

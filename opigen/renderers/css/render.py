@@ -9,7 +9,6 @@ from .fonts import OpiFont
 from .points import OpiPoints
 from .rules import OpiRule
 from .scalings import OpiDisplayScaling, OpiScaling
-from .scripts import OpiScripts
 from .tabs import OpiTabs
 from .text import OpiText
 from .widget import OpiWidget
@@ -58,8 +57,6 @@ def get_opi_renderer(widget):
 
     for i in range(MAX_AXIS_COUNT):
         wr.add_renderer(f"axis_{i}_axis_color", cr)
-
-    wr.add_renderer('scripts', OpiScripts())
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))
