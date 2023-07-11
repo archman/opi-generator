@@ -16,12 +16,12 @@ class OpiAxis:
         axis_node = et.SubElement(parent_node, axis_name)
 
         # Render non-color attributes
-        attribute_names = ['title', 'autoscale', 'minimum', 'maximum']
+        attribute_names = ['title', 'autoscale', 'minimum', 'maximum', 'show_grid']
         for attribute_name, attribute_value in zip(attribute_names, axis_values):
             et.SubElement(axis_node, attribute_name).text = str(attribute_value)
 
         # Render color attribute separately
-        color = axis_values[4]
+        color = axis_values[5]
         if color is not None:
             # Removes transparency for the axis color
             solid_color = Color((color.red, color.green, color.blue), None)

@@ -57,6 +57,7 @@ def get_opi_renderer(widget):
 
     for i in range(MAX_AXIS_COUNT):
         wr.add_renderer(f"axis_{i}_axis_color", cr)
+        wr.add_renderer(f"axis_{i}_grid_color", cr)
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))
