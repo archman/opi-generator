@@ -747,48 +747,147 @@ class SlideButton(ActionWidget):
 
 
 class XYGraph(Widget):
-    """Class for XYGraph Widget"""
+    """Class that creates an XYGraph in CS-Studio and Phoebus.
+
+    This graph will always be made to be a bar graph. Other graph types are possible, but not via 
+    the use of this widget.
+
+    Attributes:
+        show_toolbar (bool): Shows the toolbar on the graph
+        trace_count (int): Total number of traces (data sequences) on the graph
+        axis_count (int): The count of axes on the graph.
+        phoebus_axes (list): The list of axes and their settings for Phoebus.
+        phoebus_traces (list): The list of traces and their settings for Phoebus.
+    """
+
     TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
     TYPE = "xyplot"
 
     def __init__(self, x, y, width, height):
+        """Initializes the XYGraph with the given dimensions.
+
+        Args:
+            x (int): The x-coordinate of the graph.
+            y (int): The y-coordinate of the graph.
+            width (int): The width of the graph.
+            height (int): The height of the graph.
+        """
         super().__init__(XYGraph.TYPE_ID, x, y, width, height)
-        self.show_toolbar = False
+        self.show_toolbar = True
         self.trace_count = 0
         self.axis_count = 2
 
-        self.phoebus_axes = [["X Axis", 0, 100, True], ["Y Axis 1", 0, 100, True]]
+        # Phoebus renders axes vastly different from CS-Studio, so data is stored differently for
+        # it as well
+        self.phoebus_axes = [["X Axis", True, 0, 100, True, None],
+                             ["Y Axis 1", True, 0, 100, True, None]]
         self.phoebus_traces = []
 
+        # Sets the x axis and first y axis to show their grids
+        self.set_axis_grid(True, 0)
+        self.set_axis_grid(True, 1)
+
     def add_y_axis(self):
-        """Adds a y-axis to the graph"""
+        """Adds a y-axis to the graph.
+
+        Returns:
+            int: The current axis count after adding the new axis.
+        """
         self.axis_count += 1
+
+        # CS-Studio
         setattr(self, f"axis_{self.axis_count - 1}_y_axis", True)
 
-        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", 0, 100, True])
+        # Phoebus
+        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", True, 0, 100, True, None])
+
+        self.set_axis_grid(True, self.axis_count - 1)
 
         return self.axis_count
 
     def set_axis_scale(self, minimum, maximum, axis=0):
-        """Sets the minimum and maximum values for a given axis"""
+        """Sets the minimum and maximum values for a given axis, and disables the auto-scaling.
+
+        Args:
+            minimum (float): The minimum value for the axis.
+            maximum (float): The maximum value for the axis.
+            axis (int, optional): The index of the axis. Defaults to the x-axis (0).
+        """
+        # CS-Studio
         setattr(self, f"axis_{axis}_auto_scale", False)
         setattr(self, f"axis_{axis}_minimum", minimum)
         setattr(self, f"axis_{axis}_maximum", maximum)
 
-        self.phoebus_axes[axis][1] = minimum
-        self.phoebus_axes[axis][2] = maximum
-        self.phoebus_axes[axis][3] = False
+        # Phoebus
+        self.phoebus_axes[axis][1] = False
+        self.phoebus_axes[axis][2] = minimum
+        self.phoebus_axes[axis][3] = maximum
 
     def set_axis_title(self, title, axis=0):
-        """Sets the title of a given axis, defaulting to x-axis"""
+        """Sets the title of a given axis.
+
+        Args:
+            title (str): The title for the axis.
+            axis (int, optional): The index of the axis. Defaults to the x-axis (0).
+        """
+        # CS-Studio
         setattr(self, f"axis_{axis}_axis_title", title)
 
+        # Phoebus
         self.phoebus_axes[axis][0] = title
 
-    def add_trace(self, x_pv, y_pv, legend=None, line_width=10, trace_color=None, y_axis=1):
-        """Adds a trace to the graph in the form of a bar graph with a given line width"""
+    def set_axis_color(self, color, axis=0):
+        """Sets the color for a given axis.
+
+        Args:
+            color (Color): The color for the axis.
+            axis (int, optional): The index of the axis. Defaults to the x-axis (0).
+        """
+        # CS-Studio
+        setattr(self, f"axis_{axis}_axis_color", color)
+        setattr(self, f"axis_{axis}_grid_color", color)
+
+        # Phoebus
+        self.phoebus_axes[axis][5] = color
+
+    def set_axis_grid(self, grid_on=True, axis=0):
+        """Sets if the grid corresponding to an axis should be shown.
+        
+        Args:
+            grid_on (bool, optional): Whether the grid should be shown. Defaults to true.
+            axis (int, optional): The index of the axis. Defaults to the x-axis (0).
+        """
+        # CS-Studio
+        setattr(self, f"axis_{axis}_show_grid", grid_on)
+
+        # Phoebus
+        self.phoebus_axes[axis][4] = grid_on
+
+    def add_trace(self, y_pv, x_pv=None, legend=None, line_width=10, trace_color=None, y_axis=0):
+        """Adds a trace to the graph.
+
+        The trace will take the form of a bar graph. If no X PV is provided, the OPI will
+        automatically assign values such that the trace's datapoints are on integers on the x-axis.
+
+        The index of the y axis a trace is assigned to is different from the overall axis index.
+        The default y axis has an index of 0 of y-axes, but an index of 1 overall since the x-axis
+        is the 0th axis.
+
+        Args:
+            y_pv (str): The process variable for the y-values of the trace.
+            x_pv (str, optional): The process variable for the x-values of the trace.
+            legend (str, optional): The name that will be displayed on the legend.
+            line_width (int, optional): The line width for the trace. Defaults to 10.
+            trace_color (Color, optional): The color for the trace.
+            y_axis (int, optional): The index of the y-axis for the trace. 
+                Defaults to the first y-axis (0).
+        """
+        # CS-Studio
         trace_index = self.trace_count
-        setattr(self, f"trace_{trace_index}_x_pv", x_pv)
+
+        if x_pv is not None:
+            setattr(self, f"trace_{trace_index}_x_pv", x_pv)
+
         setattr(self, f"trace_{trace_index}_y_pv", y_pv)
         setattr(self, f"trace_{trace_index}_concatenate_data", False)
         setattr(self, f"trace_{trace_index}_line_width", line_width)
@@ -800,8 +899,9 @@ class XYGraph(Widget):
         if trace_color is not None:
             setattr(self, f"trace_{trace_index}_trace_color", trace_color)
 
-        setattr(self, f"trace_{trace_index}_y_axis_index", y_axis)
+        setattr(self, f"trace_{trace_index}_y_axis_index", y_axis + 1)
 
         self.trace_count += 1
 
-        self.phoebus_traces.append([legend, x_pv, y_pv, line_width, y_axis - 1, trace_color])
+        # Phoebus
+        self.phoebus_traces.append([legend, x_pv, y_pv, line_width, y_axis, trace_color])

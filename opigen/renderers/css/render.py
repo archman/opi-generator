@@ -6,17 +6,18 @@ from .actions import OpiActions
 from .borders import OpiBorder
 from .colors import OpiColor
 from .fonts import OpiFont
+from .points import OpiPoints
 from .rules import OpiRule
+from .scalings import OpiDisplayScaling, OpiScaling
+from .tabs import OpiTabs
 from .text import OpiText
 from .widget import OpiWidget
-from .points import OpiPoints
-from .scalings import OpiScaling, OpiDisplayScaling
-from .tabs import OpiTabs
 
 # there is no limit of total tabs, but here defines the maximum that
 # usually used.
 MAX_TAB_COUNT = 128
 MAX_TRACE_COUNT = 20
+MAX_AXIS_COUNT = 10
 
 
 def get_opi_renderer(widget):
@@ -53,6 +54,10 @@ def get_opi_renderer(widget):
     # Renders trace colors
     for i in range(MAX_TRACE_COUNT):
         wr.add_renderer(f"trace_{i}_trace_color", cr)
+
+    for i in range(MAX_AXIS_COUNT):
+        wr.add_renderer(f"axis_{i}_axis_color", cr)
+        wr.add_renderer(f"axis_{i}_grid_color", cr)
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))

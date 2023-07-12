@@ -50,7 +50,7 @@ def get_opi_renderer(widget):
 
     # Necessary for rendering of XYGraph
     wr.add_renderer('traces', OpiTraces(cr))
-    wr.add_renderer('axes', OpiAxis())
+    wr.add_renderer('axes', OpiAxis(cr))
 
     wr.add_renderer('points', OpiPoints())
     return OpiRenderer(widget, wr)
