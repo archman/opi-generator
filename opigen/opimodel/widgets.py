@@ -284,17 +284,13 @@ class Widget(object):
         self.rules.append(rule)
         self.phoebus_rules.append(rule)
 
-    def add_script(self, script_path, pvs, embed=True):
+    def add_script(self, script):
         """Add a script to the widget.
         
         Args:
-            script_path (str): File path to the script location.
-            pvs (List[Tuple(str, bool)]): List of PVs that script can use and a bool of whether
-                they should trigger the script.
-            embed (bool, optional): Whether the script should be embedded into XML or not.
-                Defaults to true.
+            script (Script): The Script object to add.
         """
-        self.scripts.append([script_path, pvs, embed])
+        self.scripts.append(script)
 
     def add_scale_options(self, width=True, height=True, keep_wh_ratio=False):
         """Add scale options to the widget.
