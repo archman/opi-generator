@@ -19,7 +19,7 @@ class OpiScripts:
                                               "path",
                                               pathString="EmbeddedPy",
                                               checkConnect="true",
-                                              sfe=str(script.skip_first_execution),
+                                              sfe="false",
                                               seoe="false")
 
                     # Add the script name
