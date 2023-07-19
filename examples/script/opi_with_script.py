@@ -23,7 +23,7 @@ display.add_child(rectangle)
 # Creating the script object by passing it the path to the script, indicating we want it embedded,
 # and the script name.
 # Note that the script name only shows in the OPI editor.
-rectangle_script = Script(script_path="examples/script/embedded_script.py",
+rectangle_script = Script(script_path="embedded_script.py",
                           embed=True,
                           name="Rectangle Changing Script")
 
