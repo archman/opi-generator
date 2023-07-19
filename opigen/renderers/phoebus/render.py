@@ -10,6 +10,7 @@ from .fonts import OpiFont
 from .points import OpiPoints
 from .rules import OpiRule
 from .scalings import OpiDisplayScaling, OpiScaling
+from .scripts import OpiScripts
 from .tabs import OpiTabs
 from .text import OpiText
 from .traces import OpiTraces
@@ -51,6 +52,8 @@ def get_opi_renderer(widget):
     # Necessary for rendering of XYGraph
     wr.add_renderer('traces', OpiTraces(cr))
     wr.add_renderer('axes', OpiAxis(cr))
+
+    wr.add_renderer('scripts', OpiScripts())
 
     wr.add_renderer('points', OpiPoints())
     return OpiRenderer(widget, wr)

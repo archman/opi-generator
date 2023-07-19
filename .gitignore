@@ -4,6 +4,7 @@
 *.pyc
 __pycache__
 .cache
+.pylintrc
 
 # build artifacts
 build/
