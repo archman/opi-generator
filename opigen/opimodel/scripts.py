@@ -6,7 +6,8 @@ class Script:
 
     Attributes:
         script_path (str): The file path to the location of the script.
-        embed (bool): Indicates whether the script should be embedded into XML.
+        embed (bool): Indicates whether the script should be embedded into XML. Non-embedded script
+            paths can exhibit strange behavior.
         name (str): Name of the script. Defaults to the script filename. Only shown in CS-Studio's
             OPI Editor.
         pvs (List[Tuple[str, bool]]): A list of process variables (PVs) associated with the script. 
@@ -20,7 +21,7 @@ class Script:
         Args:
             script_path (str): The file path to the location of the script.
             embed (bool, optional): Indicates whether the script should be embedded into XML. 
-                Defaults to True.
+                Defaults to True. Non-embedded script paths can exhibit strange behavior.
             name (str, optional): Name of the script. Defaults to the script's filename. Only shown
                 in CS-Studio's OPI Editor.
         """

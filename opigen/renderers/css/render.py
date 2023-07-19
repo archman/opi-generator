@@ -56,7 +56,7 @@ def get_opi_renderer(widget):
     for i in range(MAX_TRACE_COUNT):
         wr.add_renderer(f"trace_{i}_trace_color", cr)
 
-    # Renders xxis colors
+    # Renders axis colors
     for i in range(MAX_AXIS_COUNT):
         wr.add_renderer(f"axis_{i}_axis_color", cr)
         wr.add_renderer(f"axis_{i}_grid_color", cr)
