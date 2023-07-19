@@ -1,5 +1,6 @@
 """Classes for creating scripts to pass to widgets."""
 
+from os.path import basename
 
 class Script:
     """Represents a script to be added to a widget.
@@ -33,7 +34,7 @@ class Script:
         elif name is None:
             # Formats the script path such that the name is only the file name without its file
             # extension.
-            self.name = self.script_path.rsplit('/', 1)[-1].rsplit('.', 1)[0]
+            self.name = basename(script_path)
 
         self.pvs = []
 
