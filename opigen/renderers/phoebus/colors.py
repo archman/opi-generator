@@ -11,3 +11,5 @@ class OpiColor(object):
         color_node.set('blue', str(color_model.blue))
         if color_model.name is not None:
             color_node.set('name', color_model.name)
+        if color_model.alpha is not None:
+            color_node.set('alpha', str(color_model.alpha))

@@ -1,0 +1,3 @@
+[flake8]
+exclude =
+    examples/script/embedded_script.py

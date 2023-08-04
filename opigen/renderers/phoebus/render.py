@@ -3,15 +3,18 @@ import shutil
 import lxml.etree as et
 
 from .actions import OpiActions
+from .axes import OpiAxis
 from .borders import OpiBorder
 from .colors import OpiColor
 from .fonts import OpiFont
-from .rules import OpiRule
-from .text import OpiText
-from .widget import OpiWidget
 from .points import OpiPoints
-from .scalings import OpiScaling, OpiDisplayScaling
+from .rules import OpiRule
+from .scalings import OpiDisplayScaling, OpiScaling
+from .scripts import OpiScripts
 from .tabs import OpiTabs
+from .text import OpiText
+from .traces import OpiTraces
+from .widget import OpiWidget
 
 
 def get_opi_renderer(widget):
@@ -45,6 +48,12 @@ def get_opi_renderer(widget):
 
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))
+
+    # Necessary for rendering of XYGraph
+    wr.add_renderer('traces', OpiTraces(cr))
+    wr.add_renderer('axes', OpiAxis(cr))
+
+    wr.add_renderer('scripts', OpiScripts())
 
     wr.add_renderer('points', OpiPoints())
     return OpiRenderer(widget, wr)
