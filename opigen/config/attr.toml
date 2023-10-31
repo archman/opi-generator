@@ -18,6 +18,7 @@ format_type = "format"
 enabled = "enabled"
 visible = "visible"
 scripts = "scripts"
+tooltip = "tooltip"
 
 [Line]
 line_width = "line_width"
