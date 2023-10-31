@@ -762,6 +762,16 @@ class SlideButton(ActionWidget):
         self.phoebus_label = ''
 
 
+class WebBrowser(ActionWidget):
+    
+    TYPE_ID = None # to support BOY if needed
+    TYPE = 'webbrowser'
+    
+    def __init__(self, x, y, width, height, url):
+        super(WebBrowser, self).__init__(WebBrowser.TYPE_ID, x, y, width, height)
+        self.phoebus_url = url
+
+
 class XYGraph(Widget):
     """Class that creates an XYGraph in CS-Studio and Phoebus.
 
