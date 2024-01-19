@@ -293,7 +293,7 @@ class Widget(object):
 
     def add_script(self, script):
         """Add a script to the widget.
-        
+
         Args:
             script (Script): The Script object to add.
         """
@@ -765,19 +765,20 @@ class SlideButton(ActionWidget):
 
 
 class WebBrowser(ActionWidget):
-    
-    TYPE_ID = None # to support BOY if needed
+
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.webbrowser'
     TYPE = 'webbrowser'
-    
+
     def __init__(self, x, y, width, height, url):
         super(WebBrowser, self).__init__(WebBrowser.TYPE_ID, x, y, width, height)
+        self.url = url
         self.phoebus_url = url
 
 
 class XYGraph(Widget):
     """Class that creates an XYGraph in CS-Studio and Phoebus.
 
-    This graph will always be made to be a bar graph. Other graph types are possible, but not via 
+    This graph will always be made to be a bar graph. Other graph types are possible, but not via
     the use of this widget.
 
     Attributes:
@@ -880,7 +881,7 @@ class XYGraph(Widget):
 
     def set_axis_grid(self, grid_on=True, axis=0):
         """Sets if the grid corresponding to an axis should be shown.
-        
+
         Args:
             grid_on (bool, optional): Whether the grid should be shown. Defaults to true.
             axis (int, optional): The index of the axis. Defaults to the x-axis (0).
@@ -907,7 +908,7 @@ class XYGraph(Widget):
             legend (str, optional): The name that will be displayed on the legend.
             line_width (int, optional): The line width for the trace. Defaults to 10.
             trace_color (Color, optional): The color for the trace.
-            y_axis (int, optional): The index of the y-axis for the trace. 
+            y_axis (int, optional): The index of the y-axis for the trace.
                 Defaults to the first y-axis (0).
         """
         # CS-Studio
