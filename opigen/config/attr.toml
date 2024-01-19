@@ -72,3 +72,7 @@ horizontal_tabs = "direction"
 
 [XYGraph]
 show_toolbar = "show_toolbar"
+
+[DataBrowser]
+filename = "file"
+show_toolbar = "show_toolbar"
