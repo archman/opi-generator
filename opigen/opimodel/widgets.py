@@ -720,10 +720,12 @@ class Tank(Widget):
 class DataBrowser(Widget):
 
     TYPE_ID = 'org.csstudio.trends.databrowser.opiwidget'
+    TYPE = 'databrowser'
 
     def __init__(self, x, y, width, height, filename):
         super(DataBrowser, self).__init__(DataBrowser.TYPE_ID, x, y, width,
                                           height)
+        self.show_toolbar = True
         self.filename = filename
 
 
