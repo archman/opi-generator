@@ -6,8 +6,16 @@ from . import actions, scalings
 from .colors import Color
 from .borders import Border, BorderStyle
 from opigen.config import get_attr_conf
+from opigen.config import get_ver_conf
 
 ATTR_MAP = get_attr_conf()
+VER_CONF = get_ver_conf()
+DEFAULT_VER = VER_CONF['Default']
+
+def _get_widget_version(name: str):
+    """Return the version string for the widget.
+    """
+    return VER_CONF.get(name, DEFAULT_VER)
 
 
 class TraceType:
@@ -159,8 +167,10 @@ class Widget(object):
     CNT = {}
 
     def __init__(self, type_id, x, y, width, height, name=None):
+        class_name = self.__class__.__name__
+        self.version = _get_widget_version(class_name)
         if name is None:
-            k = self.__class__.__name__
+            k = class_name
             v = Widget.CNT.setdefault(k, 0)
             self.name = f"{k}_{v}"
             Widget.CNT[k] += 1
@@ -217,7 +227,7 @@ class Widget(object):
 
     def get_version_phoebus(self):
         # phoebus
-        return "2.0.0"
+        return self.version
 
     def get_type(self):
         try:

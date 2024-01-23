@@ -7,6 +7,13 @@ import sys
 from datetime import datetime
 
 
+def get_ver_conf():
+    """ Return a dict of the widget version information.
+    """
+    conf_filepath = _get_def_path('versions.toml')
+    return toml.load(conf_filepath)['VERSION']
+
+
 def get_attr_conf():
     """ Return a dict of the attribute map from BOY to BOB.
 
