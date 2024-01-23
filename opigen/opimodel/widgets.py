@@ -10,6 +10,26 @@ from opigen.config import get_attr_conf
 ATTR_MAP = get_attr_conf()
 
 
+class TraceType:
+    NONE = 0
+    LINE = 1
+    STEP = 2
+    ERROR_BARS = 3
+    LINE_ERROR_BARS = 4
+    BARS = 5
+
+
+def str2TraceType(s: str):
+    """Convert string to TraceType enum.
+    """
+    return {"none": TraceType.NONE,
+            "line": TraceType.LINE,
+            "step": TraceType.STEP,
+            "errorbars": TraceType.ERROR_BARS,
+            "line_errorbars": TraceType.LINE_ERROR_BARS,
+            "bars": TraceType.BARS}.get(s, TraceType.STEP)
+
+
 class ResizeBehaviour:
     # for LinkingContainer (BOY)
     RESIZE_OPI_TO_FIT_CONTAINER = 0  # Size *.opi to fit the container
@@ -892,7 +912,8 @@ class XYGraph(Widget):
         # Phoebus
         self.phoebus_axes[axis][4] = grid_on
 
-    def add_trace(self, y_pv, x_pv=None, legend=None, line_width=10, trace_color=None, y_axis=0):
+    def add_trace(self, y_pv, x_pv=None, legend=None, trace_type=TraceType.BARS,
+                  line_width=10, trace_color=None, y_axis=0):
         """Adds a trace to the graph.
 
         The trace will take the form of a bar graph. If no X PV is provided, the OPI will
@@ -920,7 +941,7 @@ class XYGraph(Widget):
         setattr(self, f"trace_{trace_index}_y_pv", y_pv)
         setattr(self, f"trace_{trace_index}_concatenate_data", False)
         setattr(self, f"trace_{trace_index}_line_width", line_width)
-        setattr(self, f"trace_{trace_index}_trace_type", 3)
+        setattr(self, f"trace_{trace_index}_trace_type", 3) # map BOY to PHOEBUS
 
         if legend is not None:
             setattr(self, f"trace_{trace_index}_name", legend)
@@ -933,4 +954,32 @@ class XYGraph(Widget):
         self.trace_count += 1
 
         # Phoebus
-        self.phoebus_traces.append([legend, x_pv, y_pv, line_width, y_axis, trace_color])
+        self.phoebus_traces.append([XYGraph.TYPE, legend, x_pv, y_pv, trace_type,
+                                    line_width, y_axis, trace_color])
+
+
+class StripChart(ActionWidget):
+
+    TYPE_ID = 'TO-BE-SUPPORTED'
+    TYPE = 'stripchart'
+
+    def __init__(self, x, y, width, height, show_toolbar=False,
+                 start=None):
+        super(StripChart, self).__init__(StripChart.TYPE_ID, x, y, width, height)
+        self.show_toolbar = show_toolbar
+        # the starting time, relative to now
+        if start is None:
+            start_time = "5 minutes"
+        else:
+            start_time = start
+        self.start = start_time
+        # traces
+        self.phoebus_traces = []
+
+    def add_trace(self, y_pv, legend=None, trace_type=TraceType.STEP, line_width=2,
+                  trace_color=None, yaxis=0):
+        if isinstance(trace_type, str):
+            trace_type = str2TraceType(trace_type)
+        self.phoebus_traces.append(
+            [StripChart.TYPE, legend, None, y_pv, trace_type, line_width, yaxis, trace_color])
+        

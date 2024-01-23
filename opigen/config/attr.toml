@@ -76,3 +76,8 @@ show_toolbar = "show_toolbar"
 [DataBrowser]
 filename = "file"
 show_toolbar = "show_toolbar"
+
+[StripChart]
+show_toolbar = "show_toolbar"
+start = "start"
+show_legend = "show_legend"
