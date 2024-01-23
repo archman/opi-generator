@@ -17,7 +17,7 @@ class Colors:
 display = Display(1200, 800, "XYGraph Example")
 
 # Initialize an XYGraph widget with given dimensions
-graph = XYGraph(0, 0, 1200, 800)
+graph = XYGraph(0, 0, 1200, 800, show_toolbar=True)
 
 # Set title for the X-Axis, axis index 0 is the x-axis
 graph.set_axis_title("X-Axis", 0)
