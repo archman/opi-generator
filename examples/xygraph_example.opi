@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <background_color>
+    <color red="255" green="255" blue="255" name="DISPLAY_BG"/>
+  </background_color>
+  <height>800</height>
+  <name>XYGraph Example</name>
+  <show_grid>true</show_grid>
+  <width>1200</width>
+  <x>0</x>
+  <y>0</y>
+  <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
+    <axis_0_axis_title>X-Axis</axis_0_axis_title>
+    <axis_0_show_grid>true</axis_0_show_grid>
+    <axis_1_auto_scale>false</axis_1_auto_scale>
+    <axis_1_axis_color>
+      <color red="234" green="67" blue="53"/>
+    </axis_1_axis_color>
+    <axis_1_axis_title>Y-Axis for Sinewave Readings</axis_1_axis_title>
+    <axis_1_grid_color>
+      <color red="234" green="67" blue="53"/>
+    </axis_1_grid_color>
+    <axis_1_maximum>1.5</axis_1_maximum>
+    <axis_1_minimum>-4</axis_1_minimum>
+    <axis_1_show_grid>true</axis_1_show_grid>
+    <axis_2_auto_scale>false</axis_2_auto_scale>
+    <axis_2_axis_color>
+      <color red="66" green="133" blue="244"/>
+    </axis_2_axis_color>
+    <axis_2_axis_title>Y-Axis for Sawtooth Readings</axis_2_axis_title>
+    <axis_2_grid_color>
+      <color red="66" green="133" blue="244"/>
+    </axis_2_grid_color>
+    <axis_2_maximum>4</axis_2_maximum>
+    <axis_2_minimum>-1.5</axis_2_minimum>
+    <axis_2_show_grid>true</axis_2_show_grid>
+    <axis_2_y_axis>true</axis_2_y_axis>
+    <axis_count>3</axis_count>
+    <height>800</height>
+    <name>XYGraph_0</name>
+    <show_toolbar>true</show_toolbar>
+    <trace_0_concatenate_data>false</trace_0_concatenate_data>
+    <trace_0_line_width>10</trace_0_line_width>
+    <trace_0_name>Sinewave 1</trace_0_name>
+    <trace_0_trace_color>
+      <color red="234" green="67" blue="53"/>
+    </trace_0_trace_color>
+    <trace_0_trace_type>3</trace_0_trace_type>
+    <trace_0_y_axis_index>1</trace_0_y_axis_index>
+    <trace_0_y_pv>sim://sineWaveform(10, 30, 50, 1)</trace_0_y_pv>
+    <trace_1_concatenate_data>false</trace_1_concatenate_data>
+    <trace_1_line_width>10</trace_1_line_width>
+    <trace_1_name>Sinewave 2</trace_1_name>
+    <trace_1_trace_color>
+      <color red="69" green="168" blue="83"/>
+    </trace_1_trace_color>
+    <trace_1_trace_type>3</trace_1_trace_type>
+    <trace_1_y_axis_index>1</trace_1_y_axis_index>
+    <trace_1_y_pv>sim://sineWaveform(2, 15, 50, 1)</trace_1_y_pv>
+    <trace_2_concatenate_data>false</trace_2_concatenate_data>
+    <trace_2_line_width>10</trace_2_line_width>
+    <trace_2_name>Sawtooth Wave</trace_2_name>
+    <trace_2_trace_color>
+      <color red="66" green="133" blue="244"/>
+    </trace_2_trace_color>
+    <trace_2_trace_type>3</trace_2_trace_type>
+    <trace_2_y_axis_index>2</trace_2_y_axis_index>
+    <trace_2_y_pv>sim://sawtoothWaveform(20, 20, 50, 1)</trace_2_y_pv>
+    <trace_count>3</trace_count>
+    <width>1200</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+</display>
