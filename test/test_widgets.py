@@ -313,15 +313,15 @@ def test_GroupBox_render_sets_custom_scale_options(display, get_opi_renderer):
     assert "<keep_wh_ratio>true</keep_wh_ratio>" in output
 
 
-def test_XYGraph_has_correct_attributes(display, get_opi_renderer):
-    xygraph = widgets.XYGraph(10, 10, 20, 20)
-    display.add_child(xygraph)
+def test_XYPlot_has_correct_attributes(display, get_opi_renderer):
+    xyplot = widgets.XYPlot(10, 10, 20, 20)
+    display.add_child(xyplot)
     renderer = get_opi_renderer(display)
     renderer.assemble()
     output = str(renderer)
     assert '<trace_count>0</trace_count>' in output
 
-    xygraph.add_trace("x_pv", "y_pv", "legend_name", 10)
+    xyplot.add_trace("y_pv", "x_pv", "legend_name", line_width=10)
     renderer.assemble()
     output = str(renderer)
     assert '<trace_count>1</trace_count>' in output
@@ -330,10 +330,11 @@ def test_XYGraph_has_correct_attributes(display, get_opi_renderer):
     assert "<trace_0_name>legend_name</trace_0_name>" in output
 
 
-def test_XYGraph_trace_color_works(display, get_opi_renderer):
-    xygraph = widgets.XYGraph(10, 10, 20, 20)
-    xygraph.add_trace("x_pv", "y_pv", "legend_name", 10, Color((255, 0, 0)))
-    display.add_child(xygraph)
+def test_XYPlot_trace_color_works(display, get_opi_renderer):
+    xyplot = widgets.XYPlot(10, 10, 20, 20)
+    xyplot.add_trace("y_pv", "x_pv", "legend_name", line_width=10,
+                     trace_color=Color((255, 0, 0)))
+    display.add_child(xyplot)
     renderer = get_opi_renderer(display)
     renderer.assemble()
     output = str(renderer)
