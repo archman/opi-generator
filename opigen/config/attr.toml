@@ -2,6 +2,9 @@
 # Attribute map between CS-Studio and Phoebus
 # DEFAULT section is shared by all widgets
 #
+# When to add an attribute map:
+# - The Phoebus rendering does not contain the expected attribute name
+#
 [DEFAULT]
 name = "name"
 x = "x"
