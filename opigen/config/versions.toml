@@ -15,5 +15,5 @@ Default = "2.0.0"
 ActionButton = "3.0.0"
 TextEntry = "3.0.0"
 StripChart = "2.1.0"
-XYGraph = "3.0.0"
+XYPlot = "3.0.0"
 

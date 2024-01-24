@@ -1,9 +1,9 @@
-"""Example of using the XYGraph widget to create a graph in CS-Studio and Phoebus."""
+"""Example of using the XYPlot widget to create a graph in CS-Studio and Phoebus."""
 
 from opigen import Renderer
 from opigen.contrib import Display
 from opigen.opimodel.colors import Color
-from opigen.opimodel.widgets import XYGraph
+from opigen.opimodel.widgets import XYPlot
 
 
 class Colors:
@@ -14,10 +14,10 @@ class Colors:
 
 
 # Create a new Display
-display = Display(1200, 800, "XYGraph Example")
+display = Display(1200, 800, "XYPlot Example")
 
-# Initialize an XYGraph widget with given dimensions
-graph = XYGraph(0, 0, 1200, 800, show_toolbar=True)
+# Initialize an XYPlot widget with given dimensions
+graph = XYPlot(0, 0, 1200, 800, show_toolbar=True)
 
 # Set title for the X-Axis, axis index 0 is the x-axis
 graph.set_axis_title("X-Axis", 0)
@@ -47,5 +47,5 @@ display.add_child(graph)
 
 # Render the display to CS-Studio
 renderer = Renderer(display)
-renderer.to_opi("xygraph_example.opi")
-renderer.to_bob("xygraph_example.bob")
+renderer.to_opi("xyplot_example.opi")
+renderer.to_bob("xyplot_example.bob")

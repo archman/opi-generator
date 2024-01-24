@@ -986,14 +986,14 @@ class _ChartWidget(ActionWidget):
                                     line_width, y_axis, trace_color])
 
 
-class XYGraph(_ChartWidget):
+class XYPlot(_ChartWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
     TYPE = "xyplot"
     
     def __init__(self, x, y, width, height, show_toolbar=False):
         self._has_xaxis = True
-        super(XYGraph, self).__init__(XYGraph.TYPE_ID, x, y, width, height, has_xaxis=True)
+        super(XYPlot, self).__init__(XYPlot.TYPE_ID, x, y, width, height, has_xaxis=True)
         self.show_toolbar = show_toolbar
 
 

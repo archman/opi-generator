@@ -73,7 +73,7 @@ active_tab = "active_tab"
 minimum_tab_height = "tab_height"
 horizontal_tabs = "direction"
 
-[XYGraph]
+[XYPlot]
 show_toolbar = "show_toolbar"
 
 [DataBrowser]
