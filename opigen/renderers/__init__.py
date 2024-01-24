@@ -20,5 +20,3 @@ __all__ = [
     "css_render", "get_opi_renderer", "phoebus_render", "get_bob_renderer",
     "Renderer"
 ]
-
-

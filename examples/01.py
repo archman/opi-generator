@@ -6,8 +6,10 @@ from opigen import widgets
 from opigen.contrib import TextUpdate, Display
 
 data = [
-    ('LS1_CA01:BPM_D1129', 'VA:LS1_CA01:BPM_D1129:X_RD', 'VA:LS1_CA01:BPM_D1129:Y_RD'),
-    ('LS1_CA01:BPM_D1144', 'VA:LS1_CA01:BPM_D1144:X_RD', 'VA:LS1_CA01:BPM_D1144:Y_RD')
+    ('LS1_CA01:BPM_D1129',
+     'VA:LS1_CA01:BPM_D1129:X_RD', 'VA:LS1_CA01:BPM_D1129:Y_RD'),
+    ('LS1_CA01:BPM_D1144',
+     'VA:LS1_CA01:BPM_D1144:X_RD', 'VA:LS1_CA01:BPM_D1144:Y_RD')
 ]
 
 # widget position, size controls
@@ -35,5 +37,5 @@ for name, xpv, ypv in data:
 
 # render the screen
 r = Renderer(screen)
-r.to_opi("01.opi") # for CS-Studio
-r.to_bob("01.bob") # for Phoebus
+r.to_opi("01.opi")  # for CS-Studio
+r.to_bob("01.bob")  # for Phoebus

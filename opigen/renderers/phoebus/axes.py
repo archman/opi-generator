@@ -32,7 +32,7 @@ class OpiAxis:
     def render(self, widget_node, tag_name, axes_model):
         """Does actual rendering"""
         # Render X-axis
-        if axes_model[0][-1]: # has_xaxis is True
+        if axes_model[0][-1]:  # has_xaxis is True
             self._render_axis(widget_node, "x_axis", axes_model[0])
 
         # Create root node for y-axes

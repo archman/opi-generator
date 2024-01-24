@@ -12,6 +12,7 @@ ATTR_MAP = get_attr_conf()
 VER_CONF = get_ver_conf()
 DEFAULT_VER = VER_CONF['Default']
 
+
 def _get_widget_version(name: str):
     """Return the version string for the widget.
     """
@@ -215,7 +216,8 @@ class Widget(object):
             super().__setattr__(name, value)
 
     def get_type_name(self):
-        # widget type name, i.e. tag name, followed by a real type string ('label') and other attributes.
+        # widget type name, i.e. tag name, followed by a real type string
+        # ('label') and other attributes.
         return "widget"
 
     def get_type_id(self):
@@ -575,7 +577,7 @@ class TabbedContainer(Widget):
         # create a grouping container for the content widget
         _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
 
-        if widget != None:
+        if widget is not None:
             _grp.add_child(widget)
 
         _grp.set_border(
@@ -800,7 +802,8 @@ class WebBrowser(ActionWidget):
     TYPE = 'webbrowser'
 
     def __init__(self, x, y, width, height, url):
-        super(WebBrowser, self).__init__(WebBrowser.TYPE_ID, x, y, width, height)
+        super(WebBrowser, self).__init__(
+            WebBrowser.TYPE_ID, x, y, width, height)
         self.url = url
         self.phoebus_url = url
 
@@ -855,7 +858,8 @@ class _ChartWidget(ActionWidget):
         setattr(self, f"axis_{self.axis_count - 1}_y_axis", True)
 
         # Phoebus
-        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", True, 0, 100, True, None])
+        self.phoebus_axes.append(
+            [f"Y Axis {self.axis_count - 1}", True, 0, 100, True, None])
 
         self.set_axis_grid(True, self.axis_count - 1)
 
@@ -869,7 +873,7 @@ class _ChartWidget(ActionWidget):
             maximum (float): The maximum value for the axis.
             axis (int, optional): The index of the axis. Defaults to the x-axis (0).
         """
-        if axis ==0 and not self._has_xaxis:
+        if axis == 0 and not self._has_xaxis:
             return
         # CS-Studio
         setattr(self, f"axis_{axis}_auto_scale", False)
@@ -880,7 +884,7 @@ class _ChartWidget(ActionWidget):
         self.phoebus_axes[axis][1] = False
         self.phoebus_axes[axis][2] = minimum
         self.phoebus_axes[axis][3] = maximum
-    
+
     def auto_scale(self, on: str, axis: int):
         """Set axis autoscale on or off.
         """
@@ -969,7 +973,8 @@ class _ChartWidget(ActionWidget):
         setattr(self, f"trace_{trace_index}_y_pv", y_pv)
         setattr(self, f"trace_{trace_index}_concatenate_data", False)
         setattr(self, f"trace_{trace_index}_line_width", line_width)
-        setattr(self, f"trace_{trace_index}_trace_type", 3) # map BOY to PHOEBUS
+        # map BOY to PHOEBUS
+        setattr(self, f"trace_{trace_index}_trace_type", 3)
 
         if legend is not None:
             setattr(self, f"trace_{trace_index}_name", legend)
@@ -990,10 +995,11 @@ class XYPlot(_ChartWidget):
 
     TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
     TYPE = "xyplot"
-    
+
     def __init__(self, x, y, width, height, show_toolbar=False):
         self._has_xaxis = True
-        super(XYPlot, self).__init__(XYPlot.TYPE_ID, x, y, width, height, has_xaxis=True)
+        super(XYPlot, self).__init__(XYPlot.TYPE_ID,
+                                     x, y, width, height, has_xaxis=True)
         self.show_toolbar = show_toolbar
 
 
@@ -1004,7 +1010,8 @@ class StripChart(_ChartWidget):
 
     def __init__(self, x, y, width, height, show_toolbar=False,
                  start=None):
-        super(StripChart, self).__init__(StripChart.TYPE_ID, x, y, width, height, has_xaxis=False)
+        super(StripChart, self).__init__(
+            StripChart.TYPE_ID, x, y, width, height, has_xaxis=False)
         self.show_toolbar = show_toolbar
         # the starting time, relative to now
         if start is None:

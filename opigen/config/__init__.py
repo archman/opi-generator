@@ -73,7 +73,7 @@ def export_attr_map():
 """
     parser = argparse.ArgumentParser(description="Export the attribute map.")
     parser.add_argument('-o', '--output-file', dest='outfile', default=None,
-            help="If given, write the attribute map into a file.")
+                        help="If given, write the attribute map into a file.")
     #
     args = parser.parse_args(sys.argv[1:])
     _attr_map = get_attr_conf()
@@ -143,9 +143,9 @@ def _export_def(filename: str, desc: str):
     """
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('-o', '--output-file', dest='outfile', default=None,
-            help="If given, write the definitions into a file.")
+                        help="If given, write the definitions into a file.")
     parser.add_argument('--live', action='store_true',
-            help="If set, export the definitions in-use, otherwise export the default one.")
+                        help="If set, export the definitions in-use, otherwise export the default one.")
 
     #
     args = parser.parse_args(sys.argv[1:])

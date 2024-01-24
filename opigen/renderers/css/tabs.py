@@ -19,5 +19,5 @@ class OpiTabs(object):
                 OpiColor().render(widget_node, f"tab_{i}_{_attr}", _c)
             _widget_renderer = get_opi_renderer(widget)
             _widget_renderer.assemble()
-            _widget_node = _widget_renderer.get_node() # group widget
+            _widget_node = _widget_renderer.get_node()  # group widget
             widget_node.append(_widget_node)

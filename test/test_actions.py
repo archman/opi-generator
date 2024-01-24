@@ -93,7 +93,7 @@ def test_ActionButton_adds_shell_command_phoebus(widget, get_bob_renderer):
     action_nodes = renderer.get_node().findall('./widget/actions/action')
     assert action_nodes[0].get('type') == 'command'
     assert action_nodes[0].find('./command').text == 'ls'
-    assert action_nodes[0].find('./command_directory') == None
+    assert action_nodes[0].find('./command_directory') is None
 
 
 def test_ActionButton_adds_write_pv(widget, get_opi_renderer):

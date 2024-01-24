@@ -5,15 +5,15 @@ from opigen.opimodel.colors import Color
 
 
 def test_widget_attribute_map(widget, get_opi_renderer, get_bob_renderer):
-    assert hasattr(widget, 'phoebus_x') == True
+    assert hasattr(widget, 'phoebus_x')
     assert widget.x == widget.phoebus_x
-    assert hasattr(widget, 'phoebus_y') == True
+    assert hasattr(widget, 'phoebus_y')
     assert widget.y == widget.phoebus_y
-    assert hasattr(widget, 'phoebus_width') == True
+    assert hasattr(widget, 'phoebus_width')
     assert widget.width == widget.phoebus_width
-    assert hasattr(widget, 'phoebus_height') == True
+    assert hasattr(widget, 'phoebus_height')
     assert widget.height == widget.phoebus_height
-    assert hasattr(widget, 'phoebus_name') == True
+    assert hasattr(widget, 'phoebus_name')
     assert widget.name == widget.phoebus_name
 
 

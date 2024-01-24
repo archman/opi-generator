@@ -18,7 +18,7 @@ class OpiAction(object):
         action_node = et.SubElement(actions_node, 'action')
         action_node.set('type', self.ACTION_TYPE)
         for key, value in vars(action_model).items():
-            if all(re.match(rf'^{w}', key) == None for w in ('phoebus', '_')):
+            if all(re.match(rf'^{w}', key) is None for w in ('phoebus', '_')):
                 self.text.render(action_node, key, value)
         return action_node
 
