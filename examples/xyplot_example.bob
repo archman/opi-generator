@@ -5,42 +5,42 @@
   </background_color>
   <grid_visible>true</grid_visible>
   <height>800</height>
-  <name>XYGraph Example</name>
+  <name>XYPlot Example</name>
   <width>1200</width>
   <x>0</x>
   <y>0</y>
-  <widget type="xyplot" version="2.0.0">
+  <widget type="xyplot" version="3.0.0">
     <x_axis>
       <title>X-Axis</title>
-      <autoscale>True</autoscale>
+      <autoscale>true</autoscale>
       <minimum>0</minimum>
       <maximum>100</maximum>
-      <show_grid>True</show_grid>
+      <show_grid>true</show_grid>
     </x_axis>
     <y_axes>
       <y_axis>
         <title>Y-Axis for Sinewave Readings</title>
-        <autoscale>False</autoscale>
+        <autoscale>false</autoscale>
         <minimum>-4</minimum>
         <maximum>1.5</maximum>
-        <show_grid>True</show_grid>
+        <show_grid>true</show_grid>
         <color>
           <color red="234" green="67" blue="53"/>
         </color>
       </y_axis>
       <y_axis>
         <title>Y-Axis for Sawtooth Readings</title>
-        <autoscale>False</autoscale>
+        <autoscale>false</autoscale>
         <minimum>-1.5</minimum>
         <maximum>4</maximum>
-        <show_grid>True</show_grid>
+        <show_grid>true</show_grid>
         <color>
           <color red="66" green="133" blue="244"/>
         </color>
       </y_axis>
     </y_axes>
     <height>800</height>
-    <name>XYGraph_0</name>
+    <name>XYPlot_0</name>
     <show_toolbar>true</show_toolbar>
     <traces>
       <trace>

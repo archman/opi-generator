@@ -5,8 +5,9 @@
     <color red="255" green="255" blue="255" name="DISPLAY_BG"/>
   </background_color>
   <height>800</height>
-  <name>XYGraph Example</name>
+  <name>XYPlot Example</name>
   <show_grid>true</show_grid>
+  <version>2.0.0</version>
   <width>1200</width>
   <x>0</x>
   <y>0</y>
@@ -38,7 +39,7 @@
     <axis_2_y_axis>true</axis_2_y_axis>
     <axis_count>3</axis_count>
     <height>800</height>
-    <name>XYGraph_0</name>
+    <name>XYPlot_0</name>
     <show_toolbar>true</show_toolbar>
     <trace_0_concatenate_data>false</trace_0_concatenate_data>
     <trace_0_line_width>10</trace_0_line_width>
@@ -68,6 +69,7 @@
     <trace_2_y_axis_index>2</trace_2_y_axis_index>
     <trace_2_y_pv>sim://sawtoothWaveform(20, 20, 50, 1)</trace_2_y_pv>
     <trace_count>3</trace_count>
+    <version>3.0.0</version>
     <width>1200</width>
     <x>0</x>
     <y>0</y>
