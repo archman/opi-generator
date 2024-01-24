@@ -27,6 +27,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest wheel
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install dependencies for Python 3.12
+      if: ${{ matrix.python-version == 3.12 }}
+      run: pip install setuptools
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
