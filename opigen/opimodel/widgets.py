@@ -31,12 +31,14 @@ class TraceType:
 def str2TraceType(s: str):
     """Convert string to TraceType enum.
     """
-    return {"none": TraceType.NONE,
-            "line": TraceType.LINE,
-            "step": TraceType.STEP,
-            "errorbars": TraceType.ERROR_BARS,
-            "line_errorbars": TraceType.LINE_ERROR_BARS,
-            "bars": TraceType.BARS}.get(s, TraceType.STEP)
+    return {
+        "none": TraceType.NONE,
+        "line": TraceType.LINE,
+        "step": TraceType.STEP,
+        "errorbars": TraceType.ERROR_BARS,
+        "line_errorbars": TraceType.LINE_ERROR_BARS,
+        "bars": TraceType.BARS
+    }.get(s, TraceType.STEP)
 
 
 class ResizeBehaviour:
@@ -802,8 +804,8 @@ class WebBrowser(ActionWidget):
     TYPE = 'webbrowser'
 
     def __init__(self, x, y, width, height, url):
-        super(WebBrowser, self).__init__(
-            WebBrowser.TYPE_ID, x, y, width, height)
+        super(WebBrowser, self).__init__(WebBrowser.TYPE_ID, x, y, width,
+                                         height)
         self.url = url
         self.phoebus_url = url
 
@@ -838,8 +840,9 @@ class _ChartWidget(ActionWidget):
         self._has_xaxis = kws.get('has_xaxis', True)
         # Phoebus renders axes vastly different from CS-Studio, so data is stored differently for
         # it as well
-        self.phoebus_axes = [["X Axis", True, 0, 100, True, None, self._has_xaxis],
-                             ["Y Axis 1", True, 0, 100, True, None]]
+        self.phoebus_axes = [[
+            "X Axis", True, 0, 100, True, None, self._has_xaxis
+        ], ["Y Axis 1", True, 0, 100, True, None]]
         self.phoebus_traces = []
 
         # Sets the x axis and first y axis to show their grids
@@ -942,8 +945,14 @@ class _ChartWidget(ActionWidget):
             # Phoebus
             self.phoebus_axes[axis][4] = grid_on
 
-    def add_trace(self, y_pv, x_pv=None, legend=None, trace_type=TraceType.BARS,
-                  line_width=10, trace_color=None, y_axis=0):
+    def add_trace(self,
+                  y_pv,
+                  x_pv=None,
+                  legend=None,
+                  trace_type=TraceType.BARS,
+                  line_width=10,
+                  trace_color=None,
+                  y_axis=0):
         """Adds a trace to the graph.
 
         The trace will take the form of a bar graph. If no X PV is provided, the OPI will
@@ -987,8 +996,10 @@ class _ChartWidget(ActionWidget):
         self.trace_count += 1
 
         # Phoebus
-        self.phoebus_traces.append([self.get_type(), legend, x_pv, y_pv, trace_type,
-                                    line_width, y_axis, trace_color])
+        self.phoebus_traces.append([
+            self.get_type(), legend, x_pv, y_pv, trace_type, line_width,
+            y_axis, trace_color
+        ])
 
 
 class XYPlot(_ChartWidget):
@@ -999,7 +1010,11 @@ class XYPlot(_ChartWidget):
     def __init__(self, x, y, width, height, show_toolbar=False):
         self._has_xaxis = True
         super(XYPlot, self).__init__(XYPlot.TYPE_ID,
-                                     x, y, width, height, has_xaxis=True)
+                                     x,
+                                     y,
+                                     width,
+                                     height,
+                                     has_xaxis=True)
         self.show_toolbar = show_toolbar
 
 
@@ -1008,10 +1023,13 @@ class StripChart(_ChartWidget):
     TYPE_ID = 'TO-BE-SUPPORTED'
     TYPE = 'stripchart'
 
-    def __init__(self, x, y, width, height, show_toolbar=False,
-                 start=None):
-        super(StripChart, self).__init__(
-            StripChart.TYPE_ID, x, y, width, height, has_xaxis=False)
+    def __init__(self, x, y, width, height, show_toolbar=False, start=None):
+        super(StripChart, self).__init__(StripChart.TYPE_ID,
+                                         x,
+                                         y,
+                                         width,
+                                         height,
+                                         has_xaxis=False)
         self.show_toolbar = show_toolbar
         # the starting time, relative to now
         if start is None:

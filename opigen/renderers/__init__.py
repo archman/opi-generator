@@ -5,6 +5,7 @@ from .phoebus.render import get_opi_renderer as get_bob_renderer
 
 
 class Renderer:
+
     def __init__(self, display):
         self._bob_renderer = get_bob_renderer(display)
         self._opi_renderer = get_opi_renderer(display)

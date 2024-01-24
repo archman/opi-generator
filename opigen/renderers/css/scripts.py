@@ -26,10 +26,12 @@ class OpiScripts:
                     et.SubElement(path_node, "scriptName").text = script.name
 
                     # Read the script file and embed it into the XML
-                    with open(script.script_path, 'r', encoding="utf-8") as file:
+                    with open(script.script_path, 'r',
+                              encoding="utf-8") as file:
                         script_text = file.read()
 
-                    et.SubElement(path_node, "scriptText").text = et.CDATA(script_text)
+                    et.SubElement(path_node,
+                                  "scriptText").text = et.CDATA(script_text)
 
                 # Non-embedded script
                 else:
@@ -38,4 +40,6 @@ class OpiScripts:
 
                 # Add the PVs
                 for process_variable, trigger in script.pvs:
-                    et.SubElement(path_node, "pv", trig=str(trigger)).text = str(process_variable)
+                    et.SubElement(
+                        path_node, "pv",
+                        trig=str(trigger)).text = str(process_variable)

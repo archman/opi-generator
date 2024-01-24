@@ -22,7 +22,8 @@ class OpiTraces(object):
             et.SubElement(trace_node, "y_pv").text = str(y_pv)
             et.SubElement(trace_node, "axis").text = str(y_axis)
             et.SubElement(trace_node, "line_width").text = str(line_width)
-            et.SubElement(trace_node, "trace_type").text = str(trace_type)  # 5: Bar graph for Phoebus
+            et.SubElement(trace_node, "trace_type").text = str(
+                trace_type)  # 5: Bar graph for Phoebus
 
             # None is passed as color if defaults wish to be used
             if trace_color is not None:

@@ -109,7 +109,8 @@ def test_Display_render_sets_custom_scale_options(display, get_opi_renderer):
 
 
 @pytest.mark.parametrize('widget_type,alignbit',
-                         [(widgets.TextUpdate, widgets.HA_CENTER), (widgets.TextEntry, widgets.HA_LEFT)])
+                         [(widgets.TextUpdate, widgets.HA_CENTER),
+                          (widgets.TextEntry, widgets.HA_LEFT)])
 def test_text_widgets_have_correct_attributes(display, get_opi_renderer,
                                               widget_type, alignbit):
     tb = widget_type(10, 10, 20, 20, 'pvname')
@@ -122,7 +123,8 @@ def test_text_widgets_have_correct_attributes(display, get_opi_renderer,
 
 
 @pytest.mark.parametrize('widget_type,alignbit',
-                         [(widgets.TextUpdate, widgets.HA_CENTER), (widgets.TextEntry, widgets.HA_LEFT)])
+                         [(widgets.TextUpdate, widgets.HA_CENTER),
+                          (widgets.TextEntry, widgets.HA_LEFT)])
 def test_text_widgets_have_correct_attributes_phoebus(display,
                                                       get_bob_renderer,
                                                       widget_type, alignbit):
@@ -332,7 +334,10 @@ def test_XYPlot_has_correct_attributes(display, get_opi_renderer):
 
 def test_XYPlot_trace_color_works(display, get_opi_renderer):
     xyplot = widgets.XYPlot(10, 10, 20, 20)
-    xyplot.add_trace("y_pv", "x_pv", "legend_name", line_width=10,
+    xyplot.add_trace("y_pv",
+                     "x_pv",
+                     "legend_name",
+                     line_width=10,
                      trace_color=Color((255, 0, 0)))
     display.add_child(xyplot)
     renderer = get_opi_renderer(display)

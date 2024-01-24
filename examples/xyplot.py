@@ -24,8 +24,12 @@ graph.set_axis_title("X-Axis", 0)
 
 # Add traces (data series) to the graph
 # Adding the y pv without adding an x pv automatically asigns data to be on integers on the x-axis
-graph.add_trace("sim://sineWaveform(10, 30, 50, 1)", legend="Sinewave 1", trace_color=Colors.RED)
-graph.add_trace("sim://sineWaveform(2, 15, 50, 1)", legend="Sinewave 2", trace_color=Colors.GREEN)
+graph.add_trace("sim://sineWaveform(10, 30, 50, 1)",
+                legend="Sinewave 1",
+                trace_color=Colors.RED)
+graph.add_trace("sim://sineWaveform(2, 15, 50, 1)",
+                legend="Sinewave 2",
+                trace_color=Colors.GREEN)
 
 # Configure the first Y-Axis, index 1
 graph.set_axis_title("Y-Axis for Sinewave Readings", 1)

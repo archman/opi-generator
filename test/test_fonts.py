@@ -105,4 +105,3 @@ def test_parse_font_file(font_file):
                                        fonts.BOLD,
                                        pixels=False,
                                        phoebus_size=24)
-

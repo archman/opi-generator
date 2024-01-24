@@ -72,7 +72,10 @@ def export_attr_map():
 #   directory takes precedence.
 """
     parser = argparse.ArgumentParser(description="Export the attribute map.")
-    parser.add_argument('-o', '--output-file', dest='outfile', default=None,
+    parser.add_argument('-o',
+                        '--output-file',
+                        dest='outfile',
+                        default=None,
                         help="If given, write the attribute map into a file.")
     #
     args = parser.parse_args(sys.argv[1:])
@@ -142,10 +145,17 @@ def _export_def(filename: str, desc: str):
     """Export definitions as a file.
     """
     parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument('-o', '--output-file', dest='outfile', default=None,
+    parser.add_argument('-o',
+                        '--output-file',
+                        dest='outfile',
+                        default=None,
                         help="If given, write the definitions into a file.")
-    parser.add_argument('--live', action='store_true',
-                        help="If set, export the definitions in-use, otherwise export the default one.")
+    parser.add_argument(
+        '--live',
+        action='store_true',
+        help=
+        "If set, export the definitions in-use, otherwise export the default one."
+    )
 
     #
     args = parser.parse_args(sys.argv[1:])
