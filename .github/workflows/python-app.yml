@@ -31,8 +31,8 @@ jobs:
       run: |
         python setup.py bdist_wheel
         pip install dist/*.whl --upgrade
-        #cd tests
-        #pytest -vs
+        cd test
+        pytest -vs
 #    - name: Build documentation
 #      run: |
 #        pip install sphinx sphinx_rtd_theme
