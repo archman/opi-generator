@@ -6,6 +6,7 @@ from .opimodel import colors
 from .opimodel import fonts
 from .opimodel import rules
 from .opimodel import widgets
+from .opimodel import scripts
 
 from .renderers import *
 
