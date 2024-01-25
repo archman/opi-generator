@@ -2,6 +2,8 @@
 
 from lxml import etree as et
 
+_boolean_str_map = {False: 'false', True: 'true'}
+
 
 class OpiScripts:
     """Class that renders scripts for a widget in Phoebus"""
@@ -36,5 +38,7 @@ class OpiScripts:
                 # Add the PVs
                 for process_variable, trigger in script.pvs:
                     et.SubElement(
-                        script_node, "pv_name",
-                        trigger=str(trigger)).text = str(process_variable)
+                        script_node,
+                        "pv_name",
+                        trigger=_boolean_str_map[trigger]).text = str(
+                            process_variable)
