@@ -1,0 +1,19 @@
+#
+# This file maintains version string for each widgets.
+# The mismatch of the widget version info with Phoebus app may
+# procedure unexpected results.
+#
+# VERSION section keeps the version string:
+# - 'Default' applies to all widgets.
+# - List the exceptions by updating the version string in a new key,
+#   use class name as the key name.
+
+phoebus_version = "4.7.3-SNAPSHOT"
+
+[VERSION]
+Default = "2.0.0"
+ActionButton = "3.0.0"
+TextEntry = "3.0.0"
+StripChart = "2.1.0"
+XYPlot = "3.0.0"
+

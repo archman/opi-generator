@@ -80,7 +80,7 @@ def test_parse_font_file(font_file):
     assert fonts.DUMMY_1.style_as_str() == 'BOLD'
     assert fonts.DUMMY_1.size == 19
     assert fonts.DUMMY_1.phoebus_size == 19
-    assert fonts.DUMMY_1.pixels == False
+    assert not fonts.DUMMY_1.pixels
     assert fonts.DUMMY_2 == fonts.Font('dummy 2',
                                        'Dummy two',
                                        15,

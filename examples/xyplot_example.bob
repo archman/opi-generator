@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<display version="2.0.0">
+  <background_color>
+    <color red="255" green="255" blue="255" name="DISPLAY_BG"/>
+  </background_color>
+  <grid_visible>true</grid_visible>
+  <height>800</height>
+  <name>XYPlot Example</name>
+  <width>1200</width>
+  <x>0</x>
+  <y>0</y>
+  <widget type="xyplot" version="3.0.0">
+    <x_axis>
+      <title>X-Axis</title>
+      <autoscale>true</autoscale>
+      <minimum>0</minimum>
+      <maximum>100</maximum>
+      <show_grid>true</show_grid>
+    </x_axis>
+    <y_axes>
+      <y_axis>
+        <title>Y-Axis for Sinewave Readings</title>
+        <autoscale>false</autoscale>
+        <minimum>-4</minimum>
+        <maximum>1.5</maximum>
+        <show_grid>true</show_grid>
+        <color>
+          <color red="234" green="67" blue="53"/>
+        </color>
+      </y_axis>
+      <y_axis>
+        <title>Y-Axis for Sawtooth Readings</title>
+        <autoscale>false</autoscale>
+        <minimum>-1.5</minimum>
+        <maximum>4</maximum>
+        <show_grid>true</show_grid>
+        <color>
+          <color red="66" green="133" blue="244"/>
+        </color>
+      </y_axis>
+    </y_axes>
+    <height>800</height>
+    <name>XYPlot_0</name>
+    <show_toolbar>true</show_toolbar>
+    <traces>
+      <trace>
+        <name>Sinewave 1</name>
+        <y_pv>sim://sineWaveform(10, 30, 50, 1)</y_pv>
+        <axis>0</axis>
+        <line_width>10</line_width>
+        <trace_type>5</trace_type>
+        <color>
+          <color red="234" green="67" blue="53" alpha="128"/>
+        </color>
+      </trace>
+      <trace>
+        <name>Sinewave 2</name>
+        <y_pv>sim://sineWaveform(2, 15, 50, 1)</y_pv>
+        <axis>0</axis>
+        <line_width>10</line_width>
+        <trace_type>5</trace_type>
+        <color>
+          <color red="69" green="168" blue="83" alpha="128"/>
+        </color>
+      </trace>
+      <trace>
+        <name>Sawtooth Wave</name>
+        <y_pv>sim://sawtoothWaveform(20, 20, 50, 1)</y_pv>
+        <axis>1</axis>
+        <line_width>10</line_width>
+        <trace_type>5</trace_type>
+        <color>
+          <color red="66" green="133" blue="244" alpha="128"/>
+        </color>
+      </trace>
+    </traces>
+    <width>1200</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+</display>

@@ -5,15 +5,15 @@ from opigen.opimodel.colors import Color
 
 
 def test_widget_attribute_map(widget, get_opi_renderer, get_bob_renderer):
-    assert hasattr(widget, 'phoebus_x') == True
+    assert hasattr(widget, 'phoebus_x')
     assert widget.x == widget.phoebus_x
-    assert hasattr(widget, 'phoebus_y') == True
+    assert hasattr(widget, 'phoebus_y')
     assert widget.y == widget.phoebus_y
-    assert hasattr(widget, 'phoebus_width') == True
+    assert hasattr(widget, 'phoebus_width')
     assert widget.width == widget.phoebus_width
-    assert hasattr(widget, 'phoebus_height') == True
+    assert hasattr(widget, 'phoebus_height')
     assert widget.height == widget.phoebus_height
-    assert hasattr(widget, 'phoebus_name') == True
+    assert hasattr(widget, 'phoebus_name')
     assert widget.name == widget.phoebus_name
 
 
@@ -109,7 +109,8 @@ def test_Display_render_sets_custom_scale_options(display, get_opi_renderer):
 
 
 @pytest.mark.parametrize('widget_type,alignbit',
-                         [(widgets.TextUpdate, widgets.HA_CENTER), (widgets.TextEntry, widgets.HA_LEFT)])
+                         [(widgets.TextUpdate, widgets.HA_CENTER),
+                          (widgets.TextEntry, widgets.HA_LEFT)])
 def test_text_widgets_have_correct_attributes(display, get_opi_renderer,
                                               widget_type, alignbit):
     tb = widget_type(10, 10, 20, 20, 'pvname')
@@ -122,7 +123,8 @@ def test_text_widgets_have_correct_attributes(display, get_opi_renderer,
 
 
 @pytest.mark.parametrize('widget_type,alignbit',
-                         [(widgets.TextUpdate, widgets.HA_CENTER), (widgets.TextEntry, widgets.HA_LEFT)])
+                         [(widgets.TextUpdate, widgets.HA_CENTER),
+                          (widgets.TextEntry, widgets.HA_LEFT)])
 def test_text_widgets_have_correct_attributes_phoebus(display,
                                                       get_bob_renderer,
                                                       widget_type, alignbit):
@@ -313,15 +315,15 @@ def test_GroupBox_render_sets_custom_scale_options(display, get_opi_renderer):
     assert "<keep_wh_ratio>true</keep_wh_ratio>" in output
 
 
-def test_XYGraph_has_correct_attributes(display, get_opi_renderer):
-    xygraph = widgets.XYGraph(10, 10, 20, 20)
-    display.add_child(xygraph)
+def test_XYPlot_has_correct_attributes(display, get_opi_renderer):
+    xyplot = widgets.XYPlot(10, 10, 20, 20)
+    display.add_child(xyplot)
     renderer = get_opi_renderer(display)
     renderer.assemble()
     output = str(renderer)
     assert '<trace_count>0</trace_count>' in output
 
-    xygraph.add_trace("x_pv", "y_pv", "legend_name", 10)
+    xyplot.add_trace("y_pv", "x_pv", "legend_name", line_width=10)
     renderer.assemble()
     output = str(renderer)
     assert '<trace_count>1</trace_count>' in output
@@ -330,10 +332,14 @@ def test_XYGraph_has_correct_attributes(display, get_opi_renderer):
     assert "<trace_0_name>legend_name</trace_0_name>" in output
 
 
-def test_XYGraph_trace_color_works(display, get_opi_renderer):
-    xygraph = widgets.XYGraph(10, 10, 20, 20)
-    xygraph.add_trace("x_pv", "y_pv", "legend_name", 10, Color((255, 0, 0)))
-    display.add_child(xygraph)
+def test_XYPlot_trace_color_works(display, get_opi_renderer):
+    xyplot = widgets.XYPlot(10, 10, 20, 20)
+    xyplot.add_trace("y_pv",
+                     "x_pv",
+                     "legend_name",
+                     line_width=10,
+                     trace_color=Color((255, 0, 0)))
+    display.add_child(xyplot)
     renderer = get_opi_renderer(display)
     renderer.assemble()
     output = str(renderer)

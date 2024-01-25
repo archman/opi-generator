@@ -4,7 +4,7 @@ from opigen import rules, colors
 def test_empty_RulesNode_does_not_create_rules_tag(widget, get_opi_renderer):
     renderer = get_opi_renderer(widget)
     output = str(renderer)
-    assert not 'rules' in output
+    assert 'rules' not in output
 
 
 def test_greater_than_rule(widget, get_opi_renderer):

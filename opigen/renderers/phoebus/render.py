@@ -49,7 +49,7 @@ def get_opi_renderer(widget):
     wr.add_renderer('auto_scale_widgets', OpiDisplayScaling(tr))
     wr.add_renderer('scale_options', OpiScaling(tr))
 
-    # Necessary for rendering of XYGraph
+    # Necessary for rendering of XYPlot
     wr.add_renderer('traces', OpiTraces(cr))
     wr.add_renderer('axes', OpiAxis(cr))
 

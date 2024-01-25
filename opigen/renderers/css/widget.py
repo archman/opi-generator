@@ -24,7 +24,7 @@ class OpiWidget(object):
         node.set('typeId', model.get_type_id())
         node.set('version', model.get_version())
         for var, val in sorted(vars(model).items()):
-            if all(re.match(rf'^{w}', var) == None for w in ('phoebus', '_')):
+            if all(re.match(rf'^{w}', var) is None for w in ('phoebus', '_')):
                 self._renderers[var].render(node, var, val)
         for child in model.get_children():
             self.render(child, node, res)

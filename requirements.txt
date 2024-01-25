@@ -1,3 +1,4 @@
+toml
 lxml
 pytest>=3.0
 coverage

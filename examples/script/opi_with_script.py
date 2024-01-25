@@ -6,7 +6,7 @@ from opigen.opimodel import widgets
 from opigen.opimodel.scripts import Script
 
 # Create a new Display
-display = Display(1200, 800, "XYGraph Example")
+display = Display(1200, 800, "XYPlot Example")
 
 # This will be our trigger PV, it will be displayed in a text update box to show the value, and
 # whenever it changes the script will trigger

@@ -36,3 +36,7 @@ have to extend it. To extend or update it, follow these steps:
   the extend or override if possible.
 - If `attr.toml` exists in both places, the one in the current working
   directory takes precedence.
+
+## Development
+
+- Formatter: `yapf`

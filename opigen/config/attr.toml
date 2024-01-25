@@ -2,6 +2,9 @@
 # Attribute map between CS-Studio and Phoebus
 # DEFAULT section is shared by all widgets
 #
+# When to add an attribute map:
+# - The Phoebus rendering does not contain the expected attribute name
+#
 [DEFAULT]
 name = "name"
 x = "x"
@@ -70,9 +73,15 @@ active_tab = "active_tab"
 minimum_tab_height = "tab_height"
 horizontal_tabs = "direction"
 
-[XYGraph]
+[XYPlot]
 show_toolbar = "show_toolbar"
 
 [DataBrowser]
 filename = "file"
 show_toolbar = "show_toolbar"
+
+[StripChart]
+show_toolbar = "show_toolbar"
+start = "start"
+show_legend = "show_legend"
+show_grid = "show_grid"

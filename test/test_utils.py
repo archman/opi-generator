@@ -15,4 +15,4 @@ def test_add_attr_to_module():
     # Add the variable x to the current module with value 1
     utils.add_attr_to_module('x', 1, sys.modules[__name__])
     # We expect pylint to complain about this.
-    assert X == 1 # noqa: F821 #pylint: disable=undefined-variable
+    assert X == 1  # noqa: F821 #pylint: disable=undefined-variable

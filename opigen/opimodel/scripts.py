@@ -2,6 +2,7 @@
 
 from os.path import basename
 
+
 class Script:
     """Represents a script to be added to a widget.
 
@@ -11,8 +12,8 @@ class Script:
             paths can exhibit strange behavior.
         name (str): Name of the script. Defaults to the script filename. Only shown in CS-Studio's
             OPI Editor.
-        pvs (List[Tuple[str, bool]]): A list of process variables (PVs) associated with the script. 
-            Each PV is represented as a tuple, where the first element is the PV name and the second 
+        pvs (List[Tuple[str, bool]]): A list of process variables (PVs) associated with the script.
+            Each PV is represented as a tuple, where the first element is the PV name and the second
             element is a boolean indicating whether this PV should trigger the script.
     """
 
@@ -21,7 +22,7 @@ class Script:
 
         Args:
             script_path (str): The file path to the location of the script.
-            embed (bool, optional): Indicates whether the script should be embedded into XML. 
+            embed (bool, optional): Indicates whether the script should be embedded into XML.
                 Defaults to True. Non-embedded script paths can exhibit strange behavior.
             name (str, optional): Name of the script. Defaults to the script's filename. Only shown
                 in CS-Studio's OPI Editor.
@@ -32,8 +33,8 @@ class Script:
         if name is not None:
             self.name = name
         elif name is None:
-            # Formats the script path such that the name is only the file name without its file
-            # extension.
+            # Formats the script path such that the name is only the file name
+            # without its file extension.
             self.name = basename(script_path)
 
         self.pvs = []

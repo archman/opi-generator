@@ -6,8 +6,39 @@ from . import actions, scalings
 from .colors import Color
 from .borders import Border, BorderStyle
 from opigen.config import get_attr_conf
+from opigen.config import get_ver_conf
 
 ATTR_MAP = get_attr_conf()
+VER_CONF = get_ver_conf()
+DEFAULT_VER = VER_CONF['Default']
+
+
+def _get_widget_version(name: str):
+    """Return the version string for the widget.
+    """
+    return VER_CONF.get(name, DEFAULT_VER)
+
+
+class TraceType:
+    NONE = 0
+    LINE = 1
+    STEP = 2
+    ERROR_BARS = 3
+    LINE_ERROR_BARS = 4
+    BARS = 5
+
+
+def str2TraceType(s: str):
+    """Convert string to TraceType enum.
+    """
+    return {
+        "none": TraceType.NONE,
+        "line": TraceType.LINE,
+        "step": TraceType.STEP,
+        "errorbars": TraceType.ERROR_BARS,
+        "line_errorbars": TraceType.LINE_ERROR_BARS,
+        "bars": TraceType.BARS
+    }.get(s, TraceType.STEP)
 
 
 class ResizeBehaviour:
@@ -139,8 +170,10 @@ class Widget(object):
     CNT = {}
 
     def __init__(self, type_id, x, y, width, height, name=None):
+        class_name = self.__class__.__name__
+        self.version = _get_widget_version(class_name)
         if name is None:
-            k = self.__class__.__name__
+            k = class_name
             v = Widget.CNT.setdefault(k, 0)
             self.name = f"{k}_{v}"
             Widget.CNT[k] += 1
@@ -185,7 +218,8 @@ class Widget(object):
             super().__setattr__(name, value)
 
     def get_type_name(self):
-        # widget type name, i.e. tag name, followed by a real type string ('label') and other attributes.
+        # widget type name, i.e. tag name, followed by a real type string
+        # ('label') and other attributes.
         return "widget"
 
     def get_type_id(self):
@@ -197,7 +231,7 @@ class Widget(object):
 
     def get_version_phoebus(self):
         # phoebus
-        return "2.0.0"
+        return self.version
 
     def get_type(self):
         try:
@@ -545,7 +579,7 @@ class TabbedContainer(Widget):
         # create a grouping container for the content widget
         _grp = GroupingContainer(1, 1, self.width - dw, self.height - dh)
 
-        if widget != None:
+        if widget is not None:
             _grp.add_child(widget)
 
         _grp.set_border(
@@ -770,12 +804,13 @@ class WebBrowser(ActionWidget):
     TYPE = 'webbrowser'
 
     def __init__(self, x, y, width, height, url):
-        super(WebBrowser, self).__init__(WebBrowser.TYPE_ID, x, y, width, height)
+        super(WebBrowser, self).__init__(WebBrowser.TYPE_ID, x, y, width,
+                                         height)
         self.url = url
         self.phoebus_url = url
 
 
-class XYGraph(Widget):
+class _ChartWidget(ActionWidget):
     """Class that creates an XYGraph in CS-Studio and Phoebus.
 
     This graph will always be made to be a bar graph. Other graph types are possible, but not via
@@ -789,10 +824,7 @@ class XYGraph(Widget):
         phoebus_traces (list): The list of traces and their settings for Phoebus.
     """
 
-    TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
-    TYPE = "xyplot"
-
-    def __init__(self, x, y, width, height):
+    def __init__(self, type_id, x, y, width, height, **kws):
         """Initializes the XYGraph with the given dimensions.
 
         Args:
@@ -801,15 +833,16 @@ class XYGraph(Widget):
             width (int): The width of the graph.
             height (int): The height of the graph.
         """
-        super().__init__(XYGraph.TYPE_ID, x, y, width, height)
-        self.show_toolbar = True
+        super().__init__(type_id, x, y, width, height)
         self.trace_count = 0
         self.axis_count = 2
 
+        self._has_xaxis = kws.get('has_xaxis', True)
         # Phoebus renders axes vastly different from CS-Studio, so data is stored differently for
         # it as well
-        self.phoebus_axes = [["X Axis", True, 0, 100, True, None],
-                             ["Y Axis 1", True, 0, 100, True, None]]
+        self.phoebus_axes = [[
+            "X Axis", True, 0, 100, True, None, self._has_xaxis
+        ], ["Y Axis 1", True, 0, 100, True, None]]
         self.phoebus_traces = []
 
         # Sets the x axis and first y axis to show their grids
@@ -828,7 +861,8 @@ class XYGraph(Widget):
         setattr(self, f"axis_{self.axis_count - 1}_y_axis", True)
 
         # Phoebus
-        self.phoebus_axes.append([f"Y Axis {self.axis_count - 1}", True, 0, 100, True, None])
+        self.phoebus_axes.append(
+            [f"Y Axis {self.axis_count - 1}", True, 0, 100, True, None])
 
         self.set_axis_grid(True, self.axis_count - 1)
 
@@ -842,6 +876,8 @@ class XYGraph(Widget):
             maximum (float): The maximum value for the axis.
             axis (int, optional): The index of the axis. Defaults to the x-axis (0).
         """
+        if axis == 0 and not self._has_xaxis:
+            return
         # CS-Studio
         setattr(self, f"axis_{axis}_auto_scale", False)
         setattr(self, f"axis_{axis}_minimum", minimum)
@@ -851,6 +887,17 @@ class XYGraph(Widget):
         self.phoebus_axes[axis][1] = False
         self.phoebus_axes[axis][2] = minimum
         self.phoebus_axes[axis][3] = maximum
+
+    def auto_scale(self, on: str, axis: int):
+        """Set axis autoscale on or off.
+        """
+        is_on = on == "on"
+        if axis == 0 and not self._has_xaxis:
+            self.autoscale = is_on
+            self.phoebus_autoscale = is_on
+        else:
+            setattr(self, f"axis_{axis}_auto_scale", is_on)
+            self.phoebus_axes[axis][1] = is_on
 
     def set_axis_title(self, title, axis=0):
         """Sets the title of a given axis.
@@ -872,12 +919,15 @@ class XYGraph(Widget):
             color (Color): The color for the axis.
             axis (int, optional): The index of the axis. Defaults to the x-axis (0).
         """
-        # CS-Studio
-        setattr(self, f"axis_{axis}_axis_color", color)
-        setattr(self, f"axis_{axis}_grid_color", color)
+        if axis == 0 and not self._has_xaxis:
+            self.set_fg_color(color)
+        else:
+            # CS-Studio
+            setattr(self, f"axis_{axis}_axis_color", color)
+            setattr(self, f"axis_{axis}_grid_color", color)
 
-        # Phoebus
-        self.phoebus_axes[axis][5] = color
+            # Phoebus
+            self.phoebus_axes[axis][5] = color
 
     def set_axis_grid(self, grid_on=True, axis=0):
         """Sets if the grid corresponding to an axis should be shown.
@@ -886,13 +936,23 @@ class XYGraph(Widget):
             grid_on (bool, optional): Whether the grid should be shown. Defaults to true.
             axis (int, optional): The index of the axis. Defaults to the x-axis (0).
         """
-        # CS-Studio
-        setattr(self, f"axis_{axis}_show_grid", grid_on)
+        if axis == 0 and not self._has_xaxis:
+            self.show_grid = grid_on
+            self.phoebus_show_grid = grid_on
+        else:
+            # CS-Studio
+            setattr(self, f"axis_{axis}_show_grid", grid_on)
+            # Phoebus
+            self.phoebus_axes[axis][4] = grid_on
 
-        # Phoebus
-        self.phoebus_axes[axis][4] = grid_on
-
-    def add_trace(self, y_pv, x_pv=None, legend=None, line_width=10, trace_color=None, y_axis=0):
+    def add_trace(self,
+                  y_pv,
+                  x_pv=None,
+                  legend=None,
+                  trace_type=TraceType.BARS,
+                  line_width=10,
+                  trace_color=None,
+                  y_axis=0):
         """Adds a trace to the graph.
 
         The trace will take the form of a bar graph. If no X PV is provided, the OPI will
@@ -911,6 +971,8 @@ class XYGraph(Widget):
             y_axis (int, optional): The index of the y-axis for the trace.
                 Defaults to the first y-axis (0).
         """
+        if isinstance(trace_type, str):
+            trace_type = str2TraceType(trace_type)
         # CS-Studio
         trace_index = self.trace_count
 
@@ -920,6 +982,7 @@ class XYGraph(Widget):
         setattr(self, f"trace_{trace_index}_y_pv", y_pv)
         setattr(self, f"trace_{trace_index}_concatenate_data", False)
         setattr(self, f"trace_{trace_index}_line_width", line_width)
+        # map BOY to PHOEBUS
         setattr(self, f"trace_{trace_index}_trace_type", 3)
 
         if legend is not None:
@@ -933,4 +996,44 @@ class XYGraph(Widget):
         self.trace_count += 1
 
         # Phoebus
-        self.phoebus_traces.append([legend, x_pv, y_pv, line_width, y_axis, trace_color])
+        self.phoebus_traces.append([
+            self.get_type(), legend, x_pv, y_pv, trace_type, line_width,
+            y_axis, trace_color
+        ])
+
+
+class XYPlot(_ChartWidget):
+
+    TYPE_ID = 'org.csstudio.opibuilder.widgets.xyGraph'
+    TYPE = "xyplot"
+
+    def __init__(self, x, y, width, height, show_toolbar=False):
+        self._has_xaxis = True
+        super(XYPlot, self).__init__(XYPlot.TYPE_ID,
+                                     x,
+                                     y,
+                                     width,
+                                     height,
+                                     has_xaxis=True)
+        self.show_toolbar = show_toolbar
+
+
+class StripChart(_ChartWidget):
+
+    TYPE_ID = 'TO-BE-SUPPORTED'
+    TYPE = 'stripchart'
+
+    def __init__(self, x, y, width, height, show_toolbar=False, start=None):
+        super(StripChart, self).__init__(StripChart.TYPE_ID,
+                                         x,
+                                         y,
+                                         width,
+                                         height,
+                                         has_xaxis=False)
+        self.show_toolbar = show_toolbar
+        # the starting time, relative to now
+        if start is None:
+            start_time = "5 minutes"
+        else:
+            start_time = start
+        self.start = start_time
