@@ -162,6 +162,16 @@ class LineStyle:
     DASHDOTDOT = 4
 
 
+def str2LineStyle(s: str):
+    """Convert string to LineStyle enum.
+    """
+    return {'solid': LineStyle.SOLID,
+            'dash': LineStyle.DASH,
+            'dot': LineStyle.DOT,
+            'dashdot': LineStyle.DASHDOT,
+            'dashdotdot': LineStyle.DASHDOTDOT}[s]
+
+
 class Widget(object):
     """Base class for any widget to extend.
 
@@ -967,6 +977,7 @@ class _ChartWidget(ActionWidget):
                   legend=None,
                   trace_type=TraceType.BARS,
                   line_width=10,
+                  line_style=LineStyle.SOLID,
                   trace_color=None,
                   y_axis=0):
         """Adds a trace to the graph.
@@ -989,6 +1000,8 @@ class _ChartWidget(ActionWidget):
         """
         if isinstance(trace_type, str):
             trace_type = str2TraceType(trace_type)
+        if isinstance(line_style, str):
+            line_style = str2LineStyle(line_style)
         # CS-Studio
         trace_index = self.trace_count
 
@@ -998,6 +1011,7 @@ class _ChartWidget(ActionWidget):
         setattr(self, f"trace_{trace_index}_y_pv", y_pv)
         setattr(self, f"trace_{trace_index}_concatenate_data", False)
         setattr(self, f"trace_{trace_index}_line_width", line_width)
+        setattr(self, f"trace_{trace_index}_line_style", line_style)
         # map BOY to PHOEBUS
         setattr(self, f"trace_{trace_index}_trace_type", 3)
 
@@ -1014,6 +1028,7 @@ class _ChartWidget(ActionWidget):
         # Phoebus
         self.phoebus_traces.append([
             self.get_type(), legend, x_pv, y_pv, trace_type, line_width,
+            line_style,
             y_axis, trace_color
         ])
 
