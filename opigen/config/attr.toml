@@ -75,6 +75,7 @@ horizontal_tabs = "direction"
 
 [XYPlot]
 show_toolbar = "show_toolbar"
+show_legend = "show_legend"
 
 [DataBrowser]
 filename = "file"
