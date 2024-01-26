@@ -294,6 +294,7 @@ class Widget(object):
         Args:
             Color object
         """
+        self.transparent = False
         self.background_color = color
 
     def set_fg_color(self, color):
