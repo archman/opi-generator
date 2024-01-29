@@ -20,14 +20,8 @@ class OpiScripts:
                     script_node = et.SubElement(scripts_node,
                                                 "script",
                                                 file="EmbeddedPy")
-
-                    # Read the script file and embed it into the XML
-                    with open(script.script_path, 'r',
-                              encoding="utf-8") as file:
-                        script_text = file.read()
-
                     et.SubElement(script_node,
-                                  "text").text = et.CDATA(script_text)
+                                  "text").text = et.CDATA(script.script_text)
 
                 # Non-embedded script
                 else:
