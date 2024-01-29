@@ -14,7 +14,8 @@ class OpiTraces(object):
         if len(traces_model) == 0:
             return
         trace_root_node = et.SubElement(widget_node, "traces")
-        for widget_type, legend, x_pv, y_pv, trace_type, line_width, line_style, y_axis, trace_color in traces_model:
+        for widget_type, legend, x_pv, y_pv, trace_type, line_width, \
+            line_style, point_type, point_size, y_axis, trace_color in traces_model:
             trace_node = et.SubElement(trace_root_node, "trace")
             et.SubElement(trace_node, "name").text = str(legend)
             if widget_type == "xyplot" and x_pv is not None:
@@ -23,6 +24,8 @@ class OpiTraces(object):
             et.SubElement(trace_node, "axis").text = str(y_axis)
             et.SubElement(trace_node, "line_width").text = str(line_width)
             et.SubElement(trace_node, "line_style").text = str(line_style)
+            et.SubElement(trace_node, "point_type").text = str(point_type)
+            et.SubElement(trace_node, "point_size").text = str(point_size)
             et.SubElement(trace_node, "trace_type").text = str(
                 trace_type)  # 5: Bar graph for Phoebus
 
