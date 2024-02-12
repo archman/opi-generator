@@ -43,13 +43,17 @@ class Font(object):
         # phoebus_size : font size for phoebus in pixel
         self.fontface = fontface
         self.size = size
-        self.style = style
         self.pixels = pixels
         self.name = name
         _phoebus_size = kws.get('phoebus_size', None)
         if _phoebus_size is None:
             _phoebus_size = size
         self.phoebus_size = _phoebus_size
+        if isinstance(style, str):
+            _style = STYLES[style]
+        else:
+            _style = style
+        self.style = _style
 
     def __eq__(self, other):
         val = (self.size == other.size
@@ -70,7 +74,6 @@ class Font(object):
 
     def __repr__(self):
         return str(self)
-
 
 _pattern = re.compile(
     r'([0-9a-zA-Z ]+)\s*=\s*([a-zA-Z ]+)\s*-\s*([a-zA-Z ]+)\s*-\s*([0-9]+)\s*(.*)'
