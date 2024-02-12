@@ -882,17 +882,24 @@ class _ChartWidget(ActionWidget):
             y (int): The y-coordinate of the graph.
             width (int): The width of the graph.
             height (int): The height of the graph.
+
+        Keyword Arguments
+        -----------------
+        has_xaxis : bool
+            If has X-axis for non-timestamp, e.g. False for StripChart, while True for XYPlot.
+            Defaults True. 
         """
         super().__init__(type_id, x, y, width, height)
         self.trace_count = 0
         self.axis_count = 2
 
         self._has_xaxis = kws.get('has_xaxis', True)
-        # Phoebus renders axes vastly different from CS-Studio, so data is stored differently for
-        # it as well
-        self.phoebus_axes = [[
-            "X Axis", True, 0, 100, True, None, self._has_xaxis
-        ], ["Y Axis 1", True, 0, 100, True, None]]
+        # Phoebus renders axes vastly different from CS-Studio, so data is
+        # stored differently for it as well
+        self.phoebus_axes = [
+            # legend, autoscale?, min, max, grid?, color, title_font, scale_font, [if has non-temporal xaixs?] 
+            ["X Axis", True, 0, 100, True, None, None, None, self._has_xaxis],
+            ["Y Axis 1", True, 0, 100, True, None, None, None]]
         self.phoebus_traces = []
 
         # Sets the x axis and first y axis to show their grids
@@ -912,11 +919,19 @@ class _ChartWidget(ActionWidget):
 
         # Phoebus
         self.phoebus_axes.append(
-            [f"Y Axis {self.axis_count - 1}", True, 0, 100, True, None])
+            [f"Y Axis {self.axis_count - 1}", True, 0, 100, True, None, None, None])
 
         self.set_axis_grid(True, self.axis_count - 1)
 
         return self.axis_count
+
+    def set_axis_font(self, type: str, font, axis=0):
+        """Set title or scale font, only support Phoebus now.
+        """
+        if type == "title":
+            self.phoebus_axes[axis][6] = font
+        elif type == "scale":
+            self.phoebus_axes[axis][7] = font
 
     def set_axis_scale(self, minimum, maximum, axis=0):
         """Sets the minimum and maximum values for a given axis, and disables the auto-scaling.

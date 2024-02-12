@@ -3,6 +3,7 @@
 from lxml import etree as et
 
 from opigen.opimodel.colors import Color
+from .fonts import OpiFont
 
 
 class OpiAxis:
@@ -32,6 +33,11 @@ class OpiAxis:
             # Removes transparency for the axis color
             solid_color = Color((color.red, color.green, color.blue), None)
             self._color.render(axis_node, 'color', solid_color)
+
+        # title, scale font
+        for font, s in zip(axis_values[6:8], ('title', 'scale')):
+            if font is not None:
+                OpiFont().render(axis_node, f"{s}_font", font)
 
     def render(self, widget_node, tag_name, axes_model):
         """Does actual rendering"""
